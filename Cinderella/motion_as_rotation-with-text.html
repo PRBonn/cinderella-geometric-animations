@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>motion_as_rotation.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csmove" type="text/x-cindyscript">
+//Script (CindyScript)
+dA=(A.xy-L.xy)/|A.xy-L.xy|;
+dB=(F.xy-H.xy)/|F.xy-H.xy|;
+dC=(H.xy-F.xy)/|H.xy-F.xy|;
+dAs=(M.xy-R.xy)/|M.xy-R.xy|;
+dBs=(O.xy-Q.xy)/|O.xy-Q.xy|;
+scale = 0.9;
+dl=-[0.3,0.35]*scale;
+dd=0.8*scale;
+fs=20;
+fonts="Times New Roman";
+
+
+drawtext(C.xy+[-0.1,0.4],"$c$",size->fs,family->fonts);
+drawtext(D.xy+[-0.15,-1.0],"$b$",size->fs,family->fonts);
+
+drawtext(A.xy+dd*dA+dl,"$A$",size->fs,family->fonts);
+drawtext(F.xy+dd*dB+dl,"$B$",size->fs,family->fonts);
+drawtext(H.xy+dd*dC+dl,"$$C",size->fs,family->fonts);
+
+
+drawtext(M.xy+dd*dAs+dl,"$A$'",size->fs,family->fonts);
+drawtext(O.xy+dd*dBs+dl,"$B$'",size->fs,family->fonts);
+
+
+drawtext(V.xy-dl/2,"$x_0$'",size->fs,family->fonts);
+;
+
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [4.0, 1.8526315789473686, 0.5263157894736843], color: [1.0, 0.0, 0.0]},
+    {name: "a", type: "Through", pos: [-1.3922036595067622, 1.8695306284805089, 4.0], color: [0.0, 0.0, 1.0], args: ["A"], size: 0},
+    {name: "B", type: "Free", pos: [-0.0, -4.0, -0.8], color: [1.0, 0.0, 0.0], pinned: true, size: 2.0},
+    {name: "b", type: "Through", pos: [0.0, -0.8, 4.0], color: [0.0, 0.0, 1.0], args: ["B"], pinned: true, clip: "inci"},
+    {name: "C", type: "PointOnLine", pos: [-1.4719999999999993, -4.0, -0.7999999999999999], color: [1.0, 0.0, 0.0], args: ["b"]},
+    {name: "D", type: "PointOnLine", pos: [-2.3999999999999986, -4.0, -0.7999999999999999], color: [1.0, 0.0, 0.0], args: ["b"]},
+    {name: "C0", type: "Compass", color: [0.0, 0.0, 1.0], args: ["B", "D", "A"], size: 0, printname: "$C_{0}$"},
+    {name: "Collection__1", type: "IntersectionConicLine", args: ["C0", "a"]},
+    {name: "F", type: "SelectP", pos: [4.0, 2.1234178621004887, 0.39975497694189593], color: [1.0, 0.0, 0.0], args: ["Collection__1"], size: 2.0},
+    {name: "E", type: "SelectP", pos: [4.0, 1.330954636454426, 0.7701385450143396], color: [1.0, 0.0, 0.0], args: ["Collection__1"], visible: false},
+    {name: "c", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["a", "A"], size: 0},
+    {name: "C1", type: "Compass", color: [0.0, 0.0, 1.0], args: ["C", "B", "A"], size: 0, printname: "$C_{1}$"},
+    {name: "Collection__2", type: "IntersectionConicLine", args: ["C1", "c"]},
+    {name: "G", type: "SelectP", pos: [4.0, 3.0738262085400216, 0.6152870884656554], color: [1.0, 0.0, 0.0], args: ["Collection__2"], visible: false},
+    {name: "H", type: "SelectP", pos: [4.0, 0.9399920889224771, 0.45982456934281174], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 2.0},
+    {name: "d", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "H"], size: 0},
+    {name: "e", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["c", "F"], size: 0},
+    {name: "K", type: "Meet", color: [1.0, 0.0, 0.0], args: ["c", "e"]},
+    {name: "L", type: "Meet", color: [1.0, 0.0, 0.0], args: ["d", "e"], size: 2.0},
+    {name: "M", type: "Free", pos: [4.0, 1.0599369085173502, 0.31545741324921145], color: [1.0, 0.0, 0.0]},
+    {name: "f", type: "Through", pos: [-0.24316469960263332, -0.2728189312614913, 4.0], color: [0.0, 0.0, 1.0], args: ["M"], size: 0},
+    {name: "C2", type: "Compass", color: [0.0, 0.0, 1.0], args: ["A", "F", "M"], size: 0, printname: "$C_{2}$"},
+    {name: "Collection__3", type: "IntersectionConicLine", args: ["C2", "f"]},
+    {name: "N", type: "SelectP", pos: [4.0, 2.052059575677514, 0.38312487468294554], color: [1.0, 0.0, 0.0], args: ["Collection__3"], visible: false},
+    {name: "O", type: "SelectP", pos: [4.0, 0.36566501182910105, 0.26810478403436727], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 2.0},
+    {name: "g", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["f", "M"], size: 0},
+    {name: "C3", type: "Compass", color: [0.0, 0.0, 1.0], args: ["B", "C", "M"], size: 0, printname: "$C_{3}$"},
+    {name: "Collection__4", type: "IntersectionConicLine", args: ["C3", "g"]},
+    {name: "P", type: "SelectP", pos: [4.0, 1.3617630884357181, 0.2876811666684673], color: [1.0, 0.0, 0.0], args: ["Collection__4"], visible: false},
+    {name: "Q", type: "SelectP", pos: [4.0, 0.6935979183366213, 0.34917059918342275], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 2.0},
+    {name: "h", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["f", "Q"], size: 0},
+    {name: "k", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["g", "O"], size: 0},
+    {name: "R", type: "Meet", color: [1.0, 0.0, 0.0], args: ["h", "k"], size: 2.0},
+    {name: "Poly0", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 0.0], fillalpha: 0.8290598290598291, args: ["A", "F", "L", "H"]},
+    {name: "Poly1", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 0.0], fillalpha: 0.8205128205128205, args: ["M", "O", "R", "Q"]},
+    {name: "l", type: "Segment", color: [1.0, 0.0, 0.0], args: ["A", "F"], size: 4},
+    {name: "m", type: "Segment", color: [1.0, 0.0, 0.0], args: ["M", "O"], size: 4},
+    {name: "n", type: "Join", color: [0.0, 0.0, 1.0], args: ["A", "M"], size: 0},
+    {name: "S", type: "Mid", color: [1.0, 0.0, 0.0], args: ["A", "M"], size: 0.0},
+    {name: "o", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["n", "S"], size: 0},
+    {name: "p", type: "Join", color: [0.0, 0.0, 1.0], args: ["F", "O"], size: 0},
+    {name: "T", type: "Mid", color: [1.0, 0.0, 0.0], args: ["F", "O"], size: 0.0},
+    {name: "q", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["p", "T"], size: 0},
+    {name: "U", type: "Meet", color: [1.0, 0.0, 0.0], args: ["f", "o"], size: 0.0},
+    {name: "V", type: "Meet", color: [1.0, 0.0, 0.0], args: ["o", "q"], size: 2.0},
+    {name: "C4", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["V", "A"], printname: "$C_{4}$"},
+    {name: "C5", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["V", "H"], printname: "$C_{5}$"},
+    {name: "C6", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["V", "L"], printname: "$C_{6}$"},
+    {name: "C7", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["V", "F"], printname: "$C_{7}$"},
+    {name: "Text0", type: "Text", pos: [-0.033057851239670366, -4.0, 0.8264462809917358], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 03/01", textsize: 15.0}
+  ],
+  ports: [{
+    width: 766,
+    height: 361,
+    id: "CSCanvas",
+    transform: [{visibleRect: [-2.4999999999999996, 7.259999999999999, 28.139999999999997, -7.179999999999999]}],
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  use: ["katex"],
+  cinderella: {build: 2083, version: [3, 0, 2083]}
+});
+    </script>
+</head>
+<body>
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+<h1>Motion as Screw Motion</h1> 
+
+
+The  animation (generated with  <a href="http://www.cinderella.de">Cinderella</a>) visualizes the screw motion of an arbitrary 3D motion. 
+    
+<p> In 2D any motion, i.e. rotation and translation, can be regarded as a rotation around some point. In 3D any motion, i.e. rotation and translation, can be regarded as a rotation around some 3D line and a translation along this line. 
+</p>
+
+
+<p> The animation can be interpreted in 2D and 3D. In 2D it is the motion of a rectangle. The motion also can be regarded as a rotation around the point x<sub>0</sub>. In 3D the motion is visualized along the axis of rotation: The rectangle can be interpreted as a quadrangle with arbitrary depths along the rotation axis. Its motion can be regarded as a rotation around the 3D line, passing through x<sub>0</sub> and being perpendicular to the viewing plane and a translation along this 3D line. </p>
+
+<p> In the animation one can change the two sides b=|AB| and c=|AC| of the rectangle. The position of the two rectangles can be changed by shifting A and A'. The orientation of the rectangles can be changed by rotating the red sides of the rectangles. The point of rotation x<sub>0</sub>, in 3D the intersection of the viewing plane with the rotation line, can be easily constructed by intersecting the perpendicular bisectors of (AA') and (BB').</p>
+
+    
+
+    <h2>Explore the configuration:</h2>
+    <ol>
+      <li>  - Choose A'=A and observe the resulting rotation. Explain.</li>
+			
+      <li>  - Choose A'=B and observe the resulting rotation. Explain.</li>
+			
+ 			
+ 			<li>  - Choose a pure translation, and observe the resulting rotation. Explain.</li>
+			
+			
+			<li>  - In the first two cases, only two circles appear. Generate a configuration, where no point of the rectangles coincides, and only two circles appear. Explain under which conditions this happens. What is the path A' needs to follow, that the configuration has only two circles. Why?</li>
+			
+			
+ 			
+	    
+	        </ol>
+
+    <div id="CSCanvas"></div>
+</body>
+</html>

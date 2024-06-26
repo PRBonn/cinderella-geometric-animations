@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>rotation-as-double-reflection-left.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csmove" type="text/x-cindyscript">
+//Script (CindyScript)
+// rotation as double reflection
+
+alpha=round(2*(re(arctan2(B.xy-A.xy)))*180/pi)/2;
+
+drawtext(B+[-5.2,3.1],"mirror angle (nm)",size->20);
+drawtext(B+[-2.2,1.7],"$\alpha=$"+alpha+"°",size->20,family->"Times New Roman");
+
+drawtext(P7+[-12,0],"2. reflection line m",size->20);
+drawtext(P5+[1,0],"1. reflection line n",size->20);
+
+
+drawtext([-13,-4],"rotation angle (D''OD)",size->20);
+drawtext([-10.5,-5.5],"$\beta = 2\alpha = $"+2*alpha+"°",size->20,family->"Times New Roman");
+
+dA=(G.xy-K.xy)/|G.xy-K.xy|;
+dB=(H.xy-L.xy)/|H.xy-L.xy|;
+dC=-dA;
+dD=-dB;
+dAs=(S.xy-W.xy)/|S.xy-W.xy|;
+dBs=(Q.xy-V.xy)/|Q.xy-V.xy|;
+dCs=-dAs;
+dDs=-dBs;
+dAss=(P4.xy-Y.xy)/|P4.xy-Y.xy|;
+dBss=(P0.xy-P2.xy)/|P0.xy-P2.xy|;
+dCss=-dAss;
+dDss=-dBss;
+
+d1=(P5.xy-O.xy)/|P5.xy-O.xy|;
+d2=(P7.xy-O.xy)/|P7.xy-O.xy|;
+dO=-(d1+d2)/|d1+d2|;
+
+dn=(P12.xy-O.xy)/|P12.xy-O.xy|;
+dm=(P9.xy-O.xy)/|P9.xy-O.xy|;
+
+s=0.9;
+ss=1.05;
+sss=1.2;
+dl=-[0.35,0.5];
+dls=-[0.42,0.5];
+dlss=-[0.55,0.5];
+
+fs=20;
+fonts="Times New Roman";
+drawtext(P12.xy+s*dn+dl,"$n$",size->fs,family->fonts);
+drawtext(P9.xy+s*dm+dl,"$m$",size->fs,family->fonts);
+drawtext(O.xy+sss*dO+dl,"$O$",size->fs,family->fonts);
+
+drawtext(G.xy+s*dA+dl,"$A$",size->fs,family->fonts);
+drawtext(H.xy+s*dB+dl,"$B$",size->fs,family->fonts);
+drawtext(K.xy+s*dC+dl,"$C$",size->fs,family->fonts);
+drawtext(L.xy+s*dD+dl,"$D$",size->fs,family->fonts);
+
+drawtext(S.xy+ss*dAs+dls,"$A'$",size->fs,family->fonts);
+drawtext(Q.xy+ss*dBs+dls,"$B'$",size->fs,family->fonts);
+drawtext(W.xy+ss*dCs+dls,"$C'$",size->fs,family->fonts);
+drawtext(V.xy+ss*dDs+dls,"$D'$",size->fs,family->fonts);
+
+drawtext(P4.xy+sss*dAss+dlss,"$A''$",size->fs,family->fonts);
+drawtext(P0.xy+sss*dBss+dlss,"$B''$",size->fs,family->fonts);
+drawtext( Y.xy+sss*dCss+dlss,"$C''$",size->fs,family->fonts);
+drawtext(P2.xy+sss*dDss+dlss,"$D''$",size->fs,family->fonts);
+
+
+
+;
+
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "O", type: "Free", pos: [4.0, -0.03007518796992481, 0.16870242999518362], color: [1.0, 0.0, 0.0], textsize: 20.0, size: 4.0},
+    {name: "a", type: "Through", pos: [-0.16833053486061644, 0.04946205289743236, 4.0], color: [1.0, 1.0, 1.0], args: ["O"], size: 0, overhang: 0.955},
+    {name: "A", type: "Free", pos: [3.04, -4.0, -1.0], color: [1.0, 0.0, 0.0], pinned: true, textsize: 25.0, size: 2.0},
+    {name: "C0", type: "CircleByFixedRadius", color: [0.0, 0.0, 1.0], radius: 3.0, args: ["A"], printname: "$C_{0}$"},
+    {name: "b", type: "Through", pos: [0.0, -1.0, 4.0], color: [0.0, 0.0, 1.0], args: ["A"], pinned: true, clip: "inci"},
+    {name: "Collection__1", type: "IntersectionConicLine", args: ["C0", "b"]},
+    {name: "N", type: "SelectP", pos: [0.0399999999999998, -4.0, -1.0], color: [1.0, 0.0, 0.0], args: ["Collection__1"], textsize: 25.0, size: 0.0},
+    {name: "B", type: "PointOnCircle", pos: [{r: 1.1794566031371616, i: -5.0074442300026214E-17}, -4.0, {r: -0.5867034211363882, i: -3.0080966871957495E-18}], color: [1.0, 0.0, 0.0], args: ["C0"], textsize: 25.0, size: 4.0},
+    {name: "c", type: "Join", color: [0.0, 0.0, 1.0], args: ["A", "B"], clip: "inci"},
+    {name: "C1", type: "CircleByFixedRadius", color: [0.0, 0.0, 1.0], radius: 3.0, args: ["O"], size: 0, printname: "$C_{1}$"},
+    {name: "Collection__2", type: "IntersectionConicLine", args: ["C1", "a"]},
+    {name: "C", type: "SelectP", pos: [4.0, 0.439814915557177, 0.16289199770602425], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 0.0},
+    {name: "D", type: "SelectP", pos: [4.0, -0.5347276727178241, 0.17494271696903893], color: [1.0, 0.0, 0.0], args: ["Collection__2"], visible: false},
+    {name: "C2", type: "Compass", color: [0.0, 0.0, 1.0], args: ["N", "B", "C"], visible: false, printname: "$C_{2}$"},
+    {name: "Collection__3", type: "IntersectionCircleCircle", args: ["C1", "C2"]},
+    {name: "E", type: "SelectP", pos: [4.0, {r: 0.3012657273671065, i: 1.4530398144958808E-17}, {r: 0.18781796757068478, i: -5.335863546606772E-19}], color: [1.0, 0.0, 0.0], args: ["Collection__3"], visible: false},
+    {name: "F", type: "SelectP", pos: [4.0, {r: 0.0022868108656369777, i: 1.5223753321920288E-17}, {r: 0.1497895190454479, i: 3.6853878081638615E-20}], color: [1.0, 0.0, 0.0], args: ["Collection__3"], visible: false},
+    {name: "d", type: "Join", color: [0.0, 0.0, 1.0], args: ["E", "F"], visible: false},
+    {name: "e", type: "Join", color: [1.0, 0.0, 0.0], args: ["O", "E"], visible: false, size: 4},
+    {name: "G", type: "Free", pos: [4.0, 0.6917293233082706, 0.12652682249638772], color: [1.0, 0.0, 0.0], textsize: 20.0, size: 3.0, printname: "A"},
+    {name: "H", type: "Free", pos: [4.0, 1.1215686274509804, 0.13198484229034954], color: [1.0, 0.0, 0.0], textsize: 20.0, size: 3.0, printname: "B"},
+    {name: "K", type: "Free", pos: [4.0, 0.967880085653105, 0.14413762220145238], color: [1.0, 0.0, 0.0], textsize: 20.0, size: 3.0, printname: "C"},
+    {name: "L", type: "Free", pos: [4.0, 0.5289256198347108, 0.13907493712412866], color: [1.0, 0.0, 0.0], textsize: 20.0, size: 3.0, printname: "D"},
+    {name: "Poly0", type: "Poly", color: [1.0, 1.0, 1.0], fillcolor: [0.98, 1.0, 0.62], fillalpha: 1.0, args: ["L", "H", "K"], size: 0},
+    {name: "Poly1", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 0.0], fillalpha: 0.8034188034188035, args: ["H", "G", "L"], size: 0},
+    {name: "f", type: "Orthogonal", color: [1.0, 1.0, 1.0], args: ["a", "H"], size: 0},
+    {name: "M", type: "Meet", color: [1.0, 1.0, 1.0], args: ["a", "f"], size: 0.0},
+    {name: "C3", type: "CircleMP", color: [1.0, 1.0, 1.0], args: ["H", "M"], size: 0, printname: "$C_{3}$"},
+    {name: "P", type: "OtherIntersectionCL", color: [1.0, 1.0, 1.0], args: ["C3", "f", "M"], size: 0.0},
+    {name: "C4", type: "CircleMP", color: [1.0, 1.0, 1.0], args: ["M", "H"], size: 0, printname: "$C_{4}$"},
+    {name: "Q", type: "OtherIntersectionCL", color: [1.0, 1.0, 0.0], args: ["C4", "f", "H"], textsize: 20.0, size: 3.0, printname: "B'"},
+    {name: "g", type: "Orthogonal", color: [1.0, 1.0, 1.0], args: ["a", "G"], size: 0},
+    {name: "R", type: "Meet", color: [1.0, 1.0, 1.0], args: ["a", "g"], size: 0.0},
+    {name: "C5", type: "CircleMP", color: [1.0, 1.0, 1.0], args: ["R", "G"], size: 0, printname: "$C_{5}$"},
+    {name: "S", type: "OtherIntersectionCL", color: [1.0, 1.0, 0.0], args: ["C5", "g", "G"], textsize: 20.0, size: 3.0, printname: "A'"},
+    {name: "h", type: "Join", color: [1.0, 1.0, 1.0], args: ["C", "K"], size: 0},
+    {name: "C6", type: "CircleMP", color: [1.0, 1.0, 1.0], args: ["C", "K"], size: 0, printname: "$C_{6}$"},
+    {name: "k", type: "Orthogonal", color: [1.0, 1.0, 1.0], args: ["a", "L"], size: 0},
+    {name: "U", type: "Meet", color: [1.0, 1.0, 1.0], args: ["a", "k"], size: 0.0},
+    {name: "C7", type: "CircleMP", color: [1.0, 1.0, 1.0], args: ["U", "L"], size: 0, printname: "$C_{7}$"},
+    {name: "V", type: "OtherIntersectionCL", color: [1.0, 1.0, 0.0], args: ["C7", "k", "L"], textsize: 20.0, size: 3.0, printname: "D'"},
+    {name: "l", type: "Orthogonal", color: [1.0, 1.0, 1.0], args: ["a", "K"], size: 0},
+    {name: "T", type: "Meet", color: [1.0, 1.0, 1.0], args: ["a", "l"], size: 0.0},
+    {name: "C8", type: "CircleMP", color: [1.0, 1.0, 1.0], args: ["T", "K"], size: 0, printname: "$C_{8}$"},
+    {name: "W", type: "OtherIntersectionCL", color: [1.0, 1.0, 0.0], args: ["C8", "l", "K"], textsize: 20.0, size: 3.0, printname: "C'"},
+    {name: "Poly2", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [0.0, 1.0, 1.0], fillalpha: 1.0, args: ["V", "Q", "S"], size: 0},
+    {name: "Poly3", type: "Poly", color: [1.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 1.0, args: ["V", "W", "Q"], size: 0},
+    {name: "m", type: "Orthogonal", color: [1.0, 1.0, 1.0], args: ["e", "W"], size: 0},
+    {name: "X", type: "Meet", color: [1.0, 1.0, 1.0], args: ["e", "m"], size: 0.0},
+    {name: "C9", type: "CircleMP", color: [1.0, 1.0, 1.0], args: ["X", "W"], size: 0, printname: "$C_{9}$"},
+    {name: "Y", type: "OtherIntersectionCL", color: [1.0, 1.0, 0.0], args: ["C9", "m", "W"], textsize: 20.0, size: 3.0, printname: "C''"},
+    {name: "n", type: "Orthogonal", color: [1.0, 1.0, 1.0], args: ["e", "Q"], size: 0},
+    {name: "Z", type: "Meet", color: [1.0, 1.0, 1.0], args: ["e", "n"], size: 0.0},
+    {name: "C10", type: "CircleMP", color: [1.0, 1.0, 1.0], args: ["Z", "Q"], size: 0, printname: "$C_{10}$"},
+    {name: "P0", type: "OtherIntersectionCL", color: [1.0, 1.0, 0.0], args: ["C10", "n", "Q"], textsize: 20.0, size: 3.0, printname: "B''"},
+    {name: "o", type: "Orthogonal", color: [1.0, 1.0, 1.0], args: ["e", "V"], size: 0},
+    {name: "P1", type: "Meet", color: [1.0, 1.0, 1.0], args: ["e", "o"], size: 0.0, printname: "$P_{1}$"},
+    {name: "C11", type: "CircleMP", color: [1.0, 1.0, 1.0], args: ["P1", "V"], size: 0, printname: "$C_{11}$"},
+    {name: "P2", type: "OtherIntersectionCL", color: [1.0, 1.0, 0.0], args: ["C11", "o", "V"], textsize: 20.0, size: 3.0, printname: "D''"},
+    {name: "p", type: "Orthogonal", color: [1.0, 1.0, 1.0], args: ["e", "S"], size: 0},
+    {name: "P3", type: "Meet", color: [1.0, 1.0, 1.0], args: ["e", "p"], size: 0.0, printname: "$P_{3}$"},
+    {name: "C12", type: "CircleMP", color: [1.0, 1.0, 1.0], args: ["P3", "S"], size: 0, printname: "$C_{12}$"},
+    {name: "P4", type: "OtherIntersectionCL", color: [1.0, 1.0, 0.0], args: ["C12", "p", "S"], textsize: 20.0, size: 3.0, printname: "A''"},
+    {name: "Poly4", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [1.0, 0.29, 0.29], fillalpha: 0.49572649572649574, args: ["P2", "P0", "Y"]},
+    {name: "Poly5", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [1.0, 0.0, 0.0], fillalpha: 0.5470085470085471, args: ["P2", "P4", "P0"], size: 0},
+    {name: "q", type: "Segment", color: [0.0, 0.0, 1.0], args: ["L", "V"]},
+    {name: "r", type: "Segment", color: [0.0, 0.0, 1.0], args: ["V", "P2"]},
+    {name: "s", type: "Join", color: [0.0, 0.0, 1.0], args: ["O", "L"], clip: "inci"},
+    {name: "t", type: "Join", color: [0.0, 0.0, 1.0], args: ["O", "V"], clip: "inci"},
+    {name: "u", type: "Join", color: [0.0, 0.0, 1.0], args: ["O", "P2"], clip: "inci"},
+    {name: "v", type: "Segment", color: [0.0, 0.0, 1.0], args: ["K", "W"]},
+    {name: "x", type: "Segment", color: [0.0, 0.0, 1.0], args: ["H", "Q"]},
+    {name: "y", type: "Segment", color: [0.0, 0.0, 1.0], args: ["W", "Y"]},
+    {name: "z", type: "Segment", color: [0.0, 0.0, 1.0], args: ["Q", "P0"]},
+    {name: "S0", type: "Segment", color: [0.0, 0.0, 1.0], args: ["S", "P4"], printname: "$S_{0}$"},
+    {name: "E0", type: "AngleMark", color: [0.0, 0.0, 1.0], args: ["O", "L", "V"], alpha: 0.3247863247863248},
+    {name: "E1", type: "AngleMark", color: [0.0, 0.0, 1.0], args: ["O", "V", "P2"], alpha: 0.27350427350427353},
+    {name: "C13", type: "CircleByFixedRadius", color: [0.0, 0.0, 1.0], radius: 12.0, args: ["O"], visible: false, printname: "$C_{13}$"},
+    {name: "Collection__4", type: "IntersectionConicLine", args: ["C13", "a"]},
+    {name: "P5", type: "SelectP", pos: [4.0, 1.673465672289136, 0.14763727295941584], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 2.0, printname: "$P_{5}$"},
+    {name: "P6", type: "SelectP", pos: [4.0, -2.300650192777081, 0.1967792552440234], color: [1.0, 1.0, 1.0], args: ["Collection__4"], size: 0.0, printname: "$P_{6}$"},
+    {name: "S1", type: "Segment", color: [1.0, 0.0, 0.0], args: ["O", "P5"], size: 5, overhang: 1.1400000000000001, printname: "$S_{1}$"},
+    {name: "Collection__5", type: "IntersectionConicLine", args: ["C13", "e"]},
+    {name: "P7", type: "SelectP", pos: [4.0, {r: 1.9778313209218386, i: 5.918935823324156E-17}, {r: 0.2845414662934099, i: -4.898708116660495E-18}], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 0.0, border: false, printname: "$P_{7}$"},
+    {name: "P8", type: "SelectP", pos: [4.0, {r: -0.8761171532018818, i: -4.564261678515468E-17}, {r: 0.11989304296131244, i: 8.697178808649927E-19}], color: [1.0, 0.0, 0.0], args: ["Collection__5"], visible: false, printname: "$P_{8}$"},
+    {name: "S2", type: "Segment", color: [0.0, 0.0, 1.0], args: ["P7", "P8"], visible: false, printname: "$S_{2}$"},
+    {name: "S3", type: "Segment", color: [1.0, 1.0, 1.0], args: ["O", "P7"], size: 6, overhang: 1.125, printname: "$S_{3}$"},
+    {name: "C14", type: "ArcBy3", color: [0.0, 0.0, 1.0], args: ["L", "V", "P2"], alpha: 0.2222222222222222, printname: "$C_{14}$"},
+    {name: "C15", type: "ArcBy3", color: [0.0, 0.0, 1.0], args: ["K", "W", "Y"], alpha: 0.2222222222222222, printname: "$C_{15}$"},
+    {name: "C16", type: "ArcBy3", color: [0.0, 0.0, 1.0], args: ["H", "Q", "P0"], alpha: 0.2222222222222222, printname: "$C_{16}$"},
+    {name: "C17", type: "ArcBy3", color: [0.0, 0.0, 1.0], args: ["G", "S", "P4"], alpha: 0.2222222222222222, printname: "$C_{17}$"},
+    {name: "E2", type: "AngleMark", color: [1.0, 0.741, 0.467], args: ["A", "N", "B"]},
+    {name: "S4", type: "Segment", color: [0.0, 0.0, 1.0], args: ["A", "N"], printname: "$S_{4}$", arrowshape: "jet", arrowsides: "==>", arrowsize: 1.0, arrowposition: 1.0},
+    {name: "S5", type: "Segment", color: [0.0, 0.0, 1.0], args: ["A", "B"], printname: "$S_{5}$", arrowshape: "jet", arrowsides: "==>", arrowsize: 1.0, arrowposition: 1.0},
+    {name: "E3", type: "AngleMark", color: [0.0, 0.0, 1.0], args: ["O", "P5", "P7"], alpha: 0.26495726495726496},
+    {name: "E4", type: "AngleMark", color: [1.0, 0.741, 0.467], args: ["O", "P7", "P5"], alpha: 0.6495726495726496},
+    {name: "Text0", type: "Text", pos: [4.0, 3.268817204301075, -0.3618939224090229], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 11/20", textsize: 15.0},
+    {name: "w", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["S3", "O"], size: 0},
+    {name: "Collection__6", type: "IntersectionConicLine", args: ["C1", "w"]},
+    {name: "P9", type: "SelectP", pos: [4.0, {r: 0.35067259060499106, i: -1.062057650593611E-17}, {r: 0.1569077157510882, i: -5.042260715350147E-19}], color: [1.0, 0.0, 0.0], args: ["Collection__6"], size: 0.0, printname: "$P_{9}$"},
+    {name: "P10", type: "SelectP", pos: [4.0, {r: -0.47271695537738306, i: 9.270940657112635E-18}, {r: 0.18241448152339776, i: 6.814834663841734E-19}], color: [1.0, 0.0, 0.0], args: ["Collection__6"], size: 0.0, printname: "$P_{10}$"},
+    {name: "l0", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["a", "O"], size: 0, printname: "$l_{0}$"},
+    {name: "Collection__7", type: "IntersectionConicLine", args: ["C1", "l0"]},
+    {name: "P11", type: "SelectP", pos: [4.0, 0.1281652155181563, 0.19201160720829194], color: [1.0, 0.0, 0.0], args: ["Collection__7"], size: 0.0, printname: "$P_{11}$"},
+    {name: "P12", type: "SelectP", pos: [4.0, -0.1540555118554826, 0.15043984170113459], color: [1.0, 0.0, 0.0], args: ["Collection__7"], size: 0.0, printname: "$P_{12}$"},
+    {name: "S7", type: "Segment", color: [1.0, 0.0, 0.0], args: ["O", "P12"], size: 4, printname: "$S_{7}$", arrowshape: "jet", arrowsides: "==>", arrowsize: 0.8, arrowposition: 1.0},
+    {name: "S8", type: "Segment", color: [1.0, 1.0, 1.0], args: ["O", "P9"], size: 4, printname: "$S_{8}$", arrowshape: "jet", arrowsides: "==>", arrowsize: 0.6000000000000001, arrowposition: 1.0}
+  ],
+  ports: [{
+    width: 947,
+    height: 443,
+    id: "CSCanvas",
+    transform: [{visibleRect: [-15.420665603173399, 13.45965610450395, 40.85436455561353, -12.865410801876843]}],
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  use: ["katex"],
+  cinderella: {build: 2083, version: [3, 0, 2083]}
+});
+    </script>
+</head>
+<body>
+    <div id="CSCanvas"></div>
+</body>
+</html>

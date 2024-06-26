@@ -1,0 +1,42 @@
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+<h1>Comparison of two covariance matrices</h1> 
+
+
+The animation (generated with <a
+    href="http://www.cinderella.de">Cinderella</a>) shows the 
+    comparison of two covariance matrices using their generalized eigenvalues.
+    
+
+<p> The two covariance matrices C<sub>1</sub> (blue standard ellipse) and C<sub>2</sub> (red standard ellipse) of a 2-vector of parameters
+    can be specified by the semi axes of their standard ellipses 
+    x' C<sub>1</sub><sup>-1</sup> x=1 and x' C<sub>2</sub><sup>-1</sup> x=1, namely (a<sub>1</sub>,b<sub>1</sub>) for C<sub>1</sub> and (a<sub>2</sub>,b<sub>2</sub>) for C<sub>2</sub>
+    using the  sliders in the left upper corner. 
+    The direction of the major axes can be changed directly by 
+    clicking on the major axes and moving the cursor.</p>
+    
+<p> In case one treats the covariance C<sub>1</sub> as reference covariance matrix, which represents the desired structure of the precision, one can require that the covariance matrix C<sub>2</sub>, derived from a certain measuring design, fully lies in C<sub>1</sub>. This is equivalent to require, that all functions of the parameters x are more precise when calculated with C<sub>2</sub> than when calculated with C<sub>1</sub> using variance propagation.  </p>
+    
+<p>   This requirement leads to determining the maximum of the so-called Rayleigh coefficient &lambda; = d' C<sub>2</sub> d/ (d' C<sub>1</sub> d). It is obtained as largest eigenvalue of the generalized eigenvalue problem |C_2 -&lambda; C_1| =0.</p>
+    
+<p>  The applet determines the square roots of the generalized eigenvalues and shows them as &#8730;&lambda;<sub>1</sub> and &#8730;&lambda;<sub>2</sub>  in the left lower corner. </p>
+    
+<p>   The eigenvalues can be easily be characterized geometrically. Each ray from the centre intersects the two ellipses. For two such directions, except for symmetry, the tangents at these intersection points at the two ellipses are  parallel,  here in A<sub>1</sub>/B<sub>1</sub>, and in  A'<sub>1</sub>/B'<sub>1</sub> for C<sub>1</sub> and in A<sub>2</sub>/B<sub>2</sub>, and in  A'<sub>2</sub>/B'<sub>2</sub> for C<sub>2</sub>, see the animation Pedal Curve. The eigenvectors are perpendicular to these tangents. However, the eigenvectors in general are not mutually orthogonal. </p>
+
+    
+
+    <h2>Explore the configuration:</h2>
+    <p>- Change all three parameters of for C<sub>2</sub> (red), namely the two semi axes and the direction, such that the maximal eigenvalue becomes 1. Is this always possible? </p>
+		
+ 		<p>- Choose the parameters of the covariance matrix for C<sub>2</sub> (red) such that both eigenvalues are 0.8 (alternatively 1.5).</p>
+		
+ 		<p>- Under which conditions are the eigenvectors mutually orthogonal? </p>
+		
+	  <p>- Under which conditions is problem 1 solvable? </p>

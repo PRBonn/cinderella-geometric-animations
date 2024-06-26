@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>srs-correlation-x-phi.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csmove" type="text/x-cindyscript">
+//Script (CindyScript)
+// spatial resection correlation X and phi
+
+fs=25;
+fam="Times New Roman";
+//drawtext(S.xy+[0.2,-0.9],"$O$", size->fs,bold->"true");
+//drawtext(P41.xy+[0.2,-0.2],"$Z$", size->fs,family->fam);
+//drawtext(P39.xy+[-0.4,+0.3],"$X$", size->fs,family->fam);
+//drawtext(O.xy+[0.2,+0.4],"$X_O$", size->fs,family->fam);
+
+
+
+;
+
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [3.586206896551724, -4.0, -0.3134796238244514], color: [1.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, size: 0.0},
+    {name: "a", type: "Through", pos: [0.0, -0.3134796238244514, 4.0], color: [0.0, 0.0, 1.0], args: ["A"], alpha: 0.8999999761581421, pinned: true, size: 0, clip: "inci"},
+    {name: "B", type: "PointOnLine", pos: [2.5405566501694454, -4.0, -0.3134796238244514], color: [1.0, 0.0, 0.0], args: ["a"], alpha: 0.8999999761581421, text_fontfamily: "serif", textsize: 25.0, size: 0.0, printname: "$c$"},
+    {name: "C", type: "Free", pos: [-1.5652173913043477, -4.0, -1.0869565217391304], color: [1.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, size: 1.0},
+    {name: "b", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "C"], alpha: 0.8999999761581421, size: 0},
+    {name: "c", type: "Orthogonal", color: [0.0, 1.0, 1.0], args: ["b", "C"], alpha: 0.8999999761581421, size: 0},
+    {name: "D", type: "PointOnLine", pos: [-0.5806451612903221, -4.0, -0.4032258064516126], color: [1.0, 0.0, 0.0], args: ["c"], alpha: 0.8999999761581421, pinned: true, size: 4.0},
+    {name: "E", type: "PointOnLine", pos: [2.1739130434782608, -4.0, -1.0869565217391304], color: [1.0, 0.0, 0.0], args: ["b"], alpha: 0.8999999761581421, pinned: true, size: 3.0},
+    {name: "C0", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["C", "E"], alpha: 0.0, labeled: true},
+    {name: "F", type: "OtherIntersectionCL", color: [1.0, 0.0, 0.0], args: ["C0", "b", "E"], alpha: 0.8999999761581421, size: 3.0},
+    {name: "C1", type: "CircleBy3", color: [0.0, 1.0, 1.0], args: ["D", "E", "F"], alpha: 0.8999999761581421, labeled: true},
+    {name: "G", type: "OtherIntersectionCL", color: [1.0, 0.0, 0.0], args: ["C1", "c", "D"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "d", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["b", "G"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "e", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["b", "D"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "H", type: "PointOnLine", pos: [-1.2258064516129026, -4.0, -0.4032258064516126], color: [1.0, 0.0, 0.0], args: ["e"], alpha: 0.8999999761581421, pinned: true, size: 0.0},
+    {name: "K", type: "PointOnLine", pos: [4.0, {r: 3.8773690078037957, i: 1.2177415924621444E-15}, 2.173913043478261], color: [1.0, 0.0, 0.0], args: ["d"], alpha: 0.8999999761581421, pinned: true, size: 1.0},
+    {name: "C2", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["D", "H"], alpha: 0.0, labeled: true},
+    {name: "L", type: "OtherIntersectionCL", color: [1.0, 0.0, 0.0], args: ["C2", "e", "H"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "C3", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["G", "K"], alpha: 0.0, labeled: true},
+    {name: "M", type: "OtherIntersectionCL", color: [1.0, 0.0, 0.0], args: ["C3", "d", "K"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "f", type: "Join", color: [0.0, 0.0, 1.0], args: ["G", "H"], alpha: 0.0, clip: "inci"},
+    {name: "C4", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["G", "H"], alpha: 0.0, labeled: true},
+    {name: "N", type: "OtherIntersectionCL", color: [1.0, 0.0, 0.0], args: ["C4", "f", "H"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "C5", type: "ConicBy5", color: [1.0, 0.0, 0.0], args: ["H", "K", "L", "M", "N"], alpha: 0.6324786324786325, size: 3, labeled: true},
+    {name: "O", type: "PointOnLine", pos: [{r: -3.2573437399679097, i: 1.0230140451222798E-15}, -4.0, {r: -2.2426682001150056, i: 7.043410982745582E-16}], color: [1.0, 0.0, 0.0], args: ["d"], alpha: 0.8999999761581421},
+    {name: "h", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["c", "O"], alpha: 0.8999999761581421, size: 0},
+    {name: "P", type: "Meet", color: [1.0, 0.0, 0.0], args: ["b", "h"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "R", type: "Meet", color: [1.0, 0.0, 0.0], args: ["e", "h"], alpha: 0.8999999761581421, size: 4.0},
+    {name: "C6", type: "Compass", color: [0.0, 0.0, 1.0], args: ["C", "F", "P"], alpha: 0.8999999761581421, size: 0, labeled: true},
+    {name: "Collection__1", type: "IntersectionConicLine", args: ["C6", "b"]},
+    {name: "U", type: "SelectP", pos: [{r: 2.160389976643198, i: -8.837868779427176E-32}, -4.0, -1.0869565217391304], color: [1.0, 0.0, 0.0], args: ["Collection__1"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "Q", type: "SelectP", pos: [4.0, {r: 3.0087229122646977, i: -5.000252700313404E-32}, {r: 0.8175877478980155, i: -1.358764320737339E-32}], color: [1.0, 0.0, 0.0], args: ["Collection__1"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "C7", type: "CircleBy3", color: [0.0, 0.0, 1.0], args: ["O", "Q", "R"], alpha: 0.8999999761581421, labeled: true},
+    {name: "S", type: "PointOnCircle", pos: [{r: -0.5856617828581681, i: 1.723636034693923E-16}, -4.0, {r: -0.40322580645161255, i: -6.13531450209774E-17}], color: [1.0, 0.0, 0.0], args: ["C7"], alpha: 0.8999999761581421},
+    {name: "g", type: "Join", color: [0.0, 0.0, 1.0], args: ["O", "S"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "C8", type: "Compass", color: [0.0, 0.0, 1.0], args: ["A", "B", "S"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__2", type: "IntersectionConicLine", args: ["C8", "g"]},
+    {name: "T", type: "SelectP", pos: [{r: -0.4382867800580927, i: 2.2599227334869274E-16}, -4.0, {r: -0.3017587036045409, i: -3.436052589568329E-17}], color: [1.0, 0.0, 0.0], args: ["Collection__2"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "k", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["g", "T"], alpha: 0.8999999761581421, size: 3, clip: "inci"},
+    {name: "l", type: "Join", color: [0.0, 0.0, 1.0], args: ["E", "S"], alpha: 0.8803418803418803, size: 2, clip: "inci"},
+    {name: "V", type: "Meet", color: [1.0, 0.0, 0.0], args: ["k", "l"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "m", type: "Join", color: [0.0, 0.0, 1.0], args: ["F", "S"], alpha: 0.8803418803418803, size: 2, clip: "inci"},
+    {name: "W", type: "Meet", color: [1.0, 0.0, 0.0], args: ["k", "m"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "Poly0", type: "Poly", color: [0.0, 0.0, 0.0], args: ["W", "V", "S"], alpha: 0.8999999761581421, size: 5},
+    {name: "C9", type: "Compass", color: [0.0, 0.0, 1.0], args: ["F", "G", "G"], alpha: 0.8999999761581421, size: 0, labeled: true},
+    {name: "Collection__3", type: "IntersectionConicLine", args: ["C9", "c"]},
+    {name: "X", type: "SelectP", pos: [{r: 2.6859275740589106, i: 1.0402936612889785E-15}, -4.0, {r: 1.8652274819853547, i: 7.224261536729018E-16}], color: [1.0, 0.0, 0.0], args: ["Collection__3"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "n", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["d", "X"], alpha: 0.8999999761581421, visible: false, size: 2, clip: "inci"},
+    {name: "o", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["c", "E"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "p", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["c", "F"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "Y", type: "Meet", color: [1.0, 0.0, 0.0], args: ["n", "p"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "C10", type: "Compass", color: [0.0, 0.0, 1.0], args: ["X", "Y", "X"], alpha: 0.8999999761581421, size: 0, labeled: true},
+    {name: "Collection__4", type: "IntersectionConicLine", args: ["C10", "c"]},
+    {name: "Z", type: "SelectP", pos: [4.0, {r: 3.5985818253141364, i: 2.307211136996649E-15}, 2.7777777777777786], color: [1.0, 0.0, 0.0], args: ["Collection__4"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "q", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["d", "Z"], alpha: 0.8999999761581421, visible: false, clip: "inci"},
+    {name: "P0", type: "Meet", color: [1.0, 0.0, 0.0], args: ["n", "q"], alpha: 0.0, size: 2.0},
+    {name: "r", type: "RandomLine", color: [0.0, 0.0, 1.0], alpha: 0.0, clip: "inci"},
+    {name: "P1", type: "Meet", color: [1.0, 0.0, 0.0], args: ["r", "q"], alpha: 0.0, size: 2.0},
+    {name: "s", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["n", "P1"], alpha: 0.0, clip: "inci"},
+    {name: "P2", type: "Meet", color: [1.0, 0.0, 0.0], args: ["n", "s"], alpha: 0.0, size: 2.0},
+    {name: "C11", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["P2", "P1"], alpha: 0.0, labeled: true},
+    {name: "P3", type: "OtherIntersectionCL", color: [1.0, 0.0, 0.0], args: ["C11", "s", "P1"], alpha: 0.0, size: 2.0},
+    {name: "t", type: "Join", color: [0.0, 0.0, 1.0], args: ["P0", "P3"], alpha: 0.8999999761581421, visible: false, clip: "inci"},
+    {name: "P4", type: "Meet", color: [1.0, 0.0, 0.0], args: ["o", "q"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P5", type: "Meet", color: [1.0, 0.0, 0.0], args: ["o", "t"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P6", type: "Meet", color: [1.0, 0.0, 0.0], args: ["p", "t"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "u", type: "Join", color: [0.0, 0.0, 1.0], args: ["X", "P5"], alpha: 0.0, clip: "inci"},
+    {name: "C12", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["X", "P5"], alpha: 0.0, labeled: true},
+    {name: "P7", type: "OtherIntersectionCL", color: [1.0, 0.0, 0.0], args: ["C12", "u", "P5"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "Poly1", type: "Poly", color: [0.0, 0.0, 0.0], args: ["P4", "P7", "Y", "P6", "P5"], alpha: 0.8999999761581421},
+    {name: "S0", type: "Segment", color: [1.0, 1.0, 0.0], args: ["E", "F"], alpha: 0.8999999761581421, size: 5},
+    {name: "v", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["h", "S"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "P8", type: "Meet", color: [1.0, 0.0, 0.0], args: ["n", "v"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "w", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["h", "W"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "x", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["p", "V"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "y", type: "Join", color: [0.0, 0.0, 1.0], args: ["P5", "P8"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "z", type: "Join", color: [0.0, 0.0, 1.0], args: ["P4", "P8"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l0", type: "Join", color: [0.0, 0.0, 1.0], args: ["P7", "P8"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l1", type: "Join", color: [0.0, 0.0, 1.0], args: ["P6", "P8"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P9", type: "Meet", color: [1.0, 0.0, 0.0], args: ["x", "y"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P10", type: "Meet", color: [1.0, 0.0, 0.0], args: ["x", "z"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P11", type: "Meet", color: [1.0, 0.0, 0.0], args: ["w", "l1"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P12", type: "Meet", color: [1.0, 0.0, 0.0], args: ["w", "l0"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "Poly2", type: "Poly", color: [0.0, 0.0, 0.0], args: ["P11", "P9", "P10", "P12"], alpha: 0.8999999761581421},
+    {name: "S1", type: "Segment", color: [0.0, 1.0, 0.0], args: ["W", "V"], alpha: 0.8999999761581421, size: 3},
+    {name: "C13", type: "Compass", color: [0.0, 1.0, 1.0], args: ["A", "B", "D"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__5", type: "IntersectionConicLine", args: ["C13", "c"]},
+    {name: "P13", type: "SelectP", pos: [-0.43453253319053897, -4.0, -0.301758703604541], color: [1.0, 0.0, 0.0], args: ["Collection__5"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "l2", type: "Parallel", color: [1.0, 0.0, 0.0], args: ["a", "P13"], alpha: 0.8999999761581421, size: 3, clip: "inci"},
+    {name: "l3", type: "Join", color: [1.0, 1.0, 1.0], args: ["D", "E"], alpha: 0.8803418803418803, clip: "inci"},
+    {name: "l4", type: "Join", color: [1.0, 1.0, 1.0], args: ["D", "F"], alpha: 0.8803418803418803, clip: "inci"},
+    {name: "P14", type: "Meet", color: [1.0, 0.0, 0.0], args: ["l2", "l4"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "l5", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["c", "P14"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "P15", type: "Meet", color: [1.0, 0.0, 0.0], args: ["l2", "l3"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "l6", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["c", "P15"], alpha: 0.8999999761581421, size: 0},
+    {name: "P22", type: "Meet", color: [1.0, 0.0, 0.0], args: ["h", "l6"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "Poly4", type: "Poly", color: [0.0, 0.0, 0.0], args: ["P11", "P9", "P10", "P12"], alpha: 0.8999999761581421, size: 0},
+    {name: "P16", type: "Free", pos: [4.0, -2.0287081339712922, -0.444972952070908], color: [1.0, 0.0, 0.0], alpha: 0.8999999761581421, size: 1.0},
+    {name: "l7", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "P16"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "C14", type: "Compass", color: [0.0, 0.0, 1.0], args: ["P13", "P15", "P16"], alpha: 0.8999999761581421, size: 0},
+    {name: "l8", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["l7", "P16"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "Collection__6", type: "IntersectionConicLine", args: ["C14", "l7"]},
+    {name: "P18", type: "SelectP", pos: [4.0, -1.6841876292870133, -0.3694064851892348], color: [1.0, 0.0, 0.0], args: ["Collection__6"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P17", type: "SelectP", pos: [4.0, -2.5504284459332296, -0.5594060849014109], color: [1.0, 0.0, 0.0], args: ["Collection__6"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "Collection__7", type: "IntersectionConicLine", args: ["C14", "l8"]},
+    {name: "P20", type: "SelectP", pos: [4.0, -1.2104608111830848, -0.44497295207090803], color: [1.0, 0.0, 0.0], args: ["Collection__7"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P19", type: "SelectP", pos: [4.0, -2.8469554567595003, -0.44497295207090803], color: [1.0, 0.0, 0.0], args: ["Collection__7"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "l9", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["l7", "P20"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l10", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["l7", "P19"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l11", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["l8", "P18"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l12", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["l8", "P17"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P21", type: "Meet", color: [1.0, 1.0, 0.0], args: ["l10", "l12"], alpha: 0.8999999761581421, size: 7.0},
+    {name: "P23", type: "Meet", color: [1.0, 1.0, 0.0], args: ["l10", "l11"], alpha: 0.8999999761581421, size: 7.0},
+    {name: "P24", type: "Meet", color: [1.0, 1.0, 0.0], args: ["l9", "l11"], alpha: 0.8999999761581421, size: 7.0},
+    {name: "P25", type: "Meet", color: [1.0, 1.0, 0.0], args: ["l9", "l12"], alpha: 0.8999999761581421, size: 7.0},
+    {name: "C15", type: "Compass", color: [0.0, 0.0, 1.0], args: ["P13", "P15", "T"], alpha: 0.8999999761581421, size: 0, labeled: true},
+    {name: "Collection__8", type: "IntersectionConicLine", args: ["C15", "k"]},
+    {name: "P27", type: "SelectP", pos: [{r: 0.11660818648609557, i: 2.904660342434934E-16}, -4.0, {r: -0.3017587036045409, i: -3.7696789399313494E-17}], color: [1.0, 0.0, 0.0], args: ["Collection__8"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P26", type: "SelectP", pos: [{r: -0.9931817466022808, i: 1.7378842084835292E-16}, -4.0, {r: -0.301758703604541, i: -3.102426239205275E-17}], color: [1.0, 0.0, 0.0], args: ["Collection__8"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "C16", type: "Compass", color: [0.0, 0.0, 1.0], args: ["T", "V", "P16"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__9", type: "IntersectionConicLine", args: ["C16", "l7"]},
+    {name: "P28", type: "SelectP", pos: [4.0, {r: -2.5528027701193783, i: -1.597320967456546E-16}, {r: -0.5599268646156499, i: -3.503533181495865E-17}], color: [1.0, 0.0, 0.0], args: ["Collection__9"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "C17", type: "Compass", color: [0.0, 0.0, 1.0], args: ["T", "W", "P16"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__10", type: "IntersectionConicLine", args: ["C17", "l7"]},
+    {name: "P29", type: "SelectP", pos: [4.0, {r: -1.6852226698646562, i: 6.910873312764141E-17}, {r: -0.36963350900485153, i: 1.5158177008680694E-17}], color: [1.0, 0.0, 0.0], args: ["Collection__10"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "l13", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["l12", "P28"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l14", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["l8", "P29"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P30", type: "Meet", color: [1.0, 0.0, 0.0], args: ["n", "x"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P31", type: "Meet", color: [1.0, 0.0, 0.0], args: ["n", "w"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "C18", type: "Compass", color: [0.0, 0.0, 1.0], args: ["P30", "P9", "P28"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__11", type: "IntersectionConicLine", args: ["C18", "l13"]},
+    {name: "P33", type: "SelectP", pos: [4.0, {r: -1.5231701693136952, i: 1.4228069469415115E-16}, {r: -0.5599268646156499, i: -3.5035331814958645E-17}], color: [1.0, 0.0, 0.0], args: ["Collection__11"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "P32", type: "SelectP", pos: [4.0, {r: -3.5824353709250625, i: -4.617448881854605E-16}, {r: -0.5599268646156499, i: -3.5035331814958645E-17}], color: [1.0, 0.0, 0.0], args: ["Collection__11"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "C19", type: "Compass", color: [0.0, 0.0, 1.0], args: ["P31", "P11", "P29"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__12", type: "IntersectionConicLine", args: ["C19", "l14"]},
+    {name: "P35", type: "SelectP", pos: [4.0, {r: -1.0055147735792336, i: 1.3834947248775216E-16}, {r: -0.3696335090048516, i: 1.51581770086807E-17}], color: [1.0, 0.0, 0.0], args: ["Collection__12"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "P34", type: "SelectP", pos: [4.0, {r: -2.364930566150079, i: -1.320062324693115E-19}, {r: -0.3696335090048516, i: 1.51581770086807E-17}], color: [1.0, 0.0, 0.0], args: ["Collection__12"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "Poly3", type: "Poly", color: [0.0, 0.0, 0.0], args: ["P23", "P21", "P25", "P24"], alpha: 0.8999999761581421},
+    {name: "Poly5", type: "Poly", color: [0.0, 0.0, 0.0], args: ["P34", "P32", "P33", "P35"], alpha: 0.8999999761581421},
+    {name: "l15", type: "Join", color: [1.0, 0.784, 0.0], args: ["P33", "P34"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l16", type: "Join", color: [1.0, 0.784, 0.0], args: ["P32", "P35"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P36", type: "Meet", color: [1.0, 1.0, 0.0], args: ["l15", "l16"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "l17", type: "Join", color: [1.0, 0.784, 0.0], args: ["P9", "P12"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P37", type: "Meet", color: [1.0, 1.0, 0.0], args: ["n", "l17"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "l18", type: "Join", color: [1.0, 0.784, 0.0], args: ["P11", "P37"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P38", type: "PointOnLine", pos: [{r: 0.14170823054622295, i: 5.067461165944729E-16}, -4.0, {r: -0.37313432835820953, i: 4.576362141491928E-29}], color: [1.0, 0.0, 0.0], args: ["w"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P39", type: "PointOnLine", pos: [4.0, 1.952889549679301, 0.5306765080650274], color: [1.0, 0.0, 0.0], args: ["b"], alpha: 0.8999999761581421, pinned: true, size: 0.0},
+    {name: "P41", type: "Free", pos: [-0.8147100424328146, -4.0, -0.5657708628005658], color: [1.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, size: 0.0},
+    {name: "S2", type: "Segment", color: [0.0, 0.0, 1.0], args: ["C", "P39"], alpha: 0.8999999761581421, arrowshape: "jet", arrowsides: "==>", arrowsize: 1.0, arrowposition: 1.0},
+    {name: "S3", type: "Segment", color: [0.0, 0.0, 1.0], args: ["C", "P41"], alpha: 0.8999999761581421, arrowshape: "jet", arrowsides: "==>", arrowsize: 1.0, arrowposition: 1.0},
+    {name: "S4", type: "Segment", color: [0.0, 0.0, 1.0], args: ["O", "R"], alpha: 0.8999999761581421},
+    {name: "S5", type: "Segment", color: [0.0, 0.0, 1.0], args: ["G", "D"], alpha: 0.8999999761581421},
+    {name: "P40", type: "Free", pos: [0.10843373493975902, -4.0, -0.30120481927710846], color: [1.0, 0.0, 0.0], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P42", type: "Free", pos: [-0.9638554216867471, -4.0, -0.30120481927710846], color: [1.0, 0.0, 0.0], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P43", type: "Meet", color: [1.0, 0.0, 0.0], args: ["n", "o"], size: 0.0, printname: "$P_{43}$"},
+    {name: "S6", type: "Segment", color: [0.0, 0.0, 1.0], args: ["P43", "Y"], printname: "$S_{6}$"},
+    {name: "S7", type: "Segment", color: [0.0, 0.0, 1.0], args: ["P4", "P7"], printname: "$S_{7}$"},
+    {name: "Text8", type: "Text", pos: [4.0, 1.8039215686274508, -0.23779232725375174], color: [0.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, text: "Drehung der Aufnhameachse auf Kreis (mit O) führt zu Fehlern innerhalb der Fehlerkreise (links)"},
+    {name: "Text7", type: "Text", pos: [4.0, 1.6022408963585433, -0.23779232725375174], color: [0.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, text: "Verscheibung der Aufnahmeachse (mit D) bis zur Fehlerhyperbel führt zu Fehlern innerhalb der Fehlerkreise (links)"},
+    {name: "Text9", type: "Text", pos: [4.0, 2.0623868746147704, -0.23864154737099513], color: [0.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, text: "X-Position und Drehung um Y-Achse (nach hinten) sind stark korreliert."},
+    {name: "Text10", type: "Text", pos: [-3.5665024630541873, -4.0, -0.41818650654970135], color: [0.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, text: "front view", textsize: 25.0},
+    {name: "Text11", type: "Text", pos: [4.0, -1.1162790697674416, 0.4935573304045893], color: [0.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, text: "top view", textsize: 25.0},
+    {name: "Text12", type: "Text", pos: [4.0, -0.2116167956687785, -0.2723546031110329], color: [0.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, text: "image with tolerance circles", textsize: 25.0},
+    {name: "Text2", type: "Text", color: [0.0, 0.0, 0.0], args: ["S"], text_fontfamily: "serif", text: "O", textsize: 25.0, textbold: true, textitalics: true, dock: {to: "S", offset: [4.249614705994702, -22.994995516105632]}},
+    {name: "Text3", type: "Text", color: [0.0, 0.0, 0.0], args: ["E"], text_fontfamily: "serif", pinned: true, text: "$X$", textsize: 25.0, textbold: true, textitalics: true, dock: {to: "E", offset: [4.119846745897064, 5.2724182623939555]}},
+    {name: "Text4", type: "Text", pos: [4.0, 3.27643269663822, 0.8289407359578259], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$Y$", textsize: 25.0, textbold: true, textitalics: true},
+    {name: "Text5", type: "Text", color: [0.0, 0.0, 0.0], args: ["P41"], text_fontfamily: "serif", pinned: true, text: "$Z$", textsize: 25.0, textitalics: true, dock: {to: "P41", offset: [8.331963194535092, -10.181339074558622]}},
+    {name: "Text6", type: "Text", color: [0.0, 0.0, 0.0], args: ["O"], text_fontfamily: "serif", text: "$X_O$", textsize: 25.0, textbold: true, textitalics: true, dock: {to: "O", offset: [6.0, 15.873430989426765]}},
+    {name: "Text13", type: "Text", pos: [4.0, 2.3130756526203893, 0.5537091588188613], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$X$", textsize: 25.0, textitalics: true},
+    {name: "Text0", type: "Text", pos: [4.0, 1.0282776349614395, -0.27437042969857695], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 5/05-4/24", textsize: 15.0}
+  ],
+  ports: [{
+    width: 953,
+    height: 516,
+    id: "CSCanvas",
+    transform: [{visibleRect: [-19.507149862520528, 13.623148847312606, 16.20911107692628, -5.715351304580943]}],
+    grid: 1.0,
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  use: ["katex"],
+  cinderella: {build: 2083, version: [3, 0, 2083]}
+});
+    </script>
+</head>
+<body>
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+<h1>Correlation of Translation and Rotation of the Pose from Spatial Resection (P4P)</h1> 
+
+
+The  animation (generated with  <a href="http://www.cinderella.de">Cinderella</a>) visualizes the cause for the high correlation of the translations and the rotations when determining the pose of a camera with a spatial resection (P4P).
+    
+<p> The pose of a camera derived from the four corner of a square as contrl points leads to high correlations between the translation and the rotation parameters, namely between the X-coordinate and the rotation &phi; around the Y-axis and between Y-coordinate and the rotation &omega; around the X-axis. </p>
+
+
+<p> The reason is the following:   
+the effect of a rotations around a horizontal axes can be compensated by a translation in the opposite direction, except for effects of second order, namely perspective distortions. More specifically, the camera centre can be rotated on the circle though the projection centre and the left and right mid point of the sides of the square of the ground control points. At the same time the viewing direction can be adapted (rotating the camera), such that it points toward a point x<sub>O</sub> below the original projection centre. As known from elementary geometry, this leaves the angle between the two directions and the point x<sub>O</sub> invariant.  
+This is only valid for points, when argueing in the XZ-plane for these points, not for the corner points outside this plane.
+</p>
+
+
+<p> The configuration allows to horizontally move the camera using point X<sub>O</sub>. It also allows to rotate the camera using point O, then the above mentioned composed translation and rotation is performed. </p>
+
+<p> The animation visualizes the configuration during these movements in a side view and a top view. In addition - on the left - the change of the image coordinates of the control points are visualized. If the change of the image coordinates is bounded by the tolerance circles around the four image points, then the motions are limited: the pure translation much more than the combined translation and rotation. The perspective distortion when performing a rotation is clearly visible, but also can be identified to be small. If the projection ray lies in the area bewteen the two branches of the hyperbola then the image points stay within the tolerance circles in the image. </p>
+
+
+
+    
+
+    <h2>Explore the configuration:</h2>
+    <ol>
+      <li>  - Change each of the parameters individually and observe the effect onto the 3D configuration. </li>
+ 			
+ 			<li>  - Find limiting cases, where the image points stay in the tolerance circles. Try individual and combined motions of X<sub>O</sub> (translation) and O (combined translation and rotation) </li>
+ 			
+ 			
+ 			
+	    
+	        </ol>
+    <div id="CSCanvas"></div>
+</body>
+</html>

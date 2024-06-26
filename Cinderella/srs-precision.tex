@@ -1,0 +1,36 @@
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+<h1>Uncertainty of the Spatial Resection (P4P)</h1> 
+
+
+The  animation (generated with  <a href="http://www.cinderella.de">Cinderella</a>) visualizes the uncertainty of the position of a single camera observing the four corners of a square as given control points.
+    
+<p> The perspective n-point problem (PnP) is to determine the pose of a calibrated camera from the observed images points of n points known in 3D. The animation visualizes the uncertainty of the projection centre and the uncertainty of the optical axes reconstructed from the four corners of a square in normal position (P4P).  
+</p>
+
+
+<p> The configuration can be controlled by providing the distance H (the height in an aerial setting), the effective size of the image, specified by the nominal coordinates &#177 d of the image coordinates, the principal distance c (focal length), and the assumed standard deviation &sigma; of the measured image points.    </p>
+
+<p> The animation visualizes the configuration. Especially it provides the standard deviations &sigma;<sub>X</sub>=&sigma;<sub>Y</sub> and &sigma;<sub>Z</sub> of the reconstructed projection centre, visualized by the standard ellipse in the XZ-plane. </p>
+
+<p> The uncertainty of the reconstructed pose of the viewing axes is visualized by the standard hyperbola. It has its centre, the point with smallest standard deviation across the line, at x<sub>O</sub>, which lies on the circle through the projection centre O and the two right and left points X and Y on the ground square. The low uncertainty &sigma;<sub>P</sub> across the viewing axes indicates, that for reconstructing points on a given surface in the vicinity of the ground control points the uncertainty of the camera pose has no influence.</p> 
+
+    
+
+    <h2>Explore the configuration:</h2>
+    <ol>
+      <li>  - Change each of the parameters individually and observe the effect onto the uncertainty situation. </li>
+ 			
+ 			<li>  - Find a situation where the horizontal uncertainty of the camera pose is 10 times larger than the  vertical uncertainty. What type of camera do you need? Is there only one solution or are there more solutions?</li>
+ 			
+ 			<li>  - Find a situation where the horizontal uncertainty of the camera pose is less than four times larger than the  vertical uncertainty. What type of camera do you need?  Can you reach a ratio 3 or less of the two standard deviations? Determine the limiting ratio and confirm your finding.</li>
+ 			
+	    
+	        </ol>

@@ -1,0 +1,31 @@
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+
+
+<h1>Gauge Choice and Loop Closing of Uncertain Polygon</a></h1> 
+
+
+The animation (generated with <a
+    href="http://www.cinderella.de">Cinderella</a>) shows the invariance of the intrinsic uncertainty w.r.t. the choice of the coordinate system (gauge) and the 
+    the effect of loop closing.
+    
+
+<p> The uncertainty of a point cloud can be represented by its covariance matrix, usually visualized by the standard ellipses of the point coordinates. In case the pose of the point cloud may be arbitrary w.r.t. translation, scale and rotation, one needs to fix at least two points as reference points (the gauge) which then will have zero variances. Only angles and distance ratios and their uncertainty are invariant to the choice of the gauge. </p>
+    
+<p> Here we refer to a polygon (1,...,n), representing a path of a robot. The path may be in a loop which may be open or closed. We assume the relative position of three consecutive points (jik) is observed (1) by the angle a<sub>jik</sub>=b<sub>ik</sub>-b<sub>ij</sub> as difference of the bearings/directions from i, and (2)  by the ratio r<sub>jik</sub>=d<sub>ik</sub>/d<sub>ij</sub> of the distances from i. This corresponds to observing the mutual scaled motion between neighbouring positions. In addition, we assume the precision &sigma;<sub>a</sub> of the angles is the same as the relative precision &sigma;<sub>r</sub>/r of the distance ratios. Then all standard ellipses of the points are circles.
+</p>
+    
+<p>  The animation shows the uncertainty of the configuration.  It allows to choose and modify a configuration with up to 12 points (A, ..., P), by moving them in the plane. All points in the right (positive) area are active, alphabetically connected to a polygon, while the points in the left (shaded) area are passive. At the beginning we have a square with four points (A, B, C, D). One needs to choose a gauge from four alternatives: either <b>all</b> points, the two <b>start</b>ing points (here A and B), the two <b>end</b> points (here C and D), or the <b>border</b> points (first and last point, here A and D). The uncertainty of the points is shown. In addition, the standard deviation of the pose of a mid-point (here C) and of the last point (here D) w.r.t. the first two points are given in green (see gauge case 'start'). Exploration shows: Changing the gauge possibly dramatically changes the uncertainty of the points, but does not influence the uncertainty of the mean and the end point w.r.t. the starting points. Finally, one may specify, whether the loop of the polygon is <b>open</b> or <b>closed</b>  by having observations at the starting and end point.</p>
+    
+
+    <h2>Explore the configuration:</h2>
+   <p> - Change all parameters individually (eight combinations of the gauge and the loop closing) and observe the effect onto the uncertainty of the points and the standard deviation of the mid and endpoint w.r.t. the start of the polygon. In case the uncertainty of the points is too large or too small, you can adapt the assumed standard deviation &sigma;.</p>
+		
+ 		<p> - Repeat the exploration for a straight and a round polygon with 12 points having approximately the same mutual distances. Compare the results with those in Figs. 4.7, 15.13 and 15.14 in <a href="https://link.springer.com/book/10.1007/978-3-319-11550-4">(Förstner/Wrobel, GC Vol. 11, Springer, 2016)</a>.</p>

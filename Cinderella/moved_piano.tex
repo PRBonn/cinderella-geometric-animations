@@ -1,0 +1,20 @@
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+<h1>Moving a piano around a corner</h1> 
+
+The animation (generated with <a
+    href="http://www.cinderella.de">Cinderella</a>) demonstrates the width of two corridors required to move a piano around a corner.
+    
+<p> The size of the piano can be changed by moving the two red points in the upper left.</p>
+
+<p> The piano can be moved along the left wall of the vertical corridor using the point A.</p>
+
+<p>  The minimum width of the two corridor is adapted to the piano's position. They are determined by the following geometric argument: Any 2D motion is a rotation around a point. We need the rotation centre of the current motion/rotation of the piano. Since the two points A and B are moving along the walls the vertical and horizontal line need to be tangents at two concentric circles (white), why the centre C is the intersection of the lines perpendicular to the two walls through A and B. Since the piano is rotating around C the point D, which is closest to the centre of rotation, defines the minimum width of one corridor, given the with of the other corridor. </p>
+    

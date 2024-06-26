@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>gauge_choice_triangulation.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csinit" type="text/x-cindyscript">
+//Script (CindyScript)
+// #### print matrix ##################
+printmatrix(Name,I,Mm):=(
+		println(Name);
+		repeat(I,i,println(i+".="+row(Mm,i));););
+//  #### conjugate transpose ##########
+cellipse(t,p,S):=(
+					regional(v,l);
+					v=eigenvectors(S);
+          l=eigenvalues(S);
+          p+sqrt(l_1)*column(v,1)*cos(t)+sqrt(l_2)*column(v,2)*sin(t));
+ctranspose(A):=transpose(conjugate(A));
+// #### add NE part ############
+modpos(a,m):= a-(ceil(a/m)-1)*m;
+// #### add NE part for polygon ############
+addNEpartPolygon(j1,i1,k1):=(
+    regional(Pj,Pi,Pk,zj,zi,zk,av,ii,kk,m,n);
+    Na=3;
+		Pj=pactive_j1;   Pi=pactive_i1;   Pk=pactive_k1;
+    zj=Pj.x+i*Pj.y;  zi=Pi.x+i*Pi.y; zk=Pk.x+i*Pk.y;
+    zij=zj-zi;
+    zik=zk-zi;
+    //println("3 points="+[zi,zi,zk,zij,zik]);
+		av=zeromatrix(1,3);
+    //NA=zeromatrix(I,I);
+    av_1_1 = -1/zij;
+    av_1_2 =  1/zij-1/zik;
+    av_1_3 = +1/zik;
+    //println("av="+av);
+		repeat(Na,m,
+    	ii=modpos(i1+m-2,I);
+			repeat(Na,n,
+    		kk=modpos(i1+n-2,I);
+  			Nm_ii_kk=Nm_ii_kk + conjugate(av_1_m)*av_1_n;
+        //NA_ii_kk = conjugate(av_1_m)*av_1_n;
+ 			 );
+		 );
+//printmatrix("check N=",I+2,Nm-ctranspose(Nm));
+);
+
+// #### add NE part for Triangle ############
+addNEpartTriangle(j1,i1,k1):=(
+    regional(Pj,Pi,Pk,zj,zi,zk,av,ii,kk,m,n);
+    Na=3;
+		Pj=pactive_j1;   Pi=pactive_i1;   Pk=pactive_k1;
+    zj=Pj.x+i*Pj.y;  zi=Pi.x+i*Pi.y; zk=Pk.x+i*Pk.y;
+    zij=zj-zi;
+    zik=zk-zi;
+    //println("3 points="+[zi,zi,zk,zij,zik]);
+		av=zeromatrix(1,3);
+    //NA=zeromatrix(I,I);
+    av_1_1 = -1/zij;
+    av_1_2 =  1/zij-1/zik;
+    av_1_3 = +1/zik;
+    ind=[j1,i1,k1];
+    //println("av="+av);
+		repeat(Na,m,
+    	ii=ind_m;
+			repeat(Na,n,
+    		kk=ind_n;
+  			Nm_ii_kk=Nm_ii_kk + conjugate(av_1_m)*av_1_n;
+        //NA_ii_kk = conjugate(av_1_m)*av_1_n;
+ 			 );
+		 );
+//printmatrix("check N=",I+2,Nm);
+);
+
+// #### sigma angle/distance ratio ########
+sigmajik(j1,i1,k1,Cm):=(
+    regional(Pj,Pi,Pk,zj,zi,zk,av,ii,kk,q);
+	  Pj=pactive_j1;    Pi=pactive_i1;    Pk=pactive_k1;
+    zj=Pj.x+i*Pj.y; zi=Pi.x+i*Pi.y; zk=Pk.x+i*Pk.y;
+    zij=zj-zi;
+    zik=zk-zi;
+		av=zeromatrix(1,3);
+    av_1_1=-1/zij;
+    av_1_2=1/zij-1/zik;
+    av_1_3=+1/zik;
+//println("av="+av);
+  Cjik=[[Cm_j1_j1,Cm_j1_i1,Cm_j1_k1],
+        [Cm_i1_j1,Cm_i1_i1,Cm_i1_k1],
+        [Cm_k1_j1,Cm_k1_i1,Cm_k1_k1]];
+//println("Cjik="+Cjik);
+  q=av*Cjik*ctranspose(av);
+//println("q="+q);
+  sigma*sqrt(q_1_1);
+);
+
+// point l in circle (i,j,k)
+PointInCircle(l,i,j,k,P):=(
+dx=[P_i_1-P_l_1,P_j_1-P_l_1,P_k_1-P_l_1];
+dy=[P_i_2-P_l_2,P_j_2-P_l_2,P_k_2-P_l_2];
+d2=[dx_1_1^2+dy_1_1^2,dx_2_1^2+dy_2_1^2,dx_3_1^2+dy_3_1^2];
+Am=[dx,dy,d2];
+AA=det(Am);
+BB=det([[P_i_1,P_i_2,1],[P_j_1,P_j_2,1],[P_k_1,P_k_2,1]]);
+if(AA*BB<0,0,1);
+);
+
+// Brute Force Delaunay Triangulation
+// keep only triangles which contain no pother point
+// in: Ix2 matrix of coordinates. out: triangle list, edge list
+DelaunayTriangulationBF(PP):=
+(
+	DT=[];
+	DTe=[];
+	NM=length(PP);
+	repeat(NM_1,ii,           // first point
+		(repeat(NM_1-ii,jjj,    // second point
+		   (jj=jjj+ii;
+		 	 repeat(NM_1-jj,kkk,  // third point
+  			 (kk=kkk+jj,
+       	  Index=1..NM_1;
+			 	  Nmijk=remove(Index,[ii,jj,kk]);
+      	  lInijk=0;        // indicator, whether point in circle
+      	  repeat(NM_1-3,lll, // other point     
+      	    (ll=Nmijk_lll;
+         	   lInijk=max([lInijk,PointInCircle(ll,ii,jj,kk,PP)]);
+					  );
+                );
+ 					if(lInijk==0,     // if no point in circle, save triangle and edges
+               (DTe=append(DTe,sort([ii,jj]));
+        	      DTe=append(DTe,sort([jj,kk]));
+        	      DTe=append(DTe,sort([kk,ii]));
+                DT =append(DT,sort([ii,jj,kk]));
+                //println(DT);     
+               );
+						 );
+			     );
+		         	);
+		    );
+       	     );
+    );
+       );
+  
+        	     DTe=set(DTe);  // eliminate double edges
+               [DT,DTe];
+);
+
+DelaunayTriangulationTE(PP):=
+ (regional(Numpts,xyz,mp,CH3);
+  Numpts=length(PP);
+  xyz=zeromatrix(Numpts,3);
+  mP=[sum(column(PP,1)),sum(column(PP,2))]/Numpts;
+  mP=[0,0]; 
+  repeat(Numpts,k,(pp=pactive_k;
+     xyz_k_1=pp.x-mP_1;
+     xyz_k_2=pp.y-mP_2;
+     xyz_k_3=(pp.x-mP_1)^2+(pp.y-mP_2)^2);
+  );
+  CH3=convexhull3d(xyz);
+  DTt=select(CH3_2,tr,
+   (xyz_tr_1_1-xyz_tr_3_1)*(xyz_tr_2_2-xyz_tr_3_2)-
+   (xyz_tr_1_2-xyz_tr_3_2)*(xyz_tr_2_1-xyz_tr_3_1) < 0);
+  DTe=[];
+	repeat(length(DTt),k,(
+  	DTe=concat(DTe,[sort([DTt_k_1,DTt_k_2])]);
+  	DTe=concat(DTe,[sort([DTt_k_2,DTt_k_3])]);
+  	DTe=concat(DTe,[sort([DTt_k_3,DTt_k_1])]);
+	););
+	DTe=set(DTe);
+  [DTt,DTe];
+ );
+;
+
+</script>
+<script id="csmove" type="text/x-cindyscript">
+//Script (CindyScript)
+// 2D scale ratios and angles
+// using complex numbers
+// imaginary unit
+
+
+
+// ################## START ###############################
+
+//println(" ################# ");
+
+//println(" ######################################## ");
+//println([Dall,Dstart,Dend,Dborder]);
+pts=allpoints();
+//println(pts);
+pactive=select(pts,pp,pp.x > 0 );
+//println(pactive);
+pactivec=zeromatrix(length(pactive),2);
+// slighty distort, to avoid cocircular point quadruples
+repeat(length(pactive),ii,(
+    ppi=pactive_ii;
+    pactivec_ii=[[1.002,0.001],[0.003,0.999]]*ppi.xy;
+    ););
+//println("active Points="+pactive);
+
+
+ppassive=remove(remove(pts,[T,M,N,S,U,V,W,X,Y,Z,P0]),pactive);
+ppassive=select(ppassive,pp,(pp.y < 6 & pp.y > 0.7 & pp.x < -1.6); );
+//println("passive Points="+ppassive);
+
+//println(ppassive);
+//connect(ppassive,size->1);
+
+
+// perform DT: DTte = list of all triangles and list of all edges 
+//DTte=DelaunayTriangulationBF(pactivec);
+DTte=DelaunayTriangulationTE(pactivec);
+// draw all edges of DT
+forall(DTte_2,edge,(e1=edge_1,e2=edge_2,
+     draw([pactivec_e1_1,pactivec_e1_2],
+          [pactivec_e2_1,pactivec_e2_2],
+           size->5,color->[1,0,0])););
+
+
+
+// 6 default points
+//A.xy=[3,4];B.xy=[2,9];C.xy=[7,7];D.xy=[5,10];E.xy=[10,3];F.xy=[20,5];
+//S.xy=[-2,10.3];U.xy=[-2,9.2];V.xy=[-2,8.1];W.xy=[-2,7.0];
+
+//connect(pactive,size->3);
+
+
+T.x=-1;
+drawtext(T+[0.3,0.3],"$\sigma=$",size->20);
+sigma=|T.y|/10;
+drawtext(T+[0.3,0.3],"$\sigma=$"+round(sigma*100)/100,size->20);
+
+//
+I=length(pactive);
+Im1=I-1;
+sumz=sum(pactive);
+meanz=(sumz_1+i*sumz_2)/I;
+//println("mean="+[sumz,meanz]);
+
+
+
+//println("End preparations");
+
+// all in complex numbers, 
+// I points, 2 constraints (scaled rotation + translation)
+
+// set N
+DT=DTte_1;
+NMDT=matrixrowcolumn(DT);
+IDT=NMDT_1;
+//println("length DT="+IDT);
+
+// start filling
+Nm=zeromatrix(I+2,I+2);
+repeat(IDT,i1,(
+//println([DT_i1_1,DT_i1_2,DT_i1_3]);
+//println([DT_i1_2,DT_i1_3,DT_i1_1]);
+//println([DT_i1_3,DT_i1_1,DT_i1_2]);
+addNEpartTriangle(DT_i1_1,DT_i1_2,DT_i1_3);
+addNEpartTriangle(DT_i1_2,DT_i1_3,DT_i1_1);
+addNEpartTriangle(DT_i1_3,DT_i1_1,DT_i1_2);
+);
+
+);
+
+
+//NmOhne=submatrix(submatrix(Nm,I+1,I+1),I+1,I+1);
+//printmatrix("Nm ohne Rand=",I,NmOhne);
+//println("ev Nm ohne Rand="+eigenvalues(NmOhne));
+
+// now, new set bordeer
+Ip1=I+1;
+Ip2=I+2;
+Im1=I-1;
+Im2=I-2;
+	if(Gstart==1,(
+    P1=pactive_1;
+    P2=pactive_2;
+		Nm_1_Ip1=1;
+		Nm_1_Ip2=complex(P1);
+		Nm_2_Ip1=1;
+		Nm_2_Ip2=complex(P2);
+		Nm_Ip1_1=1;
+		Nm_Ip2_1=conjugate(Nm_1_Ip2);
+		Nm_Ip1_2=1;
+		Nm_Ip2_2=conjugate(Nm_2_Ip2);
+	););
+	if(Gfirstlast==1,(
+    P1=pactive_1;
+    PI=pactive_I;
+		Nm_1_Ip1=1;
+		Nm_1_Ip2=complex(P1);
+		Nm_I_Ip1=1;
+		Nm_I_Ip2=complex(PI);
+		Nm_Ip1_1=1;
+		Nm_Ip2_1=conjugate(Nm_1_Ip2);
+		Nm_Ip1_I=1;
+		Nm_Ip2_I=conjugate(Nm_I_Ip2);
+	););
+if(Gend==1,(	
+    PIm1=pactive_Im1;
+    PI=pactive_I;
+		Nm_Im1_Ip1=1;
+		Nm_Im1_Ip2=complex(PIm1);
+		Nm_I_Ip1=1;
+		Nm_I_Ip2=complex(PI);
+		Nm_Ip1_Im1=1;
+		Nm_Ip2_Im1=conjugate(Nm_Im1_Ip2);
+		Nm_Ip1_I=1;
+		Nm_Ip2_I=conjugate(Nm_I_Ip2);
+	););
+if(Gall==1,(   
+    repeat(I,i1,(
+		Pi=pactive_i1;
+    Nm_i1_Ip1=1;
+  	Nm_i1_Ip2=complex(Pi);
+    Nm_Ip1_i1=1;
+  	Nm_Ip2_i1=conjugate(Nm_i1_Ip2);
+    ););
+););
+//printmatrix("Nm=",I+2,Nm);
+
+Cm=inverse(Nm);
+//printmatrix("Ni=",I,Ni);
+//println(" Ne 1..4="+[Nm_1_1,Nm_2_2,Nm_3_3,Nm_4_4]);
+//println(" Cm 1..4="+[Cm_1_1,Cm_2_2,Cm_3_3,Cm_4_4]);
+
+
+
+
+//printmatrix("Cm=",I,Cm);
+repeat(I,j,(
+   drawcircle(pactive_j,sigma*sqrt(re(Cm_j_j)),size->2);
+);
+);
+
+p1=pactive_1;
+mm=round((I+1)/2);
+p2=pactive_mm;
+draw(p1,p2,color->[0,1,0]);
+sd=sigma*sigmajik(2,1,mm,Cm);
+if(sd > 0,
+pm=(p1+p2)/2;
+rsd=+round(sd*100)/100;
+drawtext(pm+[0.2,0.2],"$\sigma_d$="+rsd,size->20,color->[0,1,0]);
+
+p1=pactive_1;
+p2=pactive_I;
+draw(p1,p2,color->[0,1,0],size->2);
+sd=sigma*sigmajik(2,1,I,Cm);
+pm=(p1+p2)/2;
+rsd=+round(sd*100)/100;
+drawtext(pm+[0.2,0.2],"$\sigma_d$="+rsd,size->20,color->[0,1,0]);
+);
+
+
+// show decisions
+S.color=[1,0,0];U.color=[1,0,0];V.color=[1,0,0];W.color=[1,0,0];
+if(Gall==1,(S.color=[0,1,0];););
+if(Gstart==1,(U.color=[0,1,0];););
+if(Gend==1,(V.color=[0,1,0];););
+if(Gfirstlast==1,(W.color=[0,1,0];););
+
+
+
+;
+
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [-3.1868131868131866, -4.0, -0.8011561911092933], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "B", type: "Free", pos: [-2.267716535433071, -4.0, -0.5740567983539031], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "C", type: "Free", pos: [-3.740740740740741, -4.0, -0.675048272138386], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "D", type: "Free", pos: [-2.380952380952381, -4.0, -0.4339596035175338], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "E", type: "Free", pos: [4.0, 1.9658703071672357, 0.4976465077880252], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "F", type: "Free", pos: [4.0, 1.5722543352601157, 0.2107087092223864], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "G", type: "Free", pos: [1.8445595854922276, -4.0, -0.7554944392844113], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "H", type: "Free", pos: [3.2331606217616584, -4.0, -0.7554944392844113], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "K", type: "Free", pos: [4.0, -3.694267515923567, -0.9287288330056775], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "L", type: "Free", pos: [4.0, -2.4871794871794872, -0.9346822229608421], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "T", type: "Free", pos: [1.325549334380831, -4.0, -1.325549334380831], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 20.0, size: 3.0, printname: "$\\sigma$"},
+    {name: "M", type: "Free", pos: [0.0, 0.0, 4.0], color: [1.0, 0.0, 0.0], pinned: true, size: 1.0},
+    {name: "a", type: "Through", pos: [0.0037991161128023325, -4.0, 0.0], color: [0.0, 0.0, 1.0], args: ["M"], pinned: true, size: 0},
+    {name: "b", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["a", "T"], clip: "inci"},
+    {name: "N", type: "Meet", color: [1.0, 0.0, 0.0], args: ["a", "b"], size: 3.0},
+    {name: "c", type: "Segment", color: [0.0, 0.0, 1.0], args: ["T", "N"], size: 3},
+    {name: "O", type: "Free", pos: [4.0, -1.2903225806451613, -0.940712430850912], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "P", type: "Free", pos: [4.0, -2.1573033707865172, -1.6383194020437235], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "Q", type: "Free", pos: [3.7894736842105257, -4.0, -1.5348465977041197], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "R", type: "Free", pos: [2.5, -4.0, -1.012572408207579], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "S", type: "Free", pos: [0.7766990291262135, -4.0, -0.38834951456310673], dimDependent: 1, color: [1.0, 0.0, 0.0], size: 7.0, border: false},
+    {name: "U", type: "Free", pos: [0.8695652173913044, -4.0, -0.4347826086956522], dimDependent: 1, color: [0.0, 1.0, 0.0], size: 8.0, border: false},
+    {name: "V", type: "Free", pos: [0.9876543209876543, -4.0, -0.49382716049382713], dimDependent: 1, color: [1.0, 0.0, 0.0], size: 8.0, border: false},
+    {name: "W", type: "Free", pos: [1.1428571428571428, -4.0, -0.5714285714285714], dimDependent: 1, color: [1.0, 0.0, 0.0], size: 8.0, border: false},
+    {name: "X", type: "Free", pos: [4.0, -0.56, -0.8], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
+    {name: "Y", type: "Free", pos: [4.0, -1.7499999999999996, -2.4999999999999996], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
+    {name: "Z", type: "Free", pos: [1.0666666666666669, -4.0, -0.6666666666666666], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
+    {name: "P0", type: "Free", pos: [3.3333333333333335, -4.0, -0.6666666666666666], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0, printname: "$P_{0}$"},
+    {name: "Poly0", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.38461538461538464, args: ["X", "Y", "Z", "P0"], size: 0},
+    {name: "Text0", type: "ToggleButton", pos: [1.9021739130434783, -4.0, -0.396223985820357], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "\nGall=1;\nGstart=0;\nGend=0;\nGfirstlast=0;\n", text: "all:", textsize: 20.0},
+    {name: "Text1", type: "ToggleButton", pos: [2.1284403669724776, -4.0, -0.4459034458161816], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "\nGall=0;\nGstart=1;\nGend=0;\nGfirstlast=0;", text: "first 2:", textsize: 20.0},
+    {name: "Text2", type: "ToggleButton", pos: [2.4335664335664333, -4.0, -0.5098266670695503], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "\nGall=0;\nGstart=0;\nGend=1;\nGfirstlast=0;", text: "last 2:", textsize: 20.0},
+    {name: "Text3", type: "ToggleButton", pos: [2.857142857142857, -4.0, -0.5951445991097607], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "\nGall=0;\nGstart=0;\nGend=0;\nGfirstlast=1;", text: "first+last:", textsize: 20.0},
+    {name: "Text6", type: "Text", pos: [1.7957091752462926, -4.0, -0.3622481911458465], color: [0.0, 0.0, 0.0], pinned: true, text: "GAUGE", textsize: 20.0},
+    {name: "Text8", type: "Text", pos: [4.0, 0.3935785236385211, -0.8205422280501496], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 5/24", textsize: 14.0}
+  ],
+  ports: [{
+    width: 1432,
+    height: 488,
+    id: "CSCanvas",
+    transform: [{visibleRect: [-6.131248770962575, 12.468244144977584, 33.15263597184909, -0.9190014936342115]}],
+    axes: true,
+    grid: 1.0,
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  use: ["katex"],
+  cinderella: {build: 2083, version: [3, 0, 2083]}
+});
+    </script>
+</head>
+<body>
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+<h1>Gauge Choice for a Geodetic Network</a></h1> 
+
+
+The animation (generated with <a
+    href="http://www.cinderella.de">Cinderella</a>) shows the invariance of the intrinsic uncertainty w.r.t. the choice of the coordinate system (gauge) for a planar geodetic network.
+    
+
+<p> The uncertainty of a point cloud can be represented by its covariance matrix, usually visualized by the standard ellipses of the point coordinates. In case the pose of the point cloud may be arbitrary w.r.t. translation, scale and rotation, one needs to fix at least two points as reference points (the gauge) which then will have zero variances. Only angles and distance ratios and their uncertainty are invariant to the choice of the gauge. </p>
+    
+<p>    Here we refer to a network of triangles, typically occurring in geodetic applications.  We assume the relative position of the three triplets (ijk), (jki), and (kij) of points in each triangle is observed (1) by the angle a<sub>ijk</sub>=b<sub>jk</sub>-b<sub>ji</sub> as difference of the bearings/directions from j, and (2)  by the ratio r<sub>ijk</sub>=d<sub>jk</sub>/d<sub>ji</sub> of the distances from j; similarly fo the other triplets. In addition, we assume the precision &sigma;<sub>a</sub> of the angles is the same as the relative precision &sigma;<sub>r</sub>/r of the distance ratios. Then all standard ellipses of the points are circles.
+</p>
+    
+<p>    The animation shows the uncertainty of the configuration, i.e. the expected precision derived from the inverse of the normal equation matrix.  It allows to choose and modify a configuration with up to 14 points (A,...,O), by moving them in the plane. All points in the right (positive) area are active, and connected by their Delaunay triangulation, while the points in the left area are passive. At the beginning we have a small network (A,B,C,D,E,F). One needs to choose a gauge from four alternatives: either <b>all</b> points, the  <b>first two</b> points (here A and B), the <b>last two</b> points (here E and F), or the <b>first and last</b> points (taken alphabetically, here A and F). The uncertainty of the points is shown as circular standard ellipses. In addition, the standard deviation of the pose of a mid-point (here D) and of the last point (here F) w.r.t. the first two points are given in green (see gauge case 'first two'). Exploration shows: Changing the gauge possibly dramatically changes the uncertainty of the points, but does not influence the uncertainty of the mean and the end point w.r.t. the starting points, in alphabetical order. </p>
+    
+
+    <h2>Explore the configuration:</h2>
+   <p> - Change all parameters individually (four choices for the gauge) and observe the effect onto the uncertainty of the points and the standard deviation of the mid and endpoint w.r.t. the start of the polygon. In case the uncertainty of the points is too large or too small, you can adapt the assumed standard deviation &sigma;.</p>
+	
+	  <p> - Repeat the exploration by moving some of the points individually and observe the effect onto the expected precision. </p>
+		
+ 		<p> - Repeat the exploration for a larger network of you own choice. </p>
+
+		
+ 		
+    <div id="CSCanvas"></div>
+</body>
+</html>

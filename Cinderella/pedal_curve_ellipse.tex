@@ -1,0 +1,30 @@
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+<h1> Pedal Curve of Standard Ellipse</h1>
+
+The animation, generated with <a href="http://www.cinderella.de">Cinderella</a> illustrates the uncertainty of a 2D point by its standard ellipse and the uncertainty of a distance in an arbitrary direction via the pedal curve.
+
+<p>The uncertainty of a 2D point usually is described by its 2 &times; 2 covariance matrix, assuming its coordinates are jointly Gaussian distributed with density p<sub>xy</sub>(x,y). It can be visualized by its standard ellipse, with its two semiaxes a and b (assuming a &gE; b), and the direction &alpha; of the major axis. The variances of the two coordinates, i.e. the two diagonal elements, at the same time are the variances of the two 1D marginal distributions p<sub>x</sub>(x) and p<sub>y</sub>(y) perpendicular to the x- and the y-coordinate, also Gaussians. The bounding box around the standard ellipse has sides twice the standard deviations. Given the direction &phi; to a known point the standard deviation &sigma;<sub>d<sub>&phi;</sub></sub> of the distance to that point results from the marginal distribution perpendicular to this direction, as can be seen when choosing &phi;=0&deg; or 90&deg;: the standard deviations &sigma;<sub>x</sub> and  &sigma;<sub>x</sub> are the pedal points of the origin on the sides of the enclosing bounding box. The function r(&phi;) = &sigma;<sub>d</sub>(&phi;) of the standard deviation of a distance to a fixed point as a function of the direction &phi; is the distance of the origin to the tangent of the ellipse, being perpendicular to the direction &phi; and called a pedal curve of the ellipse, here  w.r.t to the centre.
+</p>
+
+<p> The animation shows the uncertainty of the point coordinates by the density p<sub>xy</sub>(x,y) (darker is larger) and its marginals p<sub>x</sub>(x) and p<sub>y</sub>(y) along x and y, by the standard ellipse (blue) with its parameters. Its form can be controlled by the two points A and B being the end of the major and minor semi axis. The principle parameters are shown on the left. The direction &phi; to some point may be chosen on the circle in the upper left. As a result, the corresponding tangent point T, the pedal point P and the standard deviation &sigma;<sub>d<sub>&phi;</sub></sub> are given. </p><br>
+
+<h3>Explore the animation. </h3>	
+		
+		<ul>
+		 <li> - Visually verify the above-mentioned geometric relations, by changing all parameters.
+	</li>
+	
+		<li> - Change the form of the standard ellipse and observe the change of the 2D density and the two marginal densities for x and y. How, do they change when choosing a small b, or an ellipse with axis parallel to the coordinate system.</li>
+		
+		  <li> - Change the direction &phi; and observe the motion of T and P. What happens if the direction is parallel to one of the coordinate axes? In which directions is the standard deviation of the distance maximal/minimal? </li>
+			
+		  <li> - What form does the pedal curve approach if the smaller semi axis b approaches 0? Explain the geometry of the limiting curve. </li>
+		</ul>

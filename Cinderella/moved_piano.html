@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>moved_piano.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [4.0, -1.1799410029498527, 0.1685630004214075], color: [1.0, 0.0, 0.0], size: 0.0},
+    {name: "B", type: "Free", pos: [4.0, -0.61175442429539, 0.08739348918505571], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
+    {name: "a", type: "Join", color: [1.0, 0.0, 0.0], args: ["A", "B"], size: 4},
+    {name: "b", type: "Orthogonal", color: [1.0, 0.0, 0.0], args: ["a", "A"], size: 4},
+    {name: "O", type: "Free", pos: [-0.184265265381921, -4.0, -0.4245502487194243], color: [1.0, 0.0, 0.0], pinned: true, size: 1.0},
+    {name: "c", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "O"], clip: "inci"},
+    {name: "d", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["c", "O"], clip: "inci"},
+    {name: "P", type: "PointOnLine", pos: [4.0, 2.697429731133841, 0.2862986158140105], color: [1.0, 0.0, 0.0], args: ["c"]},
+    {name: "E", type: "PointOnLine", pos: [-0.26741411935810316, -4.0, -0.6161265968887669], color: [1.0, 0.0, 0.0], args: ["d"]},
+    {name: "e", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["c", "E"], clip: "inci"},
+    {name: "f", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["d", "P"], clip: "inci"},
+    {name: "F", type: "Meet", color: [1.0, 0.0, 0.0], args: ["e", "f"], size: 1.0},
+    {name: "G", type: "PointOnLine", pos: [4.0, 0.23435828241775988, 0.16856300042140748], color: [1.0, 0.0, 0.0], args: ["b"], text_fontfamily: "serif", textsize: 24.0},
+    {name: "C0", type: "Compass", color: [0.0, 0.0, 1.0], args: ["O", "P", "G"], size: 0, printname: "$C_{0}$"},
+    {name: "Collection__1", type: "IntersectionConicLine", args: ["C0", "a"]},
+    {name: "H", type: "SelectP", pos: [4.0, -0.815049824905916, 0.1164356892722737], color: [0.467, 0.0, 0.718], args: ["Collection__1"], size: 3.0},
+    {name: "K", type: "SelectP", pos: [4.0, -2.1363817279921142, 0.3051973897131592], color: [1.0, 0.0, 0.0], args: ["Collection__1"], size: 0.0},
+    {name: "g", type: "Join", color: [0.0, 0.0, 1.0], args: ["G", "H"], clip: "inci"},
+    {name: "h", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["g", "G"], size: 0, clip: "inci"},
+    {name: "C1", type: "Compass", color: [0.0, 0.0, 1.0], args: ["E", "O", "G"], size: 0, printname: "$C_{1}$"},
+    {name: "Collection__2", type: "IntersectionConicLine", args: ["C1", "h"]},
+    {name: "L", type: "SelectP", pos: [4.0, 0.5776875227148507, 0.15658206164106186], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 0.0},
+    {name: "M", type: "SelectP", pos: [4.0, -0.1658641068137846, 0.18252930267913986], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 0.0},
+    {name: "k", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["g", "L"], clip: "inci"},
+    {name: "l", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["h", "H"], clip: "inci"},
+    {name: "N", type: "Meet", color: [1.0, 0.0, 0.0], args: ["k", "l"], size: 0.0},
+    {name: "Poly0", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [0.714, 1.0, 0.667], fillalpha: 1.0, args: ["L", "N", "H", "G"]},
+    {name: "Poly1", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [0.714, 1.0, 0.667], fillalpha: 1.0, args: ["O", "P", "F", "E"]},
+    {name: "E0", type: "Locus", color: [0.0, 0.0, 1.0], args: ["G", "b", "k"], size: 4},
+    {name: "m", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["b", "G"], clip: "inci"},
+    {name: "n", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["a", "H"], clip: "inci"},
+    {name: "C", type: "Meet", color: [0.467, 0.0, 0.718], args: ["m", "n"], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "o", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["k", "C"], clip: "inci"},
+    {name: "D", type: "Meet", color: [0.467, 0.0, 0.718], args: ["k", "o"], textsize: 18.0, size: 3.0},
+    {name: "p", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["m", "D"], size: 3},
+    {name: "q", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["n", "D"], size: 3},
+    {name: "S", type: "PointOnLine", pos: [4.0, {r: -0.09728080248240256, i: -2.570664068121535E-18}, {r: 0.06582258294623439, i: 1.7393745172018114E-18}], color: [1.0, 0.0, 0.0], args: ["p"], size: 0.0},
+    {name: "C2", type: "Compass", color: [0.0, 0.0, 1.0], args: ["O", "P", "A"], size: 0, printname: "$C_{2}$"},
+    {name: "Collection__3", type: "IntersectionConicLine", args: ["C2", "b"]},
+    {name: "Q", type: "SelectP", pos: [4.0, 1.101964033888379, 0.16856300042140748], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 0.0},
+    {name: "R", type: "SelectP", pos: [4.0, -3.461846039788084, 0.16856300042140748], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 0.0},
+    {name: "C3", type: "Compass", color: [0.0, 0.0, 1.0], args: ["E", "O", "Q"], size: 0, printname: "$C_{3}$"},
+    {name: "Collection__4", type: "IntersectionConicLine", args: ["C3", "b"]},
+    {name: "U", type: "SelectP", pos: [4.0, 1.5957799442986524, 0.16856300042140748], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 0.0},
+    {name: "V", type: "SelectP", pos: [4.0, 0.6081481234781058, 0.16856300042140748], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 0.0},
+    {name: "r", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["p", "U"], clip: "inci"},
+    {name: "W", type: "Meet", color: [1.0, 0.0, 0.0], args: ["q", "r"], size: 0.0},
+    {name: "Collection__5", type: "IntersectionConicLine", args: ["C2", "a"]},
+    {name: "X", type: "SelectP", pos: [4.0, -0.7513268640837223, 0.10733240915481747], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 0.0},
+    {name: "C4", type: "Compass", color: [0.0, 0.0, 1.0], args: ["O", "E", "X"], size: 0, printname: "$C_{4}$"},
+    {name: "Collection__6", type: "IntersectionConicLine", args: ["C4", "a"]},
+    {name: "Y", type: "SelectP", pos: [4.0, -0.6965700105633813, 0.09951000150905448], color: [1.0, 0.0, 0.0], args: ["Collection__6"], size: 0.0},
+    {name: "Z", type: "SelectP", pos: [4.0, -0.815426975761194, 0.11648956796588485], color: [0.467, 0.0, 0.718], args: ["Collection__6"], size: 0.0},
+    {name: "t", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["q", "B"], clip: "inci"},
+    {name: "P0", type: "Meet", color: [1.0, 0.0, 0.0], args: ["p", "t"], size: 0.0, printname: "$P_{0}$"},
+    {name: "Poly2", type: "Poly", color: [1.0, 0.0, 0.0], fillcolor: [0.714, 1.0, 0.667], fillalpha: 0.4700854700854701, args: ["U", "W", "D", "P0", "B", "A"]},
+    {name: "C5", type: "CircleMP", color: [1.0, 1.0, 1.0], args: ["C", "G"], printname: "$C_{5}$"},
+    {name: "C6", type: "CircleMP", color: [1.0, 1.0, 1.0], args: ["C", "H"], printname: "$C_{6}$"},
+    {name: "C7", type: "CircleMP", color: [1.0, 1.0, 1.0], args: ["C", "D"], printname: "$C_{7}$"},
+    {name: "Text0", type: "Text", color: [0.0, 0.0, 0.0], text: "Piano: change size", textsize: 18.0, dock: {corner: "UL", offset: [115.0, -40.0]}},
+    {name: "Text1", type: "Text", color: [0.0, 0.0, 0.0], args: ["L"], text: "Move", textsize: 18.0, dock: {to: "L", offset: [-6.8665366470460185, 7.294968338012893]}},
+    {name: "Text2", type: "Text", color: [0.0, 0.0, 0.0], args: ["G"], text: "A", textsize: 18.0, dock: {to: "G", offset: [-24.706726707527082, 3.056271389517093]}},
+    {name: "Text4", type: "Text", color: [0.0, 0.0, 0.0], args: ["H"], text: "B", textsize: 18.0, dock: {to: "H", offset: [7.488230750476873, -20.087924070247823]}},
+    {name: "Text3", type: "Text", color: [0.0, 0.0, 0.0], args: ["D"], text: "D", textsize: 18.0, dock: {to: "D", offset: [-15.612387878187974, -19.391453872158195]}},
+    {name: "Text5", type: "Text", pos: [0.1490683229813665, -4.0, 0.21443580768982812], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 8/23", textsize: 13.0}
+  ],
+  ports: [{
+    width: 655,
+    height: 363,
+    id: "CSCanvas",
+    transform: [{visibleRect: [-14.308818169979583, 15.235705176941822, 61.58005552505383, -26.821792763969825]}],
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  use: ["katex"],
+  cinderella: {build: 2083, version: [3, 0, 2083]}
+});
+    </script>
+</head>
+<body>
+    <div id="CSCanvas"></div>
+</body>
+</html>

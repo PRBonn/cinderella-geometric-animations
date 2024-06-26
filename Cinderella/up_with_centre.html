@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>up_with_centre.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csdraw" type="text/x-cindyscript">
+//Script (CindyScript)
+// uncertain plane through three points
+// z=a+bx+cz = [1,x,y]*[a,b,c]'
+directions(H,M,r1):=(
+	// function for determining directions in circle to 
+  // intersection with principle axes
+	evs=eigenvectors(Mm);
+	e1=[evs_1_1,evs_2_1];
+	e2=[evs_1_2,evs_2_2];
+	d=transpose(evs)*H;
+	F1=d_2*e2;
+	F2=d_1*e1;
+	s1=sqrt(r1^2-d_2^2);
+	s2=sqrt(r1^2-d_1^2);
+	p1=F1-s1*e1;
+	p2=F1+s1*e1;
+	p3=F2-s2*e2;
+	p4=F2+s2*e2;
+	a=[arctan2(p1.x,p1.y),arctan2(p2.x,p2.y),arctan2(p3.x,p3.y),arctan2(p4.x,p4.y)];
+);
+// start --------------------------------------------------
+x1=K.x;         // coordiantes of three points
+y1=K.y;
+x2=L.x;
+y2=L.y;
+x3=M.x;
+y3=M.y;
+r1=abs(B.x);         // radii
+r2=abs(F.y);
+s=abs(Q.y);     // standard deviation of z_i's, Czz=s^2*I_3
+A=[[1,x1,y1],[1,x2,y2],[1,x3,y3]];  // A*[a,b,c]'=[z1,z2,z3]'
+Ai=inverse(A);                      // p:=[a,b,c]' = Ai*[z1,z2,z3]'
+                                    // J=dp/dz =Ai
+Cpp=Ai*transpose(Ai)*s^2;           // J*Czz*J'
+// sigma_z(t) on circle C([0,0],r1), s_z^2(t)=[1,x,y]*Cpp*[1,x,y]'
+zz(t):=sqrt(Cpp_1_1 + 2*Cpp_1_2*r1*cos(t) + 2*Cpp_1_3*r1*sin(t)+ Cpp_2_2*r1^2*cos(t)^2 + 2*Cpp_2_3*r1^2*cos(t)*sin(t) + Cpp_3_3*r1^2*sin(t)^2);
+// plot (in projection
+e(t) :=[r1*cos(t),r2*sin(t)];       // circle
+ep(t):=[r1*cos(t),r2*sin(t)+zz(t)]; // circle + standard deviation
+em(t):=[r1*cos(t),r2*sin(t)-zz(t)]; // circle + standard deviation
+plot(e(t),color->[0,1,0]);
+plot(ep(t),size->4);
+plot(em(t),size->4);
+// determine principal axes trhough centroid of the 3 points
+sp=[x1+x2+x3,y1+y2+y3];
+Mm=[[x1^2+x2^2+x3^2,x1*y1+x2*y2+x3*y3],[x1*y1+x2*y2+x3*y3,y1^2+y2^2+y3^2]]- [[sp_1^2,sp_1*sp_2],[sp_1*sp_2,sp_2^2]]/3;
+//println(Mm);
+a=directions(sp/3,M,r1);
+//println(a);
+draw([r1*cos(a_1),r2*sin(a_1)],[r1*cos(a_2),r2*sin(a_2)],size->2,dashtype->2);
+draw([r1*cos(a_3),r2*sin(a_3)],[r1*cos(a_4),r2*sin(a_4)],size->2,dashtype->2);
+//evs=eigenvectors(Mm);
+//draw([-evs_1_1*r1,-evs_2_1*r2],[evs_1_1*r1,evs_2_1*r2],dashtype->2);
+//draw([-evs_1_2*r1,-evs_2_2*r2],[evs_1_2*r1,evs_2_2*r2],dashtype->2);
+//t1=arctan2(evs_1_1,evs_2_1);
+repeat(4,n,
+t=a_n;
+//println([n,a_n,-zz(t)]);
+draw([r1*cos(t),r2*sin(t)-zz(t)],[r1*cos(t),r2*sin(t)+zz(t)],dashtype->2,size->2);
+);
+//println("$sigma=$"+s);
+
+draw([r1*cos(0),r2*sin(0)-zz(0)],[r1*cos(0),r2*sin(0)+zz(0)],size->4);
+draw([r1*cos(pi),r2*sin(pi)-zz(pi)],[r1*cos(pi),r2*sin(pi)+zz(pi)],size->4);
+//
+families=fontfamilies();                        // find fonts and provide input data
+drawtext(Q+[0.13,0],"$\sigma=$"+round(s*100)/100,size->25,family->"Times New Roman");
+drawtext(B+[0.13,0],"$r=$"+round(r1*100)/100,size->25,family->"Times New Roman");
+drawtext(F+[0.13,0],"$b=$"+round(r2*100)/100,size->25,family->"Times New Roman");
+drawtext(P+[0.1,0.1],"X",size->25,family->"Times New Roman");
+drawtext(O+[0.1,0.1],"Y",size->25,family->"Times New Roman");
+drawtext(N+[0.1,0.1],"Z",size->25,family->"Times New Roman");
+drawtext(K+[0.1,0.1],"X'",size->25,family->"Times New Roman");
+drawtext(L+[0.1,0.1],"Y'",size->25,family->"Times New Roman");
+drawtext(M+[0.1,0.1],"Z'",size->25,family->"Times New Roman");
+
+;
+
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [0.0, 0.0, 4.0], color: [1.0, 0.0, 0.0], pinned: true, size: 2.0},
+    {name: "a", type: "Through", pos: [-0.004551513378198088, -4.0, 0.0], color: [0.831, 0.639, 1.0], args: ["A"], pinned: true},
+    {name: "B", type: "PointOnLine", pos: [4.0, -0.004551513378198088, 0.777546354216905], color: [0.0, 0.0, 0.0], args: ["a"], size: 3.0},
+    {name: "C0", type: "Compass", color: [1.0, 0.0, 0.0], args: ["A", "B", "A"], alpha: 0.48717948717948717, dashtype: "dashed", printname: "$C_{0}$"},
+    {name: "C", type: "OtherIntersectionCL", color: [1.0, 0.0, 0.0], args: ["C0", "a", "B"], size: 2.0},
+    {name: "c", type: "Orthogonal", color: [0.831, 0.639, 1.0], args: ["a", "A"]},
+    {name: "Collection__1", type: "IntersectionConicLine", args: ["C0", "c"]},
+    {name: "D", type: "SelectP", pos: [-0.004551513378198088, -4.0, -0.7775463542169051], color: [1.0, 0.0, 0.0], args: ["Collection__1"], size: 0.0},
+    {name: "E", type: "SelectP", pos: [-0.004551513378198088, -4.0, 0.7775463542169051], color: [1.0, 0.0, 0.0], args: ["Collection__1"], size: 1.0},
+    {name: "F", type: "Free", pos: [4.0, -1.119622446822261, -0.4687284683419565], color: [0.0, 0.0, 0.0], size: 4.0},
+    {name: "b", type: "Parallel", color: [0.0, 0.0, 0.0], args: ["c", "F"], size: 4, clip: "inci"},
+    {name: "G", type: "Meet", color: [1.0, 0.0, 0.0], args: ["a", "b"], size: 0.0},
+    {name: "d", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "F"], size: 0},
+    {name: "H", type: "Meet", color: [1.0, 0.0, 0.0], args: ["c", "d"], size: 0.0},
+    {name: "Tr0", type: "TrAffine", color: [0.0, 0.0, 1.0], args: ["C", "C", "D", "H", "B", "B"], dock: {offset: [0.0, -0.0]}},
+    {name: "C1", type: "TransformConic", color: [1.0, 1.0, 0.0], args: ["Tr0", "C0"], printname: "$C_{1}$"},
+    {name: "K", type: "PointOnCircle", pos: [4.0, -2.663456742832713, 0.9341478417687628], color: [1.0, 0.0, 0.0], args: ["C0"]},
+    {name: "L", type: "PointOnCircle", pos: [1.0216377167586348, -4.0, -0.8025064160992643], color: [1.0, 0.0, 0.0], args: ["C0"]},
+    {name: "M", type: "PointOnCircle", pos: [1.829562907251185, -4.0, 0.8550198644370532], color: [1.0, 0.0, 0.0], args: ["C0"]},
+    {name: "N", type: "TransformP", color: [1.0, 0.0, 0.0], args: ["Tr0", "M"], size: 3.0, border: false},
+    {name: "O", type: "TransformP", color: [1.0, 0.0, 0.0], args: ["Tr0", "L"], size: 3.0, border: false},
+    {name: "P", type: "TransformP", color: [1.0, 0.0, 0.0], args: ["Tr0", "K"], size: 3.0, border: false},
+    {name: "Q", type: "Free", pos: [4.0, -0.4300989835663912, -0.5301576660665052], color: [0.0, 0.0, 1.0], size: 4.0, border: false},
+    {name: "e", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["b", "Q"], size: 4, clip: "inci"},
+    {name: "R", type: "Meet", color: [1.0, 0.0, 0.0], args: ["a", "e"], size: 0.0},
+    {name: "Poly0", type: "Poly", color: [1.0, 0.0, 0.0], fillcolor: [1.0, 0.0, 0.0], fillalpha: 0.3247863247863248, args: ["O", "N", "P"]},
+    {name: "f", type: "Segment", color: [0.0, 0.0, 1.0], args: ["L", "O"], dashtype: "dashed"},
+    {name: "g", type: "Join", color: [0.0, 0.0, 1.0], args: ["K", "P"], size: 0},
+    {name: "h", type: "Segment", color: [1.0, 0.0, 0.0], args: ["K", "P"], dashtype: "dashed"},
+    {name: "k", type: "Segment", color: [1.0, 0.0, 0.0], args: ["N", "M"], dashtype: "dashed"},
+    {name: "C2", type: "Compass", color: [0.0, 0.0, 1.0], args: ["R", "Q", "O"], size: 0, printname: "$C_{2}$"},
+    {name: "C3", type: "Compass", color: [0.0, 0.0, 1.0], args: ["Q", "R", "P"], size: 0, printname: "$C_{3}$"},
+    {name: "C4", type: "Compass", color: [0.0, 0.0, 1.0], args: ["Q", "R", "N"], size: 0, printname: "$C_{4}$"},
+    {name: "Collection__2", type: "IntersectionCircleCircle", args: ["C2", "C4"]},
+    {name: "T", type: "SelectP", pos: [4.0, {r: 2.964395862917991, i: 0.46786483215932817}, {r: 0.36277520324464857, i: -1.7937570828213663}], color: [1.0, 0.0, 0.0], args: ["Collection__2"]},
+    {name: "S", type: "SelectP", pos: [4.0, {r: 2.9643958629179905, i: -0.46786483215932817}, {r: 0.36277520324464835, i: 1.7937570828213663}], color: [1.0, 0.0, 0.0], args: ["Collection__2"]},
+    {name: "l", type: "Join", color: [0.0, 0.0, 1.0], args: ["L", "O"], size: 0},
+    {name: "m", type: "Join", color: [0.0, 0.0, 1.0], args: ["N", "M"], size: 0},
+    {name: "U", type: "Meet", color: [1.0, 0.0, 0.0], args: ["l", "m"]},
+    {name: "Collection__3", type: "IntersectionConicLine", args: ["C2", "l"]},
+    {name: "V", type: "SelectP", pos: [3.3985088589309123, -4.0, -2.6612808855800045], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 1.0},
+    {name: "W", type: "SelectP", pos: [1.6409665702640008, -4.0, -1.2868375355626651], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 1.0},
+    {name: "Collection__4", type: "IntersectionConicLine", args: ["C3", "g"]},
+    {name: "X", type: "SelectP", pos: [4.0, -0.4839916980843191, 0.9335691165132873], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 1.0},
+    {name: "Y", type: "SelectP", pos: [4.0, -1.9835517522995472, 0.9339673028836389], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 1.0},
+    {name: "Collection__5", type: "IntersectionConicLine", args: ["C4", "m"]},
+    {name: "Z", type: "SelectP", pos: [4.0, -2.5415653274242063, 1.866051610513764], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 1.0},
+    {name: "P0", type: "SelectP", pos: [2.8870587401426446, -4.0, 1.3479988920875374], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 1.0, printname: "$P_{0}$"},
+    {name: "n", type: "Segment", color: [0.0, 0.0, 1.0], args: ["Z", "P0"], size: 2},
+    {name: "o", type: "Segment", color: [0.0, 0.0, 1.0], args: ["W", "V"], size: 2},
+    {name: "p", type: "Segment", color: [0.0, 0.0, 1.0], args: ["X", "Y"], size: 2},
+    {name: "P1", type: "Mid", color: [1.0, 0.0, 0.0], args: ["O", "N"], size: 1.0, printname: "$P_{1}$"},
+    {name: "P2", type: "Mid", color: [1.0, 0.0, 0.0], args: ["O", "P"], size: 1.0, printname: "$P_{2}$"},
+    {name: "P3", type: "Mid", color: [1.0, 0.0, 0.0], args: ["P", "N"], size: 1.0, printname: "$P_{3}$"},
+    {name: "q", type: "Join", color: [0.0, 1.0, 0.0], args: ["O", "P3"], clip: "inci", dashtype: "dashed"},
+    {name: "r", type: "Join", color: [0.0, 1.0, 0.0], args: ["P", "P1"], labeled: true, clip: "inci", dashtype: "dashed"},
+    {name: "s", type: "Join", color: [0.0, 1.0, 0.0], args: ["P2", "N"], clip: "inci", dashtype: "dashed"},
+    {name: "Text0", type: "Text", pos: [4.0, 2.203763596218004, -0.4395849429417622], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 3/24", textsize: 15.0}
+  ],
+  ports: [{
+    width: 668,
+    height: 445,
+    id: "CSCanvas",
+    transform: [{visibleRect: [-10.944072918562856, 6.334589495107631, 7.493860775258047, -5.948165735057492]}],
+    axes: true,
+    grid: 1.0,
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  use: ["katex"],
+  cinderella: {build: 2083, version: [3, 0, 2083]}
+});
+    </script>
+</head>
+<body>
+    <div id="CSCanvas"></div>
+</body>
+</html>

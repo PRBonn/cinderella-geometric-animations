@@ -1,0 +1,39 @@
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+
+<h1>Uncertain Circle</h1> 
+
+
+The  animation (generated with  <a href="http://www.cinderella.de">Cinderella</a>) visualizes the uncertainty of a circle through three points.
+    
+<p> The uncertainty of a circle may be represented by the 3 x 3 covariance matrix of its three parameters &theta;=(x<sub>0</sub>,y<sub>0</sub>,r) , the coordinates of its centre its radius. Given a set of n points with coordinates z=(x<sub>1</sub>,y<sub>1</sub>,...,x<sub>n</sub>,y<sub>n</sub>), their covariance matrix &Sigma; and some estimation procedure &theta;=f(z,&Sigma;), one may derive the covariance matrix of the parameters by variance propagation. It is based on a Taylor expansion of the function &theta;=f(z,&Sigma;). The result generally is biased, in case the function is nonlinear. The motivation for this animation is to illustrate the problem when representing the uncertainty of a circle using the minimal case n=3.
+</p>
+
+
+<p> The configuration can be controlled by moving the points A, B, and C and specifying the standard deviation of their coordinates, assuming them to have covariance matrix &Sigma;=&sigma;<sup>2</sup> I. Then a set of K=200 random samples  z<sub>k</sub>=(x<sub>A</sub>,y<sub>A</sub>,x<sub>B</sub>,y<sub>B</sub>,x<sub>C</sub>,y<sub>C</sub>)<sub>k</sub>, k=1,...,K of the six coordinates sitting on the six-dimensional spherical standard ellipsoid of z are generated and the corresponding circles are shown, which cover what can be called an uncertainty region of the  circle in the plane. The initial configuration is symmetric w.r.t x-axis. One observes the asymmetry of the uncertainty of the point opposite to B in x-direction. </p>
+
+
+
+    <h2>Explore the configuration:</h2>
+    <ol>
+		
+ 			<li>  - Starting from the initial configuration (possibly after restarting the animation) move the point B in x-direction and observe the effect onto the uncertainty region. Especially observe the asymmetric uncertainty of the point opposite to B.</li>
+			
+			<li>  - Repeat the experiments: starting from the initial configuration (possibly after restarting the animation) now increase the standard deviation &sigma; and observe the effect onto the uncertainty region. Especially observe the asymmetric uncertainty of the point opposite to B.</li>
+			
+ 			<li>  - How many maxima/minima does the radial uncertainty of circle points have in general?</li>
+			
+			<li>  - How do you expect the uncertainty region looks like, if the three points are collinear? Compare it to the simulation result, and explain the form of the region. Possibly increase &sigma;.</li>
+			
+ 			
+ 			
+ 			
+	    
+	        </ol> 

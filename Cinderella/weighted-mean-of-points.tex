@@ -1,0 +1,36 @@
+
+<style>
+p {
+  text-indent: 30px;
+}
+</style>
+<h1>Weighted Mean of Two Points</h1> 
+
+
+The  animation (generated with  <a href="http://www.cinderella.de">Cinderella</a>) visualizes the effect of general covariance matrices onto the mean of two points.
+    
+<p> The mean of two points x<sub>1</sub> and x<sub>2</sub> usually is assumed to sit on the line joining the two points, namely at m<sub>0</sub>=(x<sub>1</sub>+x<sub>2</sub>)/2. This is the statistically optimal solution if both points have the same covariance matrix &Sigma;, especially if &Sigma;=&sigma;<sup>2</sup>I<sub>2</sub>.  Then the mean has covariance matrix  &Sigma;/2. In case the points have individual covariance matrices &Sigma;<sub>11</sub> and &Sigma;<sub>22</sub> the best estimate m for the mean is m=&Sigma;<sub>mm</sub>(W<sub>11</sub>x<sub>1</sub>+W<sub>22x</sub>x<sub>1</sub>) with its covariance matrix &Sigma;<sub>mm</sub>=(W<sub>11</sub>+W<sub>22</sub>)<sup>-1</sup>. Moreover, in case one chooses the mean m<sub>0</sub>, but assumes the points have <b>g</b>eneral (g) covariance matrices, then its covariance matrix is &Sigma;<sub>m<sub>0</sub>m<sub>0</sub>|g</sub>=(&Sigma;<sub>11</sub>+&Sigma;<sub>22</sub>)/4. The animation is meant to show (1) the mean m can lie anywhere in the plane, and (2) the difference in uncertainty of the simple mean m<sub>0</sub> when (a) assuming general covariance matrices for the two points and (b) assuming isotropic uncertainty of the two points.
+</p>
+
+
+
+<p> The animation allows to freely choose the two uncertain points by moving them in the plane and their covariance matrices by changing their semi-axes a and b by shifting the left red points horizontally and the direction of the major axes by rotating the blue lines around the two points. </p>
+
+<p> The animation shows the resultant simple mean m<sub>0</sub> (blue) and the weighted mean m together with their covariance matrices (red). For the simple mean the geometric mean of the four semi-axis is taken as standard deviation &sigma; (blue circles). The covariance matrix &Sigma;<sub>m<sub>0</sub>m<sub>0</sub>|g</sub>
+of the simple mean m<sub>0</sub> for the assumption of general covariance matrices for the two points is shown in white.</p> 
+
+    
+
+    <h2>Explore the configuration:</h2>
+    <ol>
+      <p>  - Change each of the six elements (axes, directions) of the two covariance matrices of the two points individually and observe the effect onto the estimated mean. </p>
+ 			
+			<p>  - Change the six parameters such that the intersection point of the major axes lies in the window and inside the standard ellipse of m.</p>
+ 			
+ 			<p>  - Choose your own point with coordinates (x,y), e.g. (4,7), and adapt the six parameters such that the estimated point sits at (x,y).</p>
+					
+ 			<p>  - Find two covariance matrices, which are different for both points, such that the estimated mean sits on the line joining the two points.</p>
+ 			
+	    
+	        </ol>
+					(You always can go back to the original configuration by restarting the app)

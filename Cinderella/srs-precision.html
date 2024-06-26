@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>srs-precision.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csmove" type="text/x-cindyscript">
+//Script (CindyScript)
+// Precision SRS
+// rounding
+rd1(x):=round(x*10)/10;
+rd2(x):=round(x*100)/100;
+rd3(x):=round(x*1000)/1000;
+muCov2ellipse(t,mu,CovM):=
+   (
+     regional(v,l);
+     v=eigenvectors(CovM);
+     l=eigenvalues(CovM);
+		 //println(l);
+     mu
+     +sqrt(l_1)*column(v,1)*cos(t)
+     +sqrt(l_2)*column(v,2)*sin(t);
+    );
+cosh(t):=(exp(t)+exp(-t))/2;
+sinh(t):=(exp(t)-exp(-t))/2;
+LineHyperbolap(lc):=
+   (
+   R=[[cos(lc_2),-sin(lc_2)],[+sin(lc_2),cos(lc_2)]];
+   lc_1+R*[1/tan(lc_4)*lc_3*sinh(t),lc_3*cosh(t)];
+   );
+LineHyperbolan(lc):=
+   (
+   R=[[cos(lc_2),-sin(lc_2)],[+sin(lc_2),cos(lc_2)]];
+   lc_1+R*[1/tan(lc_4)*lc_3*sinh(t),-lc_3*cosh(t)];
+   );
+// ########### end preamle #################
+// set default values
+//sigma=0.5*4;HH=4;dd=1.2;cc=2.0;
+//P1.x=P0.x+sigma;B.x=A.x+HH;F.x=E.x+dd;D.x=C.x+cc;
+// read figure
+sigma=rd2((P1.x-P0.x)/4);
+HH=rd1(B.x-A.x);
+dd=rd2(F.x-E.x);
+cc=rd2(D.x-C.x);
+
+//println("s,H,d,c="+[sigma,HH,dd,cc,sigma,Diam
+//DD=HH*dd/cc;
+//aaa=sqrt(HH^2+DD^2);
+//bbb=aaa;
+//ccc=2*DD;
+//FFF=DD*HH;
+//radius=aaa*bbb*ccc/(4*FF);
+//println("calculated D="+2*radius);
+
+ah=arctan(dd/cc);
+
+sY=sqrt(2)/4*HH/cc*sqrt(1+1/sin(ah)^4)*sigma;
+sZ=1/4*HH/dd*sigma;
+so=sqrt(2)/4*cc/dd^2*sigma;
+sYo=so*sY/sqrt(1+sin(ah)^4);
+m0=-sYo/so^2;
+//println("sY,sZ,so,sYo,m0="+[sY,sZ,so,sYo,m0]);
+sq=sqrt(sY^2-sYo^2/so^2);
+lc=[Z.xy,pi/2,sq,so];
+//println("lc="+lc);
+
+
+plot(muCov2ellipse(t,G.xy,[[sY^2,0],[0,sZ^2]]),t,size->3,color->[1,0,0]);
+plot(LineHyperbolap(lc),t,start->-10,stop->10,size->3,color->[1,0,0]);
+plot(LineHyperbolan(lc),t,start->-10,stop->10,size->3,color->[1,0,0]);
+
+fs=25;
+fam="Times New Roman";
+drawtext(P1.xy+[-0.4,0.3],"$\sigma=$"+sigma+" [pel]",size->fs,family->fam);
+drawtext(B.xy+[-0.6,0.3],"$H=$"+HH*1000+" [mm]",size->fs,family->fam);
+drawtext(F.xy+[-0.5,0.3],"$d=$"+dd*1000+" [pel]",size->fs,family->fam);
+drawtext(D.xy+[-0.5,0.3],"$c=$"+cc*1000+" [pel]",size->fs,family->fam);
+
+
+drawtext(G.xy+[0.4,0.0],"$O$",size->fs,family->fam);
+drawtext(Z.xy+[0.3,-0.5],"$X_O(\sigma_P)$",size->fs,family->fam);
+
+drawtext(P2.xy+[0.2,0],"$H$",size->fs,family->fam);
+drawtext(P3.xy+[0.2,0],"$Z$",size->fs,family->fam);
+drawtext(P4.xy+[-0.2,.3],"$X$",size->fs,family->fam);
+
+// results
+
+drawtext([-10,0.0],"$\sigma_X=\sigma_Y=$"+rd2(sY)+" [mm]",size->fs,family->fam);
+drawtext([-8.9,-1.0],"$\sigma_Z=$"+rd2(sZ)+" [mm]",size->fs,family->fam);
+drawtext([-8.86,-2.0],"$\sigma_P=$"+rd2(sq)+" [mm]",size->fs,family->fam);
+
+
+;
+
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [4.0, -1.9410187667560321, -0.40007415820279646], color: [1.0, 0.0, 0.0], pinned: true, size: 1.0},
+    {name: "a", type: "Through", pos: [0.40007415820279646, -0.0, 4.0], color: [0.0, 0.0, 1.0], args: ["A"], pinned: true, size: 0, clip: "inci"},
+    {name: "b", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["a", "A"], clip: "inci"},
+    {name: "B", type: "PointOnLine", pos: [4.0, -3.2354311675278122, -0.6668726871379478], color: [1.0, 0.0, 0.0], args: ["b"]},
+    {name: "C", type: "PointOnLine", pos: [4.0, -0.9222520107238609, -0.4000741582027964], color: [1.0, 0.0, 0.0], args: ["a"], pinned: true, size: 1.0},
+    {name: "c", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["b", "C"], clip: "inci"},
+    {name: "D", type: "PointOnLine", pos: [4.0, -1.1528684475624094, -0.5001158775626645], color: [1.0, 0.0, 0.0], args: ["c"]},
+    {name: "E", type: "PointOnLine", pos: [4.0, -1.4048257372654163, -0.4000741582027964], color: [1.0, 0.0, 0.0], args: ["a"], pinned: true, size: 1.0},
+    {name: "d", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["c", "E"], clip: "inci"},
+    {name: "F", type: "PointOnLine", pos: [4.0, -1.5964332430130364, -0.454641219108539], color: [1.0, 0.0, 0.0], args: ["d"]},
+    {name: "G", type: "Free", pos: [4.0, 2.1408450704225355, 2.101798042389339], color: [1.0, 0.0, 0.0]},
+    {name: "e", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "G"], alpha: 0.452991452991453},
+    {name: "f", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["e", "G"], clip: "inci", dashtype: "dashed"},
+    {name: "C0", type: "Compass", color: [0.0, 0.0, 1.0], args: ["C", "D", "G"], size: 0, printname: "$C_{0}$"},
+    {name: "Collection__1", type: "IntersectionConicLine", args: ["C0", "e"]},
+    {name: "K", type: "SelectP", pos: [-2.521892726025692, -4.0, -1.3251272986691782], color: [1.0, 0.0, 0.0], args: ["Collection__1"], size: 1.0},
+    {name: "C1", type: "Compass", color: [0.0, 0.0, 1.0], args: ["A", "B", "G"], size: 0, printname: "$C_{1}$"},
+    {name: "Collection__2", type: "IntersectionConicLine", args: ["C1", "e"]},
+    {name: "L", type: "SelectP", pos: [2.5533216955391898, -4.0, 1.341641635318624], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 1.0},
+    {name: "P3", type: "SelectP", pos: [-1.5168698816644013, -4.0, -0.7970385369603968], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 0.0},
+    {name: "g", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["f", "K"], clip: "inci"},
+    {name: "C2", type: "Compass", color: [0.0, 0.0, 1.0], args: ["E", "F", "K"], size: 0, printname: "$C_{2}$"},
+    {name: "Collection__3", type: "IntersectionConicLine", args: ["C2", "g"]},
+    {name: "H", type: "SelectP", pos: [-0.9317399676226755, -4.0, -1.3251272986691782], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 1.0},
+    {name: "M", type: "SelectP", pos: [4.0, 3.891007543712251, 1.2890200788752029], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 1.0},
+    {name: "h", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["f", "L"], clip: "inci"},
+    {name: "k", type: "Join", color: [0.0, 0.0, 1.0], args: ["M", "G"], clip: "inci"},
+    {name: "N", type: "Meet", color: [1.0, 0.0, 0.0], args: ["h", "k"], size: 1.0},
+    {name: "l", type: "Join", color: [0.0, 0.0, 1.0], args: ["H", "G"], clip: "inci"},
+    {name: "O", type: "Meet", color: [1.0, 0.0, 0.0], args: ["h", "l"], size: 1.0},
+    {name: "Collection__4", type: "AngularBisector", args: ["e", "h", "L"]},
+    {name: "m", type: "SelectL", pos: [-0.8189078440827173, 0.8189078440827173, 4.0], color: [0.0, 0.0, 1.0], args: ["Collection__4"], size: 0, clip: "inci"},
+    {name: "n", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["m", "O"], clip: "inci"},
+    {name: "o", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["n", "N"], clip: "inci"},
+    {name: "p", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["o", "H"], clip: "inci"},
+    {name: "q", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["o", "M"], clip: "inci"},
+    {name: "P", type: "Mid", color: [1.0, 0.0, 0.0], args: ["E", "F"], size: 0.0},
+    {name: "C3", type: "Compass", color: [0.0, 0.0, 1.0], args: ["P", "F", "H"], size: 0, printname: "$C_{3}$"},
+    {name: "C4", type: "Compass", color: [0.0, 0.0, 1.0], args: ["P", "F", "M"], size: 0, printname: "$C_{4}$"},
+    {name: "Collection__5", type: "IntersectionConicLine", args: ["C4", "q"]},
+    {name: "Q", type: "SelectP", pos: [4.0, 3.873745932891283, 1.4931678125790286], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 1.0},
+    {name: "R", type: "SelectP", pos: [4.0, 3.904116810866898, 1.1339808297636265], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 1.0},
+    {name: "Collection__6", type: "IntersectionConicLine", args: ["C3", "p"]},
+    {name: "S", type: "SelectP", pos: [-0.42996856998263555, -4.0, -1.541833500127932], color: [1.0, 0.0, 0.0], args: ["Collection__6"], size: 1.0},
+    {name: "T", type: "SelectP", pos: [-1.309844013897133, -4.0, -1.1618308413388165], color: [1.0, 0.0, 0.0], args: ["Collection__6"], size: 1.0},
+    {name: "Poly0", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [0.98, 1.0, 0.62], fillalpha: 0.38461538461538464, args: ["T", "R", "Q", "S"]},
+    {name: "r", type: "Join", color: [0.0, 0.0, 1.0], args: ["S", "G"], clip: "inci"},
+    {name: "U", type: "Meet", color: [1.0, 0.0, 0.0], args: ["n", "r"], size: 1.0},
+    {name: "s", type: "Join", color: [0.0, 0.0, 1.0], args: ["T", "G"], clip: "inci"},
+    {name: "V", type: "Meet", color: [1.0, 0.0, 0.0], args: ["n", "s"], size: 1.0},
+    {name: "W", type: "OtherIntersectionCL", color: [1.0, 0.0, 0.0], args: ["C2", "k", "M"], size: 0.0},
+    {name: "t", type: "Join", color: [0.0, 0.0, 1.0], args: ["Q", "G"], clip: "inci"},
+    {name: "X", type: "Meet", color: [1.0, 0.0, 0.0], args: ["o", "t"], size: 1.0},
+    {name: "u", type: "Join", color: [0.0, 0.0, 1.0], args: ["R", "G"], clip: "inci"},
+    {name: "Y", type: "Meet", color: [1.0, 0.0, 0.0], args: ["o", "u"], size: 1.0},
+    {name: "Poly1", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [0.98, 1.0, 0.62], fillalpha: 0.358974358974359, args: ["X", "U", "V", "Y"]},
+    {name: "v", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["l", "O"], clip: "inci"},
+    {name: "Z", type: "Meet", color: [1.0, 0.0, 0.0], args: ["e", "v"], size: 4.0},
+    {name: "C5", type: "CircleBy3", color: [0.0, 0.0, 1.0], args: ["Z", "G", "O"], printname: "$C_{5}$"},
+    {name: "P0", type: "PointOnLine", pos: [4.0, -2.3914209115281495, -0.4000741582027964], color: [1.0, 0.0, 0.0], args: ["a"], pinned: true, size: 1.0, printname: "$P_{0}$"},
+    {name: "w", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["b", "P0"], clip: "inci"},
+    {name: "P1", type: "PointOnLine", pos: [4.0, -2.989414695423453, -0.5001158775626643], color: [1.0, 0.0, 0.0], args: ["w"], printname: "$P_{1}$"},
+    {name: "P2", type: "Mid", color: [1.0, 0.0, 0.0], args: ["G", "L"], size: 0.0, printname: "$P_{2}$"},
+    {name: "x", type: "Segment", color: [0.0, 0.0, 1.0], args: ["G", "L"], size: 4},
+    {name: "y", type: "Segment", color: [0.0, 0.0, 1.0], args: ["A", "B"], size: 4},
+    {name: "z", type: "Segment", color: [1.0, 0.0, 0.0], args: ["E", "F"], size: 4},
+    {name: "S0", type: "Segment", color: [1.0, 0.0, 0.0], args: ["T", "R"], size: 4, printname: "$S_{0}$"},
+    {name: "S1", type: "Segment", color: [1.0, 1.0, 0.0], args: ["C", "D"], size: 5, printname: "$S_{1}$"},
+    {name: "S2", type: "Segment", color: [1.0, 1.0, 0.0], args: ["K", "G"], size: 5, printname: "$S_{2}$"},
+    {name: "C6", type: "CircleByFixedRadius", color: [0.0, 0.0, 1.0], radius: 4.0, args: ["G"], size: 0, printname: "$C_{6}$"},
+    {name: "P4", type: "Meet", color: [1.0, 0.0, 0.0], args: ["f", "m"], size: 0.0, printname: "$P_{4}$"},
+    {name: "S3", type: "Segment", color: [0.0, 0.0, 1.0], args: ["G", "P4"], dashtype: "dashed", printname: "$S_{3}$", arrowshape: "jet", arrowsides: "==>", arrowsize: 0.8, arrowposition: 1.0},
+    {name: "S4", type: "Segment", color: [0.0, 0.0, 1.0], args: ["G", "P3"], dashtype: "dashed", printname: "$S_{4}$", arrowshape: "jet", arrowsides: "==>", arrowsize: 0.8, arrowposition: 1.0},
+    {name: "Text0", type: "Text", pos: [4.0, 1.6507936507936511, -0.3947821719831828], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 02/01-4/24", textsize: 15.0}
+  ],
+  ports: [{
+    width: 955,
+    height: 472,
+    id: "CSCanvas",
+    transform: [{visibleRect: [-13.094087160380626, 7.116643072837372, 12.504384156228378, -5.535166834429067]}],
+    grid: 1.0,
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  use: ["katex"],
+  cinderella: {build: 2083, version: [3, 0, 2083]}
+});
+    </script>
+</head>
+<body>
+    <div id="CSCanvas"></div>
+</body>
+</html>

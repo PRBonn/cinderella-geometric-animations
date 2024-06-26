@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>bayes-2-modes-outliers.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csdraw" type="text/x-cindyscript">
+//Bayes-1D-GMM-oulier
+erf(x):=(1-1/((1+0.278393*abs(x)+0.230389*x^2+0.000972*abs(x)^3+ 0.078108*x^4)^4))*x/abs(x);// error funktion
+Phi(x):=1/2*(1+erf(x/sqrt(2)));                 // cumulative normal distribution
+g(x,m,s):=1/sqrt(2*pi*s^2)*exp(-(x-m)^2/s^2/2); // general Normal density
+Heavy(x):=(1+x/abs(x))/2;                       // Heavyside function
+Uniform(x,a,b):=1/abs(a-b)*Heavy(-(x-a)*(x-b)); // Uniform density
+a=0;b=3;                                        // assumed range of outliers
+scale=0.3;                                      // vertical scaling of Figure
+m1=C.x;                                         // mean 1
+m2=D.x;                                         // mean 2
+s1=0.1;                                         // standard deviation 1
+s2=0.1;                                         // standard deviation 2
+P1=abs(min(max(A.y/1,0),1));                    // take P(mu=mu_1) from drawing, enforce in [0,1]
+Pin=abs(min(max(B.y/1,0),1));                   // take P(observation is outlier) from drawing, enforce in [0,1]
+print([m1,m2,s1,s2,P1,Pin]);
+gm(x):=P1*g(x,m1,s1)+(1-P1)*g(x,m2,s2);         // prior: Gaussian mixture
+plot(scale*gm(x),size->4,color->[1,0,0]);       // draw prior (red)
+y=E.x;                                          // take observation y from drawing
+sy=abs(P7.x);                                        // set its standard deviation
+Logl(x):=Pin*g(x,y,sy)+(1-Pin)*Uniform(x,a,b);  // specify likelihood, robust if Pin = 1
+plot(scale*Logl(x),color->[0,0,1],dashtype->1,size->5); // plot likelihood (dahed blue)
+expd1=-1/2*(m1-y)^2/(s1^2+sy^2);                // weighted distance (y,m1), *-1/2
+expd2=-1/2*(m2-y)^2/(s2^2+sy^2);                // weighted distance (y,m2), *-1/2
+A1=   P1 *Pin*exp(expd1)/(sqrt(2*pi)*sqrt(s1^2+sy^2)); // four components of p(y)
+A2=(1-P1)*Pin*exp(expd2)/(sqrt(2*pi)*sqrt(s2^2+sy^2));
+B1=   P1 *(1-Pin)/abs(a-b)*abs((Phi((b-m1)/s1)-Phi((a-m1)/s1)));
+B2=(1-P1)*(1-Pin)/abs(a-b)*abs((Phi((b-m2)/s2)-Phi((a-m2)/s2)));
+sc=1/(A1+A2+B1+B2);                             // denuminator of posterior
+plot(scale*sc*Logl(x)*gm(x),color->[0,1,0],size->2,maxima->true); // plot posterior
+families=fontfamilies();                        // find fonts and provide input data
+drawtext(L+[0.02,0],"$P_{in}=$"+round(Pin*100)/100,size->25,family->"Times New Roman");
+drawtext(H+[0.02,0],"$P_1=$"+round(P1*100)/100,size->25,family->"Times New Roman");
+drawtext(C+[0.05,0],"$\mu_1=$"+round(m1*100)/100,size->25,family->"Times New Roman");
+drawtext(D+[0.05,0],"$\mu_2=$"+round(m2*100)/100,size->25,family->"Times New Roman");
+drawtext(E+[0.04,0],"$y=$"+round(y*100)/100,size->25,family->"Times New Roman");
+drawtext(V+[0.03,+0.1],"$\sigma_y=$"+round(sy*100)/100,size->25,family->"Times New Roman");
+
+
+
+
+
+
+
+;
+
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [-2.3049114923178373, 2.19155518941696, 4.0], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 36.0, printname: "$P_1$"},
+    {name: "B", type: "Free", pos: [-1.0202067261078953, 3.797436147179388, 4.0], color: [0.0, 0.0, 1.0], text_fontfamily: "serif", textsize: 36.0, printname: "$P_{in}$"},
+    {name: "C", type: "Free", pos: [4.0, -0.6456692913385826, 3.334201506518848], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 36.0},
+    {name: "D", type: "Free", pos: [4.0, -0.6745562130177515, 2.5055833806384245], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 36.0},
+    {name: "E", type: "Free", pos: [4.0, -1.0599369085173502, 2.671568399545071], color: [0.0, 0.0, 1.0], text_fontfamily: "serif", textsize: 36.0},
+    {name: "a", type: "Through", pos: [4.0, -0.0, 2.3049114923178373], color: [1.0, 0.0, 0.0], args: ["A"], pinned: true, size: 3, clip: "inci"},
+    {name: "G", type: "PointOnLine", pos: [-2.3049114923178373, 0.04675996217519154, 4.0], color: [1.0, 0.0, 0.0], args: ["a"], size: 1.0},
+    {name: "H", type: "Mid", color: [1.0, 0.0, 0.0], args: ["A", "G"], size: 0.0},
+    {name: "dist0", type: "Dist", color: [0.0, 0.0, 1.0], args: ["A", "G"]},
+    {name: "b", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "B"], size: 3, clip: "inci"},
+    {name: "K", type: "PointOnLine", pos: [-1.0202067261078953, 0.01889271715014562, 4.0], color: [1.0, 0.0, 0.0], args: ["b"], size: 1.0},
+    {name: "L", type: "Mid", color: [1.0, 0.0, 0.0], args: ["B", "K"], visible: false, size: 0.0, border: false},
+    {name: "M", type: "Free", pos: [-0.9772021011719457, -4.0, -3.9795569907275534], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, textsize: 36.0, size: 1.0},
+    {name: "N", type: "Free", pos: [-2.966536293430054, -4.0, -3.9816748329886766], color: [1.0, 0.0, 0.0], size: 1.0},
+    {name: "c", type: "Join", color: [1.0, 0.0, 0.0], args: ["M", "N"], textsize: 36.0, size: 5, clip: "inci", printname: "$p(\\theta)$"},
+    {name: "O", type: "Free", pos: [1.0137688484455598, 3.2739391486001326, 4.0], color: [1.0, 0.0, 0.0], pinned: true, size: 2.0},
+    {name: "P", type: "Free", pos: [2.9801894105987037, 3.2634235306207042, 4.0], color: [1.0, 0.0, 0.0], pinned: true, size: 2.0},
+    {name: "d", type: "Join", color: [0.0, 0.0, 1.0], args: ["O", "P"], size: 6, clip: "inci", dashtype: "tightdash"},
+    {name: "Q", type: "Free", pos: [0.982221994507274, 2.6009395979167036, 4.0], color: [1.0, 0.0, 0.0], pinned: true, size: 1.0},
+    {name: "R", type: "Free", pos: [2.9591581746398465, 2.6009395979167036, 4.0], color: [1.0, 0.784, 0.0], pinned: true, size: 1.0, border: false, "point.image.rotation": 360.0},
+    {name: "e", type: "Segment", color: [0.0, 1.0, 0.0], args: ["Q", "R"], size: 4},
+    {name: "f", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["b", "C"], visible: false},
+    {name: "g", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["b", "D"], visible: false},
+    {name: "h", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["b", "E"], size: 0},
+    {name: "S", type: "Free", pos: [0.0, 0.0, 4.0], color: [1.0, 0.0, 0.0], pinned: true, size: 2.0},
+    {name: "k", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["b", "S"]},
+    {name: "T", type: "Meet", color: [1.0, 0.0, 0.0], args: ["f", "k"], visible: false},
+    {name: "U", type: "Meet", color: [1.0, 0.0, 0.0], args: ["g", "k"], visible: false},
+    {name: "V", type: "Meet", color: [1.0, 0.0, 0.0], args: ["h", "k"], size: 0.0},
+    {name: "W", type: "Mid", color: [1.0, 0.0, 0.0], args: ["C", "T"], size: 0.0},
+    {name: "dist2", type: "Dist", color: [0.0, 0.0, 1.0], args: ["C", "T"]},
+    {name: "X", type: "Mid", color: [1.0, 0.0, 0.0], args: ["D", "U"], size: 0.0},
+    {name: "dist3", type: "Dist", color: [0.0, 0.0, 1.0], args: ["D", "U"]},
+    {name: "Y", type: "Mid", color: [1.0, 0.0, 0.0], args: ["E", "V"], size: 0.0},
+    {name: "dist4", type: "Dist", color: [0.0, 0.0, 1.0], args: ["E", "V"]},
+    {name: "l", type: "Orthogonal", color: [0.0, 0.0, 0.0], args: ["k", "S"], alpha: 0.4700854700854701},
+    {name: "F", type: "Free", pos: [0.32, -4.0, -4.0], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
+    {name: "Z", type: "PointOnLine", pos: [0.0, -4.0, -4.0], color: [1.0, 0.0, 0.0], args: ["k"], pinned: true, size: 0.0},
+    {name: "m", type: "Segment", color: [0.0, 0.0, 0.0], args: ["F", "Z"], size: 3},
+    {name: "P0", type: "PointOnLine", pos: [3.98636331868085, -0.0, 4.0], color: [1.0, 0.0, 0.0], args: ["l"], pinned: true, size: 0.0, printname: "$P_{0}$"},
+    {name: "P2", type: "PointOnLine", pos: [4.0, -0.0, 2.003675738277106], color: [1.0, 0.0, 0.0], args: ["l"], pinned: true, size: 0.0, printname: "$P_{2}$"},
+    {name: "o", type: "Through", pos: [-2.003675738277106, 0.09543007877491057, 4.0], color: [0.0, 0.0, 0.0], args: ["P2"], pinned: true, size: 3, clip: "inci"},
+    {name: "P3", type: "PointOnLine", pos: [4.0, -0.11872022739196121, 2.006508108440153], color: [1.0, 0.0, 0.0], args: ["o"], pinned: true, size: 0.0},
+    {name: "P4", type: "PointOnLine", pos: [4.0, -0.0, 1.3333333333333333], color: [1.0, 0.0, 0.0], args: ["l"], size: 0.0},
+    {name: "p", type: "Through", pos: [-1.3333333333333333, -0.0, 4.0], color: [0.0, 0.0, 0.0], args: ["P4"], pinned: true, size: 3, clip: "inci"},
+    {name: "P5", type: "PointOnLine", pos: [4.0, -0.08816601336734932, 1.333333333333333], color: [1.0, 0.0, 0.0], args: ["p"], pinned: true, size: 0.0, printname: "$P_{5}$"},
+    {name: "n", type: "Through", pos: [4.0, -0.0, -3.98636331868085], color: [0.0, 0.0, 0.0], args: ["P0"], pinned: true, size: 3, clip: "inci"},
+    {name: "P6", type: "PointOnLine", pos: [3.98636331868085, -0.28339075725219304, 4.0], color: [1.0, 0.0, 0.0], args: ["n"], pinned: true, size: 0.0, printname: "$P_{6}$"},
+    {name: "q", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["b", "Z"], clip: "inci", dashtype: "dashed"},
+    {name: "P1", type: "PointOnLine", pos: [3.039398123270888, -4.0, -4.0], color: [1.0, 0.0, 0.0], args: ["q"], pinned: true, size: 0.0, printname: "$P_{1}$"},
+    {name: "P7", type: "PointOnLine", pos: [-0.6195812048228153, -1.5869882406122815, 4.0], color: [0.0, 0.0, 1.0], args: ["h"], printname: "$P_{7}$"},
+    {name: "r", type: "Segment", color: [0.0, 0.0, 1.0], args: ["V", "P7"], size: 3},
+    {name: "Text2", type: "Text", pos: [-0.9432569136701663, -4.0, -3.800629297433015], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$p(\\theta)$", textsize: 25.0, textitalics: true},
+    {name: "Text3", type: "Text", pos: [0.9927376124867026, 3.410642182332704, 4.0], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$L(\\theta)=p(y|\\theta)$", textsize: 25.0, textitalics: true},
+    {name: "Text4", type: "Text", pos: [1.0032532304661312, 2.7481582496287036, 4.0], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$p(\\theta|y)$", textsize: 25.0, textitalics: true},
+    {name: "Text5", type: "Text", color: [0.0, 0.0, 0.0], args: ["dist2", "W"], visible: false, text: "|@$\"T\"@$\"C\"|= @#\"dist2\"", dock: {to: "W", offset: [3.0, 3.0]}},
+    {name: "Text7", type: "Text", color: [0.0, 0.0, 0.0], args: ["dist3", "X"], visible: false, text: "|@$\"U\"@$\"D\"|= @#\"dist3\"", dock: {to: "X", offset: [3.0, 3.0]}},
+    {name: "Text8", type: "Text", color: [0.0, 0.0, 0.0], args: ["dist4", "Y"], visible: false, text: "|@$\"E\"@$\"V\"|= @#\"dist4\"", dock: {to: "Y", offset: [3.0, 3.0]}},
+    {name: "Text0", type: "Text", pos: [0.4007174181305069, -4.0, -3.8607831777159194], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "1", textsize: 22.0},
+    {name: "Text9", type: "Text", pos: [4.0, -0.3239396115578461, 2.1103866945864995], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "2", textsize: 22.0},
+    {name: "Text10", type: "Text", pos: [4.0, -0.2208778627456308, 1.3769327967791438], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "3", textsize: 22.0},
+    {name: "Text6", type: "Text", pos: [3.5983898226733904, -0.6416518315557531, 4.0], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "1", textsize: 22.0},
+    {name: "Text1", type: "Text", pos: [-2.7772294210714925, -1.5680955234621352, 4.0], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 3/24", textsize: 15.0}
+  ],
+  ports: [{
+    width: 989,
+    height: 485,
+    id: "CSCanvas",
+    transform: [{visibleRect: [-0.9281047300009325, 1.7735538224699754, 3.7431195853727175, -0.5171881319852525]}],
+    axes: true,
+    grid: 0.5,
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  use: ["katex"],
+  cinderella: {build: 2083, version: [3, 0, 2083]}
+});
+    </script>
+</head>
+<body>
+
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+<h1>Bayes Estimation</h1> 
+
+
+The animation (generated with  <a href="http://www.cinderella.de">Cinderella</a>) shows the Bayes estimation of a single parameter from a single observation.
+    
+<p> Bayes estimation is a well-established method for information fusion based on a probabilistic setup. The parameter &theta; is to be estimated. The prior information is encoded by the density p(&theta;). In addition we have the observation y, which is related to the parameter &theta; by the likelihood function L(&theta;)=p(y|&theta;). It is the conditional probability density for y given some value &theta; and tells how likely some value &theta; is, if an observational value is given.  Bayes' theorem provides the a posteriori density p(&theta;|y)=p(&theta;)p(y|&theta;)/p(y). A maximum a posteriori estimate then is the maximum of this density. </p>
+
+<p> The example shown below assumes the prior density is a mixture of two Gaussians with the same standard deviation &sigma;=0.15, the means &mu;<sub>1</sub> and &mu;<sub>2</sub>, and the probabilities P<sub>1</sub>=P(&mu;= &mu;<sub>1</sub>) and P<sub>2</sub>=1-P<sub>1</sub>.  The observation with (a usually high) probability P<sub>in</sub> is an inlier with a standard deviation of &sigma;<sub>y</sub>. Otherwise it is assumed to be an outlier, randomly lying in the interval [0,3]. </p>
+
+<p> You can interactively change (1) the two mean values &mu;<sub>1</sub> and &mu;<sub>2</sub>  by shifting the lower red points to the left or the right, (2) the prior probability P<sub>1</sub> for the mean  &mu;<sub>1</sub> by shifting the left red point up or down, enforcing P<sub>1</sub>&#8712;[0,1], (3) the probability P<sub>in</sub> by shifting the left blue point up or down, again enforcing P<sub>in</sub>&#8712;[0,1], (4) the observational value y by shifting the lower blue point to the left or the right, and its standard deviation &sigma;<sub>y</sub> (being the distance to the ordinate axis) by shifting the lower left blue point to the right or left.</p> 
+
+    
+<p> Depending on the chosen values, the applet then shows (1) the prior density p(&theta;) as red curve, (2) the likelihood  L(&theta;)=p(y|&theta;) as dashed blue curve, and (3) the resulting posterior density p(&theta;|y) as the green curve. The initial configuration assumes the means are  &mu;<sub>1</sub>=1.2 and &mu;<sub>2</sub>=1.6, the mean &mu;<sub>1</sub> is slightly more probable than the mean &mu;<sub>2</sub>, namely P<sub>1</sub>=0.55, the inlier rate is P<sub>in</sub>=90&#37;, and the observational value is y=1.5. All values are shown with two digits. </p>
+    
+
+    <h2>Explore the configuration:</h2>
+    <ul>
+      <li> - Change each of the values individually and explore the effect onto the three functions, and especially onto the maximum of the posterior density p(&theta;|y). </li>
+ 			
+ 			<li> - Choose P<sub>in</sub>=90&#37;, and explore the effect of the other free parameters. Compare the effect of y onto the maximum of the posterior density p(&theta;|y).</li>
+
+                       <li> - Choose &mu;<sub>1</sub>=&mu;<sub>2</sub> and explore the effect of the other free parameters. </li>
+ 			
+	    <li> - Can you find a case where the posterior density has three relative maxima of the same density value? Explain the situation. </li>
+	        </ul>
+
+    <div id="CSCanvas"></div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>weighted-mean-of-points.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csmove" type="text/x-cindyscript">
+//Script (CindyScript)
+// weighted mean of two points
+// functions
+fe=3;   // size of lines for ellipses
+covm(a,b,p):=(
+regional(D,R);
+	D=[[a^2,0],[0,b^2]];
+	R=[[cos(p),-sin(p)],[sin(p),cos(p)]];
+	Cov=R*D*transpose(R);
+);
+parellipse(S):=(
+  regional(v,l);
+  v=eigenvectors(S);
+  l=eigenvalues(S);
+  av=sqrt(l_1)*column(v,1);
+  bv=sqrt(l_2)*column(v,2);
+);
+standardellipse(t,P,S,c,s):=(
+  //regional(S,c,s);
+  parellipse(S);
+  plot(P+av*cos(t)+bv*sin(t),color->c,size->s);
+);
+//
+x1=B;
+x2=C;
+a1=|F-D|;
+b1=|E-D|;
+a2=|K-G|;
+b2=|H-G|;
+p1=f.angle;
+p2=g.angle;
+//println([a1,b1,p1,a2,b2,p2]);
+
+S1=covm(a1,b1,p1);W1=inverse(S1);
+S2=covm(a2,b2,p2);W2=inverse(S2);
+//println(S1);
+//println(S2);
+//parellipse(t,B,S1);
+standardellipse(t,B,S1,[1,0,0],fe);
+standardellipse(t,C,S2,[1,0,0],fe);
+// 
+eye=[[1,0],[0,1]];
+Sm=inverse(W1+W2);
+xm=Sm*(W1*B+W2*C);
+standardellipse(t,xm,Sm,[1,0,0],fe);
+s:=(a1*a2*b1*b2)^(1/4);   // geometric mean
+drawtext(B+(s)*[1,1],"$\sigma=(a_1 b_1 a_2 b_2)^{1/4}=$"+round(s*100)/100,size->25,family->"Times New Roman",color->[0,0,0]);
+//
+
+S01=s^2*[[1,0],[0,1]];W01=inverse(S01);
+S02=s^2*[[1,0],[0,1]];W02=inverse(S02);
+standardellipse(t,B,S01,[0,0,1],fe);
+standardellipse(t,C,S02,[0,0,1],fe);
+S0m=inverse(W01+W02);
+x0m=S0m*(W01*B+W02*C);
+standardellipse(t,x0m,S0m,[0,0,1],fe);
+//
+S0S=(S1+S2)/4;
+standardellipse(t,x0m,S0S,[1,1,1],fe);
+families=fontfamilies();                        // find fonts and provide input
+drawtext(B+[0.2,0.2],"$x_1$",size->25,family->"Times New Roman");
+drawtext(C+[0.2,0.2],"$x_2$",size->25,family->"Times New Roman");
+drawtext(E+[0,0.4],"$b_1=$"+round(b1*100)/100,size->25,family->"Times New Roman");
+drawtext(F-[0,0.8],"$a_1=$"+round(a1*100)/100,size->25,family->"Times New Roman");
+drawtext(H+[0,0.4],"$b_2=$"+round(b2*100)/100,size->25,family->"Times New Roman");
+drawtext(K-[0,0.8],"$a_2=$"+round(a2*100)/100,size->25,family->"Times New Roman");
+draw((B+C)/2,size->5,color->[0,0,1]);
+drawtext((B+C)/2+[0.2,0.2],"$m_0$",size->25,family->"Times New Roman");
+draw(xm,size->5,color->[1,0,0]);
+drawtext(xm+[0.2,0.2],"$m$",size->25,family->"Times New Roman");
+
+
+;
+
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [0.0, 0.0, 4.0], color: [1.0, 0.0, 0.0], pinned: true, size: 2.0},
+    {name: "a", type: "Through", pos: [0.0, -4.0, 0.0], color: [0.0, 0.0, 1.0], args: ["A"], pinned: true},
+    {name: "b", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["a", "A"]},
+    {name: "B", type: "Free", pos: [4.0, 4.0, 0.4444444444444444], color: [1.0, 1.0, 0.0]},
+    {name: "C", type: "Free", pos: [4.0, 1.1428571428571428, 0.5714285714285714], color: [1.0, 1.0, 0.0]},
+    {name: "D", type: "Free", pos: [3.111111111111111, -4.0, -0.4444444444444444], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
+    {name: "c", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["b", "D"], clip: "inci"},
+    {name: "d", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "D"], clip: "inci"},
+    {name: "E", type: "PointOnLine", pos: [2.755555555555556, -4.0, -0.4444444444444445], color: [1.0, 0.0, 0.0], args: ["d"]},
+    {name: "F", type: "PointOnLine", pos: [2.4, -4.0, -0.4444444444444445], color: [1.0, 0.0, 0.0], args: ["d"]},
+    {name: "G", type: "PointOnLine", pos: [4.0, -3.428571428571429, -0.5714285714285714], color: [1.0, 0.0, 0.0], args: ["c"], pinned: true, size: 1.0},
+    {name: "e", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "G"], clip: "inci"},
+    {name: "H", type: "PointOnLine", pos: [4.0, -3.8095238095238106, -0.634920634920635], color: [1.0, 0.0, 0.0], args: ["e"]},
+    {name: "K", type: "PointOnLine", pos: [2.8000000000000003, -4.0, -0.6666666666666665], color: [1.0, 0.0, 0.0], args: ["e"]},
+    {name: "f", type: "Through", pos: [-0.0640640640640641, -0.38038038038038036, 4.0], color: [0.0, 0.0, 1.0], args: ["B"]},
+    {name: "g", type: "Through", pos: [1.4558809370648094, -4.0, -2.1911665594536673], color: [0.0, 0.0, 1.0], args: ["C"]},
+    {name: "h", type: "Segment", color: [0.0, 0.0, 1.0], args: ["B", "C"], dashtype: "dashed"},
+    {name: "Text0", type: "Text", pos: [4.0, -0.3739294541090078, -0.5698573804316129], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 4/24", textsize: 15.0},
+    {name: "Text1", type: "Text", color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$5$", textsize: 20.0, dock: {corner: "LL", offset: [389.0, 5.0]}},
+    {name: "Text2", type: "Text", color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$10$", textsize: 20.0, dock: {corner: "LL", offset: [532.0, 5.0]}},
+    {name: "Text3", type: "Text", pos: [0.7695614032965747, -4.0, -0.8404762319266916], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$5$", textsize: 20.0},
+    {name: "Text4", type: "Text", pos: [0.43006173306502277, -4.0, -0.4090906667595132], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$10$", textsize: 20.0},
+    {name: "Text5", type: "Text", color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$15$", textsize: 20.0, dock: {corner: "LL", offset: [681.0, 5.0]}}
+  ],
+  ports: [{
+    width: 838,
+    height: 385,
+    id: "CSCanvas",
+    transform: [{visibleRect: [-8.42646206691548, 11.986938996598077, 19.98953476236087, -1.0681430789047792]}],
+    axes: true,
+    grid: 1.0,
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  use: ["katex"],
+  cinderella: {build: 2083, version: [3, 0, 2083]}
+});
+    </script>
+</head>
+<body>
+    <div id="CSCanvas"></div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+
+<h1>Uncertain Plane through Three Points</h1> 
+
+
+The  animation (generated with  <a href="http://www.cinderella.de">Cinderella</a>) visualizes the uncertainty of a plane through three points.
+    
+<p> Three non-collinear points define a plane. If the points are uncertain, the plane is uncertain. The uncertainty of a plane can be characterized by (1) the uncertainty of the position of the plane along the normal, and (2) the uncertainty of the direction of the normal, which has a maximum across the normal in one direction and a minimum perpendicular to this direction. For a set of N 3D-points, which are close to a plane, these three standard deviations can be obtained from the eigenvalues of the central moment matrix of the points: the minimal eigenvalue provides the variance of the position, while the other two eigenvalues provide the variance of the normal in the two principal directions of the point cloud. The predicted standard interval (&pm; the standard deviation) of an arbitrary point on the plane increases with distance from the centroid of the point and can be visualized by a hyperboloid of two sheets. The animation wants to give an idea of this uncertainty situation. </p>
+
+
+
+<p> The animation refers to the case N=3, where the three points X, Y, and Z lie on a circle (in green) with radius r<sub>1</sub> in the XY-plane and have the same standard deviation &sigma; in Z-direction. The two thick blue curves are the intersection of the resulting uncertainty hyperboloid with the vertical cylinder having radius r<sub>1</sub>. The principal axes of the set of the three points are shown as the two dashed blue lines, which intersect in the centroid of the triangle. </p>
+
+<p> You can interactively change (1) the position of the three points X, Y, and Z by moving their pre-images X',Y', and Z' on the thin light red circle, (2) the standard deviation &sigma; of the Z-coordinates of the points by moving the left blue point up or down, (3) the viewing angle, namely the semi-axis b of the green ellipse by moving the left black point up or down, and (4) the radius r<sub>1</sub> of the circle, by moving the small black point to the right or left.</p> 
+
+    
+
+    <h2>Explore the configuration:</h2>
+    <ol>
+      <li>  - Move one of the three points and observe the change of the uncertainty region. Hint: Possibly change the view or the standard deviation </li>
+ 			
+ 			<li>  - Find a situation where the uncertainty is the same in all directions. Slightly shift one point along the circle. What effect do you observe? Explain.</li>
+ 			
+ 			<li>  - Under which conditions does on principal axis pass through one of the three points. Explain. Hint: Possibly choose b=r, to have a vertical view onto the triangle.</li>
+ 			
+	    
+	        </ol>

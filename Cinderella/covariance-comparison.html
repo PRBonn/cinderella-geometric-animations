@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>covariance-comparison.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csinit" type="text/x-cindyscript">
+//Script (CindyScript)
+rd1(x):=round(10*x)/10;
+rd2(x):=round(100*x)/100;
+rd3(x):=round(1000*x)/1000;
+
+direction(AA,BB):=(
+(BB-AA)/|BB-AA|;);
+
+fs=25;
+sc=0.6;
+scs=0.8;
+fonts="Times New Roman";
+dl=-[0.3,0.3];
+;
+
+</script>
+<script id="csmove" type="text/x-cindyscript">
+//Script (CindyScript)
+// postion text
+
+drawtext(P39+[0.15,0],"$\sqrt{\lambda}_2="+dist3,size->fs,family->fonts);
+drawtext(P42+[0.15,0],"$\sqrt{\lambda}_1="+dist2,size->fs,family->fonts);
+
+dA1=direction(G.xy,P12.xy);
+dA2=direction(G.xy,P11.xy);
+dA1s=-dA1;
+dA2s=-dA2;
+dB1=direction(G.xy,P7.xy);
+dB2=direction(G.xy,P8.xy);
+dB1s=-dB1;
+dB2s=-dB2;
+drawtext(P12+sc*dA1+dl,"$A_1$",size->fs,family->fonts,italics->true);
+drawtext(P11+sc*dA2+dl,"$A_2$",size->fs,family->fonts,italics->true);
+drawtext(P5+scs*dA1s+dl,"$A'_1$",size->fs,family->fonts,italics->true);
+drawtext(P4+scs*dA2s+dl,"$A'_2$",size->fs,family->fonts,italics->true);
+drawtext(P7+sc*dB1+dl,"$B_1$",size->fs,family->fonts,italics->true);
+drawtext(P8+sc*dB2+dl,"$B_2$",size->fs,family->fonts,italics->true);
+drawtext(P10+scs*dB1s+dl,"$B'_1$",size->fs,family->fonts,italics->true);
+drawtext(P9+scs*dB2s+dl,"$B'_2$",size->fs,family->fonts,italics->true);
+;
+
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 1.0,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [4.0, -2.647887323943662, -0.3178960662584549], color: [1.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, size: 0.0},
+    {name: "a", type: "Through", pos: [0.0, -0.4802259724329851, 4.0], color: [1.0, 0.0, 0.0], args: ["A"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "b", type: "Orthogonal", color: [0.467, 0.0, 0.718], args: ["a", "A"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "B", type: "PointOnLine", pos: [4.0, -3.0704225352112684, -0.31789606625845485], color: [1.0, 0.0, 0.0], args: ["b"], alpha: 0.8999999761581421, pinned: true, size: 0.0},
+    {name: "C", type: "PointOnLine", pos: [3.446808510638299, -4.0, -0.48022597243298515], color: [1.0, 0.0, 0.0], args: ["a"], alpha: 0.8999999761581421, size: 4.0},
+    {name: "D", type: "PointOnLine", pos: [4.0, -3.3176470588235305, -0.39830507125324066], color: [1.0, 0.0, 0.0], args: ["a"], alpha: 0.8999999761581421, size: 4.0},
+    {name: "c", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "B"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "E", type: "PointOnLine", pos: [4.0, -3.7371428571428593, -0.38692492636029074], color: [1.0, 0.0, 0.0], args: ["c"], alpha: 0.8999999761581421, size: 4.0},
+    {name: "F", type: "PointOnLine", pos: [3.1926605504587147, -4.0, -0.4141398294376199], color: [1.0, 0.0, 0.0], args: ["c"], alpha: 0.8999999761581421, size: 4.0},
+    {name: "G", type: "Free", pos: [-2.8333333333333335, -4.0, -0.9404425293479289], color: [1.0, 0.0, 0.0], alpha: 0.8999999761581421},
+    {name: "d", type: "Through", pos: [-0.9150251636898767, -0.2922997050675996, 4.0], color: [1.0, 0.0, 0.0], args: ["G"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "e", type: "Through", pos: [-0.4154101970125821, -0.6461936397973499, 4.0], color: [0.0, 0.0, 1.0], args: ["G"], alpha: 0.8999999761581421, size: 2, clip: "inci"},
+    {name: "C0", type: "Compass", color: [0.0, 0.0, 1.0], args: ["A", "C", "G"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__1", type: "IntersectionConicLine", args: ["C0", "d"]},
+    {name: "H", type: "SelectP", pos: [-0.5819759992310913, -4.0, -0.42543037605760187], color: [1.0, 0.0, 0.0], args: ["Collection__1"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "K", type: "SelectP", pos: [4.0, -0.7691662969155963, 0.8588183932557851], color: [1.0, 0.0, 0.0], args: ["Collection__1"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "f", type: "Orthogonal", color: [1.0, 0.0, 0.0], args: ["d", "G"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "C1", type: "Compass", color: [1.0, 1.0, 0.0], args: ["A", "D", "G"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__2", type: "IntersectionConicLine", args: ["C0", "f"]},
+    {name: "L", type: "SelectP", pos: [4.0, 2.890632116346836, 0.4900944079953204], color: [1.0, 0.0, 0.0], args: ["Collection__2"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "Collection__3", type: "IntersectionConicLine", args: ["C1", "f"]},
+    {name: "Q", type: "SelectP", pos: [-0.6815997511629941, -4.0, -1.1493088603912223], color: [1.0, 0.0, 0.0], args: ["Collection__3"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "M", type: "SelectP", pos: [4.0, 3.700910674425085, 0.7363119248139718], color: [1.0, 0.0, 0.0], args: ["Collection__3"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "N", type: "PointOnCircle", pos: [{r: -2.211732658829914, i: 1.2975092942530203E-16}, -4.0, {r: -0.4330714597928117, i: 4.7908217916560125E-18}], color: [1.0, 0.0, 0.0], args: ["C0"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "g", type: "Join", color: [0.0, 0.0, 1.0], args: ["L", "N"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "O", type: "Meet", color: [1.0, 0.0, 0.0], args: ["d", "g"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "h", type: "Join", color: [0.0, 0.0, 1.0], args: ["M", "O"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "k", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["d", "N"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "P", type: "Meet", color: [1.0, 0.0, 0.0], args: ["h", "k"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "C2", type: "ConicBy5", color: [1.0, 0.0, 0.0], args: ["H", "K", "M", "P", "Q"], alpha: 0.8999999761581421, size: 4},
+    {name: "C3", type: "Compass", color: [0.0, 0.0, 1.0], args: ["B", "F", "G"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__4", type: "IntersectionConicLine", args: ["C3", "e"]},
+    {name: "R", type: "SelectP", pos: [0.631054956067227, -4.0, -0.5806569738909366], color: [1.0, 0.0, 0.0], args: ["Collection__4"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "S", type: "SelectP", pos: [4.0, 0.9099046558388388, 0.5624038473688456], color: [1.0, 0.0, 0.0], args: ["Collection__4"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "l", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["e", "G"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "C4", type: "Compass", color: [0.0, 0.0, 1.0], args: ["B", "E", "G"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__5", type: "IntersectionConicLine", args: ["C4", "l"]},
+    {name: "T", type: "SelectP", pos: [-3.042442439454302, -4.0, -1.691307443906444], color: [1.0, 0.0, 0.0], args: ["Collection__5"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "U", type: "SelectP", pos: [-2.7528086742164413, -4.0, -0.6512961482588078], color: [1.0, 0.0, 0.0], args: ["Collection__5"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "Collection__6", type: "IntersectionConicLine", args: ["C3", "l"]},
+    {name: "V", type: "SelectP", pos: [1.5093364187142022, 0.6150238850826582, 4.0], color: [1.0, 0.0, 0.0], args: ["Collection__6"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "W", type: "PointOnCircle", pos: [4.0, {r: 2.7249316164623827, i: 1.5915889425017798E-16}, {r: 0.5145624738163606, i: 3.9007576491560605E-18}], color: [1.0, 0.0, 0.0], args: ["C3"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "m", type: "Join", color: [0.0, 0.0, 1.0], args: ["V", "W"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "X", type: "Meet", color: [1.0, 0.0, 0.0], args: ["e", "m"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "n", type: "Join", color: [1.0, 1.0, 0.0], args: ["T", "X"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "o", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["e", "W"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "Y", type: "Meet", color: [1.0, 0.0, 0.0], args: ["n", "o"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "C5", type: "ConicBy5", color: [0.0, 0.0, 1.0], args: ["R", "S", "T", "U", "Y"], alpha: 0.8999999761581421, size: 4},
+    {name: "Collection__7", type: "IntersectionConicConic", args: ["C2", "C5"]},
+    {name: "P1", type: "SelectP", pos: [{r: -0.08489630174209317, i: 1.1397347641202832E-15}, -4.0, {r: -0.5342204146856474, i: 4.200210112561745E-16}], color: [1.0, 0.0, 0.0], args: ["Collection__7"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "P0", type: "SelectP", pos: [4.0, {r: 3.9908623713053317, i: 1.505773393066726E-15}, {r: 0.7499438828867984, i: -8.762925231546339E-17}], color: [1.0, 0.0, 0.0], args: ["Collection__7"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "Z", type: "SelectP", pos: [{r: -0.8687988863238822, i: 2.585679725494704E-16}, -4.0, {r: -1.255853226499427, i: -4.456511006595401E-16}], color: [1.0, 0.0, 0.0], args: ["Collection__7"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "P2", type: "SelectP", pos: [4.0, {r: 0.694838365939035, i: -2.9597144657546566E-16}, {r: 0.6818240848194728, i: -2.85081792720093E-17}], color: [1.0, 0.0, 0.0], args: ["Collection__7"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "q", type: "PolarOfPoint", color: [1.0, 1.0, 0.0], args: ["P2", "C2"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "t", type: "PolarOfPoint", color: [0.0, 0.0, 1.0], args: ["P1", "C2"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "S0", type: "Segment", color: [0.0, 0.0, 1.0], args: ["S", "R"], alpha: 0.8999999761581421, size: 2},
+    {name: "S1", type: "Segment", color: [1.0, 0.0, 0.0], args: ["H", "K"], alpha: 0.8999999761581421, size: 2},
+    {name: "S4", type: "Segment", color: [0.0, 0.0, 1.0], args: ["B", "F"], alpha: 0.8999999761581421, size: 2},
+    {name: "S5", type: "Segment", color: [1.0, 0.0, 0.0], args: ["A", "C"], alpha: 0.8999999761581421, size: 2},
+    {name: "S6", type: "Segment", color: [1.0, 0.0, 0.0], args: ["M", "Q"], alpha: 0.8999999761581421, size: 0},
+    {name: "S7", type: "Segment", color: [0.0, 0.0, 1.0], args: ["T", "U"], alpha: 0.8999999761581421, size: 0},
+    {name: "P13", type: "Free", pos: [4.0, 0.01680672268907563, 0.10504201680672269], color: [1.0, 0.0, 0.0], alpha: 0.8999999761581421, size: 2.0},
+    {name: "v", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["b", "P13"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "C6", type: "CircleByFixedRadius", color: [0.0, 0.0, 1.0], radius: 2.0, args: ["P13"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__8", type: "IntersectionConicLine", args: ["C6", "v"]},
+    {name: "P14", type: "SelectP", pos: [4.0, 0.22689075630252367, 0.10504201680672269], color: [1.0, 0.0, 0.0], args: ["Collection__8"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "w", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["v", "P13"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P18", type: "PointOnLine", pos: [4.0, -0.05633802816901409, -0.3178960662584549], color: [1.0, 0.0, 0.0], args: ["b"], alpha: 0.8999999761581421, pinned: true, size: 0.0},
+    {name: "z", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["c", "P18"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P19", type: "PointOnLine", pos: [4.0, -0.08204700597777195, -0.46296296296296297], color: [1.0, 0.0, 0.0], args: ["z"], alpha: 0.8999999761581421, pinned: true, size: 0.0},
+    {name: "l2", type: "Parallel", color: [0.718, 0.333, 0.0], args: ["b", "P19"], clip: "inci"},
+    {name: "P25", type: "Free", pos: [1.3333333333333333, -4.0, -0.38759689922480617], color: [1.0, 0.0, 0.0], alpha: 0.8999999761581421, visible: false, size: 0.0},
+    {name: "C13", type: "Compass", color: [0.0, 0.0, 1.0], args: ["P13", "P14", "P19"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__9", type: "IntersectionConicLine", args: ["C13", "l2"]},
+    {name: "P27", type: "SelectP", pos: [4.0, -1.0079729319037094, -0.4629629629629631], color: [1.0, 0.0, 0.0], args: ["Collection__9"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "l3", type: "Parallel", color: [0.0, 0.0, 0.0], args: ["z", "P27"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P28", type: "Meet", color: [1.0, 0.0, 0.0], args: ["b", "l3"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "S13", type: "Segment", color: [0.0, 0.0, 0.0], args: ["P28", "P27"], alpha: 0.8999999761581421},
+    {name: "p", type: "PolarOfPoint", color: [0.0, 0.0, 1.0], args: ["P0", "C2"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "P3", type: "Meet", color: [1.0, 0.0, 0.0], args: ["p", "q"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "r", type: "PolarOfPoint", color: [0.0, 0.0, 1.0], args: ["P3", "C2"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "s", type: "Join", color: [1.0, 1.0, 0.0], args: ["G", "P3"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "Collection__10", type: "IntersectionConicLine", args: ["C2", "s"]},
+    {name: "P4", type: "SelectP", pos: [{r: -0.11381967994814025, i: 1.8521539874245126E-16}, -4.0, {r: -0.7340188090964876, i: 2.2314884184923245E-16}], color: [1.0, 1.0, 0.0], args: ["Collection__10"], alpha: 0.8999999761581421, size: 3.0},
+    {name: "P11", type: "SelectP", pos: [4.0, {r: 2.0830923401907424, i: -1.2016373106030077E-15}, {r: 0.681376633259448, i: -2.3816068584173555E-17}], color: [1.0, 1.0, 0.0], args: ["Collection__10"], alpha: 0.8999999761581421, size: 3.0},
+    {name: "Collection__11", type: "IntersectionConicLine", args: ["C5", "s"]},
+    {name: "P5", type: "SelectP", pos: [{r: 0.827889807433625, i: -1.360729930878898E-16}, -4.0, {r: -0.6625386841339056, i: 2.7116500692448573E-16}], color: [1.0, 1.0, 0.0], args: ["Collection__11"], alpha: 0.8999999761581421, size: 3.0},
+    {name: "P12", type: "SelectP", pos: [4.0, {r: 1.3576439376874512, i: -1.4157137638625517E-15}, {r: 0.5498203075786346, i: -2.3129596482970142E-17}], color: [1.0, 1.0, 0.0], args: ["Collection__11"], alpha: 0.8999999761581421, size: 3.0},
+    {name: "P6", type: "Meet", color: [1.0, 0.0, 0.0], args: ["p", "t"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "u", type: "Join", color: [1.0, 1.0, 0.0], args: ["G", "P6"], alpha: 0.8999999761581421, size: 0, clip: "inci"},
+    {name: "Collection__12", type: "IntersectionConicLine", args: ["C5", "u"]},
+    {name: "P10", type: "SelectP", pos: [{r: -1.538696868777249, i: -2.5237756086885285E-16}, -4.0, {r: -0.5746808403205184, i: -1.3072064652598882E-17}], color: [1.0, 1.0, 0.0], args: ["Collection__12"], alpha: 0.8999999761581421, size: 3.0},
+    {name: "P7", type: "SelectP", pos: [4.0, {r: 1.847341300034275, i: 3.9786503510637587E-16}, {r: 1.1947247878009506, i: 1.3497811195356504E-16}], color: [1.0, 1.0, 0.0], args: ["Collection__12"], alpha: 0.8999999761581421, size: 3.0},
+    {name: "Collection__13", type: "IntersectionConicLine", args: ["C2", "u"]},
+    {name: "P9", type: "SelectP", pos: [{r: -1.02359259151413, i: -3.3641367259968673E-16}, -4.0, {r: -0.42915318399762625, i: -1.3645779096600855E-17}], color: [1.0, 1.0, 0.0], args: ["Collection__13"], alpha: 0.8999999761581421, size: 3.0},
+    {name: "P8", type: "SelectP", pos: [4.0, {r: -0.8944626729405968, i: 1.5167192338932555E-16}, {r: 1.0987842560810084, i: 2.1371517654339283E-16}], color: [1.0, 1.0, 0.0], args: ["Collection__13"], alpha: 0.8999999761581421, size: 3.0},
+    {name: "S2", type: "Segment", color: [1.0, 1.0, 0.0], args: ["P11", "P4"], alpha: 0.8999999761581421},
+    {name: "S3", type: "Segment", color: [1.0, 1.0, 0.0], args: ["P7", "P10"], alpha: 0.8999999761581421},
+    {name: "S8", type: "Segment", color: [1.0, 1.0, 0.0], args: ["P8", "P9"], alpha: 0.8999999761581421},
+    {name: "C7", type: "Compass", color: [0.0, 0.0, 1.0], args: ["G", "P12", "P13"], alpha: 0.8999999761581421, size: 0},
+    {name: "C8", type: "Compass", color: [0.0, 0.0, 1.0], args: ["G", "P11", "P13"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__14", type: "IntersectionConicLine", args: ["C7", "w"]},
+    {name: "P15", type: "SelectP", pos: [4.0, {r: 0.014988061751328084, i: -4.339733971314942E-19}, {r: 0.09367538594580052, i: -2.712333732071839E-18}], color: [1.0, 0.0, 0.0], args: ["Collection__14"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "Collection__15", type: "IntersectionConicLine", args: ["C8", "w"]},
+    {name: "P16", type: "SelectP", pos: [4.0, {r: 0.015542304390539547, i: -3.1287587534761785E-19}, {r: 0.09713940244087216, i: -1.9554742209226117E-18}], color: [1.0, 0.0, 0.0], args: ["Collection__15"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "x", type: "Join", color: [0.0, 0.0, 1.0], args: ["P14", "P15"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "y", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["x", "P16"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P17", type: "Meet", color: [1.0, 0.0, 0.0], args: ["v", "y"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "C9", type: "Compass", color: [0.0, 0.0, 1.0], args: ["P13", "P17", "P18"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__16", type: "IntersectionConicLine", args: ["C9", "b"]},
+    {name: "P20", type: "SelectP", pos: [4.0, {r: -0.4826075153005624, i: -1.6493614387433127E-30}, {r: -0.3178960662584549, i: 4.0944323610813006E-48}], color: [1.0, 0.0, 0.0], args: ["Collection__16"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "C10", type: "Compass", color: [0.0, 0.0, 1.0], args: ["G", "P7", "P13"], alpha: 0.8999999761581421, size: 0},
+    {name: "C11", type: "Compass", color: [0.0, 0.0, 1.0], args: ["G", "P8", "P13"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__17", type: "IntersectionConicLine", args: ["C11", "w"]},
+    {name: "P22", type: "SelectP", pos: [4.0, {r: 0.01481958877602885, i: 1.3079565968611256E-19}, {r: 0.09262242985018032, i: 8.174728730382035E-19}], color: [1.0, 0.0, 0.0], args: ["Collection__17"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "Collection__18", type: "IntersectionConicLine", args: ["C10", "w"]},
+    {name: "P21", type: "SelectP", pos: [4.0, {r: 0.01568329436566722, i: 7.825511024282304E-20}, {r: 0.09802058978542011, i: 4.8909443901764395E-19}], color: [1.0, 0.0, 0.0], args: ["Collection__18"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "l0", type: "Join", color: [0.0, 0.0, 1.0], args: ["P14", "P21"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l1", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["l0", "P22"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P23", type: "Meet", color: [1.0, 0.0, 0.0], args: ["v", "l1"], alpha: 0.8999999761581421, size: 2.0},
+    {name: "C12", type: "Compass", color: [0.0, 0.0, 0.0], args: ["P13", "P23", "P19"], alpha: 0.8999999761581421, size: 0},
+    {name: "Collection__19", type: "IntersectionConicLine", args: ["C12", "l2"]},
+    {name: "P24", type: "SelectP", pos: [4.0, {r: -1.815288797360821, i: -5.1043783438860875E-30}, -0.46296296296296297], color: [1.0, 0.0, 0.0], args: ["Collection__19"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "S9", type: "Segment", color: [0.467, 0.0, 0.718], args: ["P18", "P20"], alpha: 0.8999999761581421, size: 2, arrowshape: "jet", arrowsides: "==>", arrowsize: 1.2000000000000002, arrowposition: 1.0},
+    {name: "S11", type: "Segment", color: [0.718, 0.333, 0.0], args: ["P19", "P24"], size: 2, arrowshape: "jet", arrowsides: "==>", arrowsize: 1.2000000000000002, arrowposition: 1.0},
+    {name: "S12", type: "Segment", color: [1.0, 1.0, 0.0], args: ["P12", "P5"], alpha: 0.8999999761581421},
+    {name: "l4", type: "PolarOfPoint", color: [0.0, 0.0, 1.0], args: ["P9", "C2"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l5", type: "PolarOfPoint", color: [0.0, 0.0, 1.0], args: ["P10", "C5"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l6", type: "Orthogonal", color: [1.0, 1.0, 0.0], args: ["l5", "G"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P29", type: "Meet", color: [1.0, 0.0, 0.0], args: ["l5", "l6"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "P30", type: "Meet", color: [1.0, 0.0, 0.0], args: ["l4", "l6"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "C14", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["G", "P30"], alpha: 0.0},
+    {name: "P31", type: "OtherIntersectionCL", color: [1.0, 0.0, 0.0], args: ["C14", "l6", "P30"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "C15", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["G", "P29"], alpha: 0.0},
+    {name: "P32", type: "OtherIntersectionCL", color: [1.0, 0.0, 0.0], args: ["C15", "l6", "P29"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "S14", type: "Segment", color: [1.0, 1.0, 0.0], args: ["P29", "P32"], alpha: 0.8999999761581421},
+    {name: "S15", type: "Segment", color: [1.0, 1.0, 0.0], args: ["P30", "P31"], alpha: 0.8999999761581421},
+    {name: "l8", type: "Join", color: [0.0, 0.0, 1.0], args: ["P7", "P32"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l9", type: "PolarOfPoint", color: [0.0, 0.0, 1.0], args: ["P5", "C5"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l10", type: "PolarOfPoint", color: [1.0, 0.0, 0.0], args: ["P4", "C2"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l11", type: "Orthogonal", color: [1.0, 1.0, 0.0], args: ["l10", "G"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P33", type: "Meet", color: [1.0, 0.0, 0.0], args: ["l10", "l11"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P34", type: "Meet", color: [1.0, 0.0, 0.0], args: ["l9", "l11"], alpha: 0.8999999761581421, size: 1.0},
+    {name: "C16", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["G", "P34"], alpha: 0.0},
+    {name: "P35", type: "OtherIntersectionCL", color: [1.0, 0.0, 0.0], args: ["C16", "l11", "P34"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "C17", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["G", "P33"], alpha: 0.0},
+    {name: "P36", type: "OtherIntersectionCL", color: [1.0, 0.0, 0.0], args: ["C17", "l11", "P33"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "l12", type: "Join", color: [0.0, 0.0, 1.0], args: ["P12", "P35"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "l13", type: "Join", color: [1.0, 0.0, 0.0], args: ["P11", "P36"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "S16", type: "Segment", color: [1.0, 1.0, 0.0], args: ["P34", "P35"], alpha: 0.8999999761581421},
+    {name: "S17", type: "Segment", color: [1.0, 1.0, 0.0], args: ["P33", "P36"], alpha: 0.8999999761581421},
+    {name: "l7", type: "Join", color: [0.0, 0.0, 1.0], args: ["P8", "P31"], alpha: 0.8999999761581421, clip: "inci"},
+    {name: "P37", type: "Free", pos: [4.0, -2.590604026845637, -0.33557046979865773], color: [1.0, 0.0, 0.0], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P38", type: "Free", pos: [4.0, -2.848484848484848, -0.3787878787878788], color: [1.0, 0.0, 0.0], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P39", type: "Mid", color: [1.0, 0.0, 0.0], args: ["P20", "P18"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P40", type: "Free", pos: [4.0, 0.6185567010309277, -0.34364261168384874], color: [1.0, 0.0, 0.0], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P41", type: "Mid", color: [1.0, 0.0, 0.0], args: ["P27", "P40"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P42", type: "Mid", color: [1.0, 0.0, 0.0], args: ["P24", "P19"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P43", type: "Meet", color: [1.0, 0.0, 0.0], args: ["c", "S4"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P44", type: "Mid", color: [1.0, 0.0, 0.0], args: ["B", "P43"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P45", type: "Mid", color: [1.0, 0.0, 0.0], args: ["E", "B"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P46", type: "Mid", color: [1.0, 0.0, 0.0], args: ["F", "B"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P47", type: "Mid", color: [1.0, 0.0, 0.0], args: ["D", "A"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "P48", type: "Mid", color: [1.0, 0.0, 0.0], args: ["C", "A"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "dist0", type: "Dist", color: [0.0, 0.0, 1.0], args: ["P19", "P24"], alpha: 0.8999999761581421},
+    {name: "dist1", type: "Dist", color: [0.0, 0.0, 1.0], args: ["P18", "P20"], alpha: 0.8999999761581421},
+    {name: "C18", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["G", "P11"], alpha: 0.0, size: 2},
+    {name: "P49", type: "Mid", color: [0.718, 0.333, 0.0], args: ["P19", "P42"], size: 0.0},
+    {name: "dist2", type: "Dist", color: [0.0, 0.0, 1.0], args: ["P19", "P42"], alpha: 0.8999999761581421},
+    {name: "P50", type: "Mid", color: [0.467, 0.0, 0.718], args: ["P18", "P39"], alpha: 0.8999999761581421, size: 0.0},
+    {name: "dist3", type: "Dist", color: [0.0, 0.0, 1.0], args: ["P18", "P39"], alpha: 0.8999999761581421},
+    {name: "S19", type: "Segment", color: [0.0, 0.0, 1.0], args: ["P34", "G"], alpha: 0.8999999761581421, dashtype: "dashed", arrowshape: "jet", arrowsides: "<==", arrowsize: 1.4000000000000001, arrowposition: 1.0},
+    {name: "S20", type: "Segment", color: [1.0, 0.0, 0.0], args: ["G", "P30"], alpha: 0.8999999761581421, dashtype: "dashed", arrowshape: "jet", arrowsides: "==>", arrowsize: 1.6, arrowposition: 1.0},
+    {name: "Text0", type: "Text", pos: [4.0, 0.5523809523809524, -0.3224374386335756], color: [0.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, text: "wf 03/2003", textsize: 15.0},
+    {name: "Text1", type: "Text", color: [0.0, 0.0, 0.0], args: ["E"], alpha: 0.8999999761581421, text_fontfamily: "serif", text: "$b_1$", textsize: 24.0, textitalics: true, dock: {to: "E", offset: [7.357441098410675, 11.0]}},
+    {name: "Text2", type: "Text", color: [0.0, 0.0, 0.0], args: ["F"], alpha: 0.8999999761581421, text_fontfamily: "serif", text: "$a_1$", textsize: 24.0, textitalics: true, dock: {to: "F", offset: [4.0, 7.239603960396039]}},
+    {name: "Text3", type: "Text", color: [0.0, 0.0, 0.0], args: ["C"], alpha: 0.8999999761581421, text_fontfamily: "serif", text: "$a_2$", textsize: 24.0, textitalics: true, dock: {to: "C", offset: [3.0, 6.235643564356451]}},
+    {name: "Text4", type: "Text", color: [0.0, 0.0, 0.0], args: ["D"], alpha: 0.8999999761581421, text_fontfamily: "serif", text: "$b_2$", textsize: 24.0, textitalics: true, dock: {to: "D", offset: [5.0, 10.235643564356508]}},
+    {name: "Text5", type: "Text", color: [0.0, 0.0, 0.0], args: ["G"], alpha: 0.8999999761581421, text_fontfamily: "serif", text: "$O$", textsize: 24.0, textitalics: true, dock: {to: "G", offset: [8.0, -15.0]}},
+    {name: "Text8", type: "Text", color: [0.0, 0.0, 0.0], args: ["P28"], text_fontfamily: "serif", text: "1", textsize: 24.0, dock: {to: "P28", offset: [-16.716831683168436, -1.415841584159466]}}
+  ],
+  ports: [{
+    width: 1040,
+    height: 502,
+    id: "CSCanvas",
+    transform: [{visibleRect: [-17.500626375058754, 12.124906543395138, 13.21777266301906, -2.702628376907808]}],
+    axes: true,
+    grid: 1.0,
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  use: ["katex"],
+  cinderella: {build: 2083, version: [3, 0, 2083]}
+});
+    </script>
+</head>
+<body>
+    <div id="CSCanvas"></div>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>gauge_choice_loop_closing_polygon.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csinit" type="text/x-cindyscript">
+//Script (CindyScript)
+
+// #### print matrix ##################
+printmatrix(Name,I,Mm):=(
+		println(Name);
+		repeat(I,i,println(i+".="+row(Mm,i));););
+//  #### conjugate transpose ##########
+cellipse(t,p,S):=(
+					regional(v,l);
+					v=eigenvectors(S);
+          l=eigenvalues(S);
+          p+sqrt(l_1)*column(v,1)*cos(t)+sqrt(l_2)*column(v,2)*sin(t));
+ctranspose(A):=transpose(conjugate(A));
+// #### add NE part ############
+modpos(a,m):= a-(ceil(a/m)-1)*m;
+// #### add NE part ############
+addNEpart(j1,i1,k1):=(
+    regional(Pj,Pi,Pk,zj,zi,zk,av,ii,kk,m,n);
+    Na=3;
+		Pj=pactive_j1;   Pi=pactive_i1;   Pk=pactive_k1;
+    zj=Pj.x+i*Pj.y;  zi=Pi.x+i*Pi.y; zk=Pk.x+i*Pk.y;
+    zij=zj-zi;
+    zik=zk-zi;
+    //println("3 points="+[zi,zi,zk,zij,zik]);
+		av=zeromatrix(1,3);
+    //NA=zeromatrix(I,I);
+    av_1_1=-1/zij;
+    av_1_2=1/zij-1/zik;
+    av_1_3=+1/zik;
+    //println("av="+av);
+		repeat(Na,m,
+    	ii=modpos(i1+m-2,I);
+			repeat(Na,n,
+    		kk=modpos(i1+n-2,I);
+  			Nm_ii_kk=Nm_ii_kk + conjugate(av_1_m)*av_1_n;
+        //NA_ii_kk = conjugate(av_1_m)*av_1_n;
+
+ 			 );
+		 );
+//printmatrix("check NA",I,NA);
+);
+
+// #### sigma angle/distance ratio ########
+sigmajik(j1,i1,k1,Cm):=(
+    regional(Pj,Pi,Pk,zj,zi,zk,av,ii,kk,q);
+	  Pj=pactive_j1;    Pi=pactive_i1;    Pk=pactive_k1;
+    zj=Pj.x+i*Pj.y; zi=Pi.x+i*Pi.y; zk=Pk.x+i*Pk.y;
+    zij=zj-zi;
+    zik=zk-zi;
+		av=zeromatrix(1,3);
+    av_1_1=-1/zij;
+    av_1_2=1/zij-1/zik;
+    av_1_3=+1/zik;
+//println("av="+av);
+  Cjik=[[Cm_j1_j1,Cm_j1_i1,Cm_j1_k1],
+        [Cm_i1_j1,Cm_i1_i1,Cm_i1_k1],
+        [Cm_k1_j1,Cm_k1_i1,Cm_k1_k1]];
+//println("Cjik="+Cjik);
+  q=av*Cjik*ctranspose(av);
+//println("q="+q);
+  sigma*sqrt(q_1_1);
+);
+;
+
+</script>
+<script id="csmove" type="text/x-cindyscript">
+//Script (CindyScript)
+// 2D scale ratios and angles
+// using complex numbers
+// imaginary unit
+
+
+// ################## START ###############################
+
+
+//println([Dall,Dstart,Dend,Dborder]);
+pts=allpoints();
+//println(pts);
+pactive=select(pts,p,p.x>0);
+pactive=remove(pactive,[T,Q,X,Y,Z]);
+ppassive=remove(remove(pts,[T,M,N,Q,X,Y,Z]),pactive);
+ppassive=select(ppassive,pp,(pp.y < 6 & pp.y > 2.5 & pp.x < -1));
+//println(pactive);
+//println(pactive_1);
+connect(ppassive,size->1);
+
+//A.xy=[2,8];B.xy=[5,8];C.xy=[5,5];D.xy=[2,5];
+//R.xy=[-2,10.3];S.xy=[-2,9.2];U.xy=[-2,8.1];V.xy=[-2,7.0];
+
+connect(pactive,size->3);
+//println("Loop closed="+connected=true);
+connected=Text7.pressed;
+if(connected,a=concat(pactive,A),a=pactive);
+connect(a,size->5);
+
+T.x=-0.7;
+drawtext(T+[0.3,0.3],"$\sigma=$",size->20);
+sigma=|T.y|/10;
+drawtext(T+[0.3,0.3],"$\sigma=$"+round(sigma*100)/100,size->20);
+
+
+//
+I=length(pactive);
+Im1=I-1;
+sumz=sum(pactive);
+meanz=(sumz_1+i*sumz_2)/I;
+//println("mean="+[sumz,meanz]);
+
+
+
+//println("End preparations");
+
+// all in complex numbers, 
+// I points, 2 constraints (scaled rotation + translation)
+
+// set N
+Nm=zeromatrix(I+2,I+2);
+repeat(I,i1,
+	if( i1>1 & i1<I,
+    // Pjik = Lik-Lij = ln(zik)-ln(zij)=ln(sik/sij) + i*Ajik
+    j=i1-1;
+    k=i1+1;
+		addNEpart(j,i1,k);
+  );
+);
+if(connected,
+  // around first point PI12
+  j=I;
+  i1=1;
+  k=2;
+  addNEpart(j,i1,k);
+//  around last point PI-1I1
+  j=I-1;
+  i1=I;
+  k=1;
+  addNEpart(j,i1,k);
+);
+
+//NmOhne=submatrix(submatrix(Nm,I+1,I+1),I+1,I+1);
+//printmatrix("NmOhne=",I,NmOhne);
+//println("ev NmOhne="+eigenvalues(NmOhne));
+// now, new set bordeer
+Ip1=I+1;
+Ip2=I+2;
+Im1=I-1;
+Im2=I-2;
+	if(Dstart==1,(
+    P1=pactive_1;
+    P2=pactive_2;
+		Nm_1_Ip1=1;
+		Nm_1_Ip2=complex(P1);
+		Nm_2_Ip1=1;
+		Nm_2_Ip2=complex(P2);
+		Nm_Ip1_1=1;
+		Nm_Ip2_1=conjugate(Nm_1_Ip2);
+		Nm_Ip1_2=1;
+		Nm_Ip2_2=conjugate(Nm_2_Ip2);
+	););
+	if(Dborder==1,(
+    P1=pactive_1;
+    PI=pactive_I;
+		Nm_1_Ip1=1;
+		Nm_1_Ip2=complex(P1);
+		Nm_I_Ip1=1;
+		Nm_I_Ip2=complex(PI);
+		Nm_Ip1_1=1;
+		Nm_Ip2_1=conjugate(Nm_1_Ip2);
+		Nm_Ip1_I=1;
+		Nm_Ip2_I=conjugate(Nm_I_Ip2);
+	););
+if(Dend==1,(	
+    PIm1=pactive_Im1;
+    PI=pactive_I;
+		Nm_Im1_Ip1=1;
+		Nm_Im1_Ip2=complex(PIm1);
+		Nm_I_Ip1=1;
+		Nm_I_Ip2=complex(PI);
+		Nm_Ip1_Im1=1;
+		Nm_Ip2_Im1=conjugate(Nm_Im1_Ip2);
+		Nm_Ip1_I=1;
+		Nm_Ip2_I=conjugate(Nm_I_Ip2);
+	););
+if(Dall==1,(   
+    repeat(I,i1,(
+		Pi=pactive_i1;
+    Nm_i1_Ip1=1;
+  	Nm_i1_Ip2=complex(Pi);
+    Nm_Ip1_i1=1;
+  	Nm_Ip2_i1=conjugate(Nm_i1_Ip2);
+    ););
+););
+//printmatrix("Nm=",I+2,Nm);
+//println("ev Nm="+eigenvalues(Nm));
+
+
+
+Cm=inverse(Nm);
+//printmatrix("Nm=",I+2,Nm);
+
+
+
+
+//printmatrix("Cm=",I,Cm);
+repeat(I,j,(
+   drawcircle(pactive_j,sigma*sqrt(re(Cm_j_j)),size->2);
+);
+);
+
+p1=pactive_1;
+m=round((I+1)/2);
+p2=pactive_m;
+draw(p1,p2,color->[0,1,0]);
+sd=sigma*sigmajik(2,1,m,Cm);
+if(sd > 0,
+pm=(p1+p2)/2;
+rsd=+round(sd*100)/100;
+drawtext(pm,"$\sigma_d$="+rsd,size->20,color->[0,1,0]);
+
+p1=pactive_1;
+p2=pactive_I;
+draw(p1,p2,color->[0,1,0],size->2);
+sd=sigma*sigmajik(2,1,I,Cm);
+pm=(p1+p2)/2;
+rsd=+round(sd*100)/100;
+drawtext(pm,"$\sigma_d$="+rsd,size->20,color->[0,1,0]);
+);
+
+
+// show decisions
+x0=-2.9;
+// show decisions
+R.color=[1,0,0];S.color=[1,0,0];U.color=[1,0,0];V.color=[1,0,0];
+if(Dall==1,(R.color=[0,1,0];););
+if(Dstart==1,(S.color=[0,1,0];););
+if(Dend==1,(U.color=[0,1,0];););
+if(Dborder==1,(V.color=[0,1,0];););
+//println("Loop closed="+connected);
+
+W.color=[1,0,0];
+if(connected,W.color=[0,1,0];,W.color=[1,0,0];);
+
+
+;
+
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [-1.0, -4.0, -0.5], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
+    {name: "B", type: "Free", pos: [-2.6666666666666665, -4.0, -0.4444444444444444], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
+    {name: "C", type: "Free", pos: [4.0, 2.857142857142857, 0.5714285714285714], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
+    {name: "D", type: "Free", pos: [-3.0, -4.0, -1.0], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
+    {name: "E", type: "Free", pos: [1.1958762886597936, -4.0, -0.7516001380509864], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
+    {name: "F", type: "Free", pos: [2.0530973451327434, -4.0, -1.290357759131782], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
+    {name: "G", type: "Free", pos: [2.4052287581699345, -4.0, -0.9530093253718391], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
+    {name: "H", type: "Free", pos: [2.474226804123711, -4.0, -0.7516001380509864], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
+    {name: "K", type: "Free", pos: [4.0, -4.0, -1.2679167546251422], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
+    {name: "L", type: "Free", pos: [3.9736842105263155, -4.0, -0.9592791235650748], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
+    {name: "T", type: "Free", pos: [1.3608973166309863, -4.0, -1.9441390237585523], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 20.0, size: 3.0, printname: "$\\sigma$"},
+    {name: "M", type: "Free", pos: [0.0, 0.0, 4.0], color: [1.0, 0.0, 0.0], pinned: true, size: 1.0},
+    {name: "a", type: "Through", pos: [-2.526374171591459E-14, -4.0, 0.0], color: [0.0, 0.0, 1.0], args: ["M"], pinned: true},
+    {name: "b", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["a", "T"], clip: "inci"},
+    {name: "N", type: "Meet", color: [1.0, 0.0, 0.0], args: ["a", "b"], size: 3.0},
+    {name: "c", type: "Segment", color: [0.0, 0.0, 1.0], args: ["T", "N"], size: 3},
+    {name: "O", type: "Free", pos: [3.832460732984293, -4.0, -0.7634053758214209], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
+    {name: "P", type: "Free", pos: [4.0, -2.4, -0.8], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
+    {name: "R", type: "Free", pos: [0.7766990291262135, -4.0, -0.38834951456310673], dimDependent: 1, color: [1.0, 0.0, 0.0], pinned: true, size: 7.0, border: false},
+    {name: "S", type: "Free", pos: [0.8716417910447767, -4.0, -0.4352550053190786], dimDependent: 1, color: [1.0, 0.0, 0.0], pinned: true, size: 7.0, border: false},
+    {name: "U", type: "Free", pos: [0.9876543209876543, -4.0, -0.49382716049382713], dimDependent: 1, color: [1.0, 0.0, 0.0], pinned: true, size: 7.0, border: false},
+    {name: "V", type: "Free", pos: [1.1428571428571428, -4.0, -0.5714285714285714], dimDependent: 1, color: [1.0, 0.0, 0.0], pinned: true, size: 7.0, border: false},
+    {name: "W", type: "Free", pos: [4.0, -0.9230769230769231, -1.2462429639477897], dimDependent: 1, color: [1.0, 0.0, 0.0], pinned: true, size: 7.0, border: false},
+    {name: "Q", type: "Free", pos: [4.0, -1.8181818181818181, -0.7272727272727273], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
+    {name: "X", type: "Free", pos: [1.6, -4.0, -1.6], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
+    {name: "Y", type: "Free", pos: [0.6666666666666666, -4.0, -0.6666666666666666], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
+    {name: "Z", type: "Free", pos: [3.6666666666666665, -4.0, -0.6666666666666666], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
+    {name: "Poly0", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.4700854700854701, args: ["Z", "Y", "X", "Q"], size: 0},
+    {name: "Text0", type: "ToggleButton", pos: [1.9231863865368513, -4.0, -0.39674658586696127], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "Dall=1;\nDstart=0;\nDend=0;\nDborder=0;", text: "all:", textsize: 20.0},
+    {name: "Text1", type: "ToggleButton", pos: [2.1458552608666563, -4.0, -0.445201925552224], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "Dall=0;\nDstart=1;\nDend=0;\nDborder=0;", text: "start:", textsize: 20.0},
+    {name: "Text2", type: "ToggleButton", pos: [2.461515864322268, -4.0, -0.5106922272712028], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "Dall=0;\nDstart=0;\nDend=1;\nDborder=0;", text: "end:", textsize: 20.0},
+    {name: "Text3", type: "ToggleButton", pos: [2.8860628271282134, -4.0, -0.5987732496847179], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "Dall=0;\nDstart=0;\nDend=0;\nDborder=1;", text: "border:", textsize: 20.0},
+    {name: "Text6", type: "Text", pos: [1.7957091752462926, -4.0, -0.3622481911458465], color: [0.0, 0.0, 0.0], pinned: true, text: "GAUGE", textsize: 18.0},
+    {name: "Text7", type: "ToggleButton", pos: [4.0, -1.1818181818181817, -0.8284683339880191], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, text: "LOOP CLOSED", textsize: 18.0},
+    {name: "Text8", type: "Text", pos: [4.0, 0.3935785236385211, -0.8205422280501496], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 4/24", textsize: 14.0}
+  ],
+  ports: [{
+    width: 1311,
+    height: 482,
+    id: "CSCanvas",
+    transform: [{visibleRect: [-6.62504061828842, 12.468244144977584, 29.339465595277286, -0.7544042111922631]}],
+    axes: true,
+    grid: 1.0,
+    snap: true,
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  use: ["katex"],
+  cinderella: {build: 2083, version: [3, 0, 2083]}
+});
+    </script>
+</head>
+<body>
+    <div id="CSCanvas"></div>
+</body>
+</html>

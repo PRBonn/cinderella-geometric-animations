@@ -1,0 +1,41 @@
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+<h1>Correlation of Translation and Rotation of the Pose from Spatial Resection (P4P)</h1> 
+
+
+The  animation (generated with  <a href="http://www.cinderella.de">Cinderella</a>) visualizes the cause for the high correlation of the translations and the rotations when determining the pose of a camera with a spatial resection (P4P).
+    
+<p> The pose of a camera derived from the four corner of a square as control points leads to high correlations between the translation and the rotation parameters, namely between the X-coordinate and the rotation &phi; around the Y-axis and between Y-coordinate and the rotation &omega; around the X-axis. </p>
+
+
+<p> The reason is the following:   
+the effect of a rotations around a horizontal axes can be compensated by a translation in the opposite direction, except for effects of second order, namely perspective distortions. More specifically, the camera centre can be rotated on the circle though the projection centre and the left and right mid point of the sides of the square of the ground control points. At the same time the viewing direction can be adapted (rotating the camera), such that it points toward a point x<sub>O</sub> below the original projection centre. As known from elementary geometry, this leaves the angle between the two directions and the point x<sub>O</sub> invariant.  
+This is only valid for points, when arguing in the XZ-plane for these points, not for the corner points outside this plane.
+</p>
+
+
+<p> The configuration allows to horizontally move the camera using point X<sub>O</sub>. It also allows to rotate the camera using point O, then the above mentioned composed translation and rotation is performed. </p>
+
+<p> The animation visualizes the configuration during these movements in a side view and a top view. In addition - on the left - the change of the image coordinates of the control points are visualized. If the change of the image coordinates is bounded by the tolerance circles around the four image points, then the motions are limited: the pure translation much more than the combined translation and rotation. The perspective distortion when performing a rotation is clearly visible, but also can be identified to be small. If the projection ray lies in the area bewteen the two branches of the hyperbola then the image points stay within the tolerance circles in the image. </p>
+
+
+
+    
+
+    <h2>Explore the configuration:</h2>
+    <ol>
+      <li>  - Change each of the parameters individually and observe the effect onto the 3D configuration. </li>
+ 			
+ 			<li>  - Find limiting cases, where the image points stay in the tolerance circles. Try individual and combined motions of X<sub>O</sub> (translation) and O (combined translation and rotation) </li>
+ 			
+ 			
+ 			
+	    
+	        </ol>

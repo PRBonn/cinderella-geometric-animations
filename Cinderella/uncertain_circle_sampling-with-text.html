@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>uncertain_circle_sampling.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csinit" type="text/x-cindyscript">
+//Script (CindyScript)
+// #### t, mu,CovM -> standard ellipse ####
+muCov2ellipse(t,mu,CovM):=(
+         regional(v,l);
+         v=eigenvectors(CovM);
+         l=eigenvalues(CovM);
+				 //println(l);
+        mu+sqrt(l_1)*column(v,1)*cos(t)+sqrt(l_2)*column(v,2)*sin(t));
+
+rd1(x):=round(10*x)/10;
+rd2(x):=round(100*x)/100;
+;
+
+</script>
+<script id="csmove" type="text/x-cindyscript">
+//Script (CindyScript)
+//Np=3;     // number of points
+Nc=6;  // number of coordinates  
+nc=1..Nc; // list of coordinates
+
+Nsamples=200;
+
+
+
+;
+
+</script>
+<script id="csdraw" type="text/x-cindyscript">
+//Script (CindyScript)
+sigma=round(|E.x-D.x|*10)/100;
+A.x=rd1(A.x);
+B.x=rd1(B.x);
+C.x=rd1(C.x);
+A.y=rd1(A.y);
+B.y=rd1(B.y);
+C.y=rd1(C.y);
+drawtext(E.xy+[-0.3,0.3],"$\sigma=$"+sigma,size->20);
+
+
+repeat(Nsamples,n,
+   noise=apply(nc,(randomnormal()));
+   noise=sigma*noise/|noise|;
+   x1 = A.x + noise_1;
+   y1 = A.y + noise_2;
+   x2 = B.x + noise_3;
+   y2 = B.y + noise_4;
+   x3 = C.x + noise_5;
+   y3 = C.y + noise_6;
+   z1=x1^2+y1^2;
+   z2=x2^2+y2^2;
+   z3=x3^2+y3^2;
+   Ad = det([[1,1,1],[y1,y2,y3],[z1,z2,z3]]);
+   Bd = det([[x1,x2,x3],[1,1,1],[z1,z2,z3]]);
+   Cd = det([[x1,x2,x3],[y1,y2,y3],[1,1,1]]);
+   Dd = det([[x1,x2,x3],[y1,y2,y3],[z1,z2,z3]]);
+   xm =-Ad/(2*Cd);
+   ym =-Bd/(2*Cd);
+   r  = sqrt(abs((Ad^2+Bd^2+4*Cd*Dd)/(4*Cd^2)));
+drawcircle([xm,ym],r,alpha->0.5);
+);
+
+
+draw(C0.center);
+
+drawcircle(A.xy,sigma,color->[0,1,0]);
+drawcircle(B.xy,sigma,color->[0,1,0]);
+drawcircle(C.xy,sigma,color->[0,1,0]);
+
+dirA=(A.xy-C0.center)/|A.xy-C0.center|;
+dirB=(B.xy-C0.center)/|B.xy-C0.center|;
+dirC=(C.xy-C0.center)/|C.xy-C0.center|;
+drawtext(A.xy+(0.4+sigma)*dirA-[0.2,0.3],"A",size->25);
+drawtext(B.xy+(0.4+sigma)*dirB-[0.2,0.3],"B",size->25);
+drawtext(C.xy+(0.4+sigma)*dirC-[0.2,0.3],"C",size->25);
+
+bias = sigma^2/C0.radius/2;
+
+drawtext([-11,5],"A     = "+A.xy,size->20);
+drawtext([-11,4],"B     = "+B.xy,size->20);
+drawtext([-11,3],"C     = "+C.xy,size->20);
+drawtext([-11,2],"[x,y] = "+[rd2(C0.center_1),rd2(C0.center_2)],size->20);
+drawtext([-11,1],"r     = "+rd2(C0.radius),size->20);
+
+;
+
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [4.0, 2.6666666666666665, -1.3333333333333333], color: [1.0, 0.0, 0.0], textsize: 25.0},
+    {name: "B", type: "Free", pos: [4.0, -0.0, -1.0], color: [1.0, 0.0, 0.0], textsize: 25.0},
+    {name: "C", type: "Free", pos: [4.0, -2.6666666666666665, -1.3333333333333333], color: [1.0, 0.0, 0.0], textsize: 25.0},
+    {name: "C0", type: "CircleBy3", color: [1.0, 1.0, 0.0], args: ["C", "A", "B"], size: 5, printname: "$C_{0}$"},
+    {name: "D", type: "Free", pos: [4.0, -2.444444444444444, -0.36488565900330605], color: [1.0, 0.0, 0.0], pinned: true, size: 1.0},
+    {name: "a", type: "Through", pos: [0.0, -0.5970856238235918, 4.0], color: [1.0, 1.0, 0.0], args: ["D"], pinned: true, size: 3, clip: "inci"},
+    {name: "E", type: "PointOnLine", pos: [4.0, -3.354838709677419, -0.500781490948819], color: [1.0, 0.0, 0.0], args: ["a"]},
+    {name: "Text0", type: "Text", pos: [4.0, 2.5454545454545454, -0.36363636363636365], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 5/24", textsize: 15.0}
+  ],
+  ports: [{
+    width: 1404,
+    height: 639,
+    id: "CSCanvas",
+    transform: [{visibleRect: [-12.637139874739038, 7.835260960334028, 20.249874739039665, -7.1325469728601245]}],
+    axes: true,
+    grid: 1.0,
+    snap: true,
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  use: ["katex"],
+  cinderella: {build: 2083, version: [3, 0, 2083]}
+});
+    </script>
+</head>
+<body>
+
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+
+<h1>Uncertain Circle</h1> 
+
+
+The  animation (generated with  <a href="http://www.cinderella.de">Cinderella</a>) visualizes the uncertainty of a circle through three points.
+    
+<p> The uncertainty of a circle may be represented by the 3 x 3 covariance matrix of its three parameters &theta;=(x<sub>0</sub>,y<sub>0</sub>,r) , the coordinates of its centre its radius. Given a set of n points with coordinates z=(x<sub>1</sub>,y<sub>1</sub>,...,x<sub>n</sub>,y<sub>n</sub>), their covariance matrix &Sigma; and some estimation procedure &theta;=f(z,&Sigma;), one may derive the covariance matrix of the parameters by variance propagation. It is based on a Taylor expansion of the function &theta;=f(z,&Sigma;). The result generally is biased, in case the function is nonlinear. The motivation for this animation is to illustrate the problem when representing the uncertainty of a circle using the minimal case n=3.
+</p>
+
+
+<p> The configuration can be controlled by moving the points A, B, and C and specifying the standard deviation of their coordinates, assuming them to have covariance matrix &Sigma;=&sigma;<sup>2</sup> I. Then a set of K=200 random samples  z<sub>k</sub>=(x<sub>A</sub>,y<sub>A</sub>,x<sub>B</sub>,y<sub>B</sub>,x<sub>C</sub>,y<sub>C</sub>)<sub>k</sub>, k=1,...,K of the six coordinates sitting on the six-dimensional spherical standard ellipsoid of z are generated and the corresponding circles are shown, which cover what can be called an uncertainty region of the  circle in the plane. The initial configuration is symmetric w.r.t x-axis. One observes the asymmetry of the uncertainty of the point opposite to B in x-direction. </p>
+
+
+
+    <h2>Explore the configuration:</h2>
+    <ol>
+		
+ 			<li>  - Starting from the initial configuration (possibly after restarting the animation) move the point B in x-direction and observe the effect onto the uncertainty region. Especially observe the asymmetric uncertainty of the point opposite to B.</li>
+			
+			<li>  - Repeat the experiments: starting from the initial configuration (possibly after restarting the animation) now increase the standard deviation &sigma; and observe the effect onto the uncertainty region. Especially observe the asymmetric uncertainty of the point opposite to B.</li>
+			
+ 			<li>  - How many maxima/minima does the radial uncertainty of circle points have in general?</li>
+			
+			<li>  - How do you expect the uncertainty region looks like, if the three points are collinear? Compare it to the simulation result, and explain the form of the region. Possibly increase &sigma;.</li>
+			
+ 			
+ 			
+ 			
+	    
+	        </ol> 
+    <div id="CSCanvas"></div>
+</body>
+</html>

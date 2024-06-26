@@ -1,0 +1,46 @@
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+<h1>Matching Constraints for Points in Image Triplets</h1> 
+
+
+The animation (generated with  <a href="http://www.cinderella.de">Cinderella</a>) visualizes the general configuration of an image triplet observing a 3D point and the need for a trifocal constraint. 
+
+<p> The animation shows the projection of the point X to the three image points x', x'', and x''' in the three images having projection centres O', O'', and O'''. The six epipoles {e'<sub>2</sub>,e'<sub>3</sub>},  {e''<sub>3</sub>,e''<sub>1</sub>}, and {e'''<sub>1</sub>,e'''<sub>2</sub>} are the projections of the projection centres O', O'', and O''' into the other two images. The three projection lines L<sub>x'</sub>=(O'X), L<sub>x''</sub>=(O''X), and L<sub>x'''</sub>=(O'''X) are shown in red, blue, and green. They map to the six epipolar lines {(x'e'<sub>2</sub>),(x'e'<sub>3</sub>)},  {(x''e''<sub>3</sub>),(x''e''<sub>1</sub>)}, and {(x'''e'''<sub>1</sub>),(x'''e'''<sub>2</sub>)}.   </p>
+    
+<p> The two image points x' and x'' of the 3D point X in the image pair (O',O'') need to fulfil the epipolar constraint, namely that the image point x'' passes through the (red) epipolar line (x''e''<sub>1</sub>) being the image of the (red) projection ray L<sub>x'</sub> into the second image. The epipolar constraint actually means: the two projection rays L<sub>x'</sub> and L<sub>x''</sub> must intersect, or formally  &iota;(L<sub>x'</sub>,L<sub>x''</sub>). Similarly, we can argue for the other two image pairs (O''O''') and (O'''O'). Each of these constraints has one degree of freedom. 
+</p>
+
+<p> The six coordinates of x', x'', and x''' need to fulfil three constraints, since the 3D point has three coordinates. In general, the three epipolar constraints in the three image pairs are sufficient: (1) The first constraint 
+&iota;(L<sub>x'</sub>,L<sub>x''</sub>) fixes the 3D point, and (2) the constraint that X sits on L<sub>x'''</sub> are the other two constraints on the coordinates of x''', namely that x''' sits on the intersection point of the two epipolar lines e'''<sub>1</sub> and e'''<sub>2</sub>. </p>
+
+<p> However, the situation is different, in case the point X sits on the trifocal plane, i.e. on the plane (O'O''O'''), a situation which arises always in image sequences on a straight path, since all trifocal planes form a bundle through consecutive projection centres, such that all 3D points lie in a trifocal plane.  Then the two constraints in (2) reduce to one constraint, since the two epipolar lines e'''<sub>1</sub> and e'''<sub>2</sub> are identical, i.e. the point x''' can sit anywhere along these epipolar lines. Therefore, a constraint between all six image coordinates is necessary: The three projection rays, when mapped to the trifocal plane, need to intersect, here in point F. This trifocal constraint has one degree of freedom, and needs to augment two of the epipolar constraints to enforce consistency between all six image coordinates. </p>
+
+<p> In the animation one can change the position of X, by moving F in the trifocal plane and shifting X in orthogonal direction. In addition one can change the height d of the images on the left.</p>
+
+
+
+    
+
+    <h2>Explore the configuration:</h2>
+    <ol>
+      <li>  - Visually verify the three epipolar constraints. </li>
+			
+      <li>  - Move F onto one of the lines joining two projection centres, and verify that also in this situation the three epipolar constraints are sufficient.</li>
+			
+ 			
+ 			<li>  - Move X into the trifocal plane, and verify that the three epipolar constraints are not sufficient to constraint all six image coordinates.</li>
+			
+			
+			<li>  - Why has the trifocal constraint one degree of freedom?</li>
+			
+			
+ 			
+	    
+	        </ol>

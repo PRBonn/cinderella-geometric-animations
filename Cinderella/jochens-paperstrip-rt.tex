@@ -1,0 +1,41 @@
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+<h1>Image Rectification with Paperstrip-Method</h1> 
+
+
+The animation (generated with <a
+    href="http://www.cinderella.de">Cinderella</a>) shows how to rectify a perspective image of a planar object. This especially is useful for rectifying, possibly oblique, aerial images to a map, as in this animation, or to rectify the image of a building facade into the facade plane. 
+    
+<p>  The basic assumption is that the rectification is a perspective mapping, a homography,  which is straight line preserving. Then four corresponding points in the image and the map are sufficient to transfer any further point from the image to the map. This generally will be realized numerically. It can also be realized graphically exploiting the invariance of the cross ratio for collinear points and concurrent lines with what is called the paperstrip-method. </p>
+    
+
+<p> The animation shows the rectification with the paperstrip method. The user needs to identify four corresponding point pairs (AA'), (BB'), (CC'), and (DD') (yellow and red in the image and the map). For an arbitrary point P in the image we may draw four lines from two points, say B and C, to the other four points, fix their cross ratio on a paper strip, by marking the points, say (acdp) and (abdp),in the image and position the paperstrip in the map such that the three rays from, say B' and C', to (A'C'P') and (A'B'P') intersect the paperstrip at the points a=a', b=b', ... . Then the two rays (B'p') and (C'p') intersect in the corresponding point P' in the map due to the identities of the cross ratios of the concurrent lines at B and B', and at C and C'..</p>    
+    
+<p> The animation is initiated with four corresponding point pairs at the city wall of the town Rothenburg o.d. Tauber. The point P in the image is the pedal point of one of the two towers of the St. Jacobs Church. You may choose other four point pairs in the image and the map, position the paperstrips in the image, and choose an arbitrary point P in the image. The corresponding paperstrips in the map and the point P' move accordingly.  You may switch the image and the map off and on for exploring the geometry alone. You may recover the original point positions manually or by restarting the animation. </p>
+
+    
+    
+
+    <h2>Explore the configuration:</h2>
+    <ul>
+
+      <li> - Move the point P along the city wall of the town in the image, and observe its path in the map.</li>
+ 			
+ 			<li> - Move the point P to the pedal point of the second tower, and verify its position in the map.</li>
+ 			
+ 			<li> - Is the chancel in the West or the East of the church? Is this usual?</li> 
+ 			
+	    <li> - Choose another set of four corresponding points? Report on your experience on manually solving the image-map correspondence problem.
+	    
+	    <li> - Sometimes there are deviations of the position of the transferred point to the true map point, which you expect. 
+			       Name at least three reasons why such deviations may occur.</li>
+	    
+	   
+    </ul>

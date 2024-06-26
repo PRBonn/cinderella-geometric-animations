@@ -1,0 +1,30 @@
+<style>
+p {
+  text-indent: 20px;
+}
+li {
+  text-indent: 20px;
+}
+</style>
+
+<h1>Gauge Choice for a Geodetic Network</a></h1> 
+
+
+The animation (generated with <a
+    href="http://www.cinderella.de">Cinderella</a>) shows the invariance of the intrinsic uncertainty w.r.t. the choice of the coordinate system (gauge) for a planar geodetic network.
+    
+
+<p> The uncertainty of a point cloud can be represented by its covariance matrix, usually visualized by the standard ellipses of the point coordinates. In case the pose of the point cloud may be arbitrary w.r.t. translation, scale and rotation, one needs to fix at least two points as reference points (the gauge) which then will have zero variances. Only angles and distance ratios and their uncertainty are invariant to the choice of the gauge. </p>
+    
+<p>    Here we refer to a network of triangles, typically occurring in geodetic applications.  We assume the relative position of the three triplets (ijk), (jki), and (kij) of points in each triangle is observed (1) by the angle a<sub>ijk</sub>=b<sub>jk</sub>-b<sub>ji</sub> as difference of the bearings/directions from j, and (2)  by the ratio r<sub>ijk</sub>=d<sub>jk</sub>/d<sub>ji</sub> of the distances from j; similarly fo the other triplets. In addition, we assume the precision &sigma;<sub>a</sub> of the angles is the same as the relative precision &sigma;<sub>r</sub>/r of the distance ratios. Then all standard ellipses of the points are circles.
+</p>
+    
+<p>    The animation shows the uncertainty of the configuration, i.e. the expected precision derived from the inverse of the normal equation matrix.  It allows to choose and modify a configuration with up to 14 points (A,...,O), by moving them in the plane. All points in the right (positive) area are active, and connected by their Delaunay triangulation, while the points in the left area are passive. At the beginning we have a small network (A,B,C,D,E,F). One needs to choose a gauge from four alternatives: either <b>all</b> points, the  <b>first two</b> points (here A and B), the <b>last two</b> points (here E and F), or the <b>first and last</b> points (taken alphabetically, here A and F). The uncertainty of the points is shown as circular standard ellipses. In addition, the standard deviation of the pose of a mid-point (here D) and of the last point (here F) w.r.t. the first two points are given in green (see gauge case 'first two'). Exploration shows: Changing the gauge possibly dramatically changes the uncertainty of the points, but does not influence the uncertainty of the mean and the end point w.r.t. the starting points, in alphabetical order. </p>
+    
+
+    <h2>Explore the configuration:</h2>
+   <p> - Change all parameters individually (four choices for the gauge) and observe the effect onto the uncertainty of the points and the standard deviation of the mid and endpoint w.r.t. the start of the polygon. In case the uncertainty of the points is too large or too small, you can adapt the assumed standard deviation &sigma;.</p>
+	
+	  <p> - Repeat the exploration by moving some of the points individually and observe the effect onto the expected precision. </p>
+		
+ 		<p> - Repeat the exploration for a larger network of you own choice. </p>
