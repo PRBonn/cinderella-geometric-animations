@@ -4,7 +4,7 @@
 
 This repository contains the paper on Cinderella Animations together with the code and html-files for  local usage.
 
-The interactive graphics illustrate various topicss from geometry, statistics, and estimaton theory and may be useful for supporting lectures or exploring the topics. The animations are generated with the software [Cinderella](https://www.cinderella.de/tiki-index.php).
+The interactive graphics illustrate various topics from geometry, statistics, and estimation theory and may be useful for supporting lectures or exploring the topics. The animations are generated with the software [Cinderella](https://www.cinderella.de/tiki-index.php).
 
 # Content
 
