@@ -4,7 +4,7 @@
 
 This repository contains the paper on Cinderella Animations together with the code and html-files for  local usage.
 
-The interactive graphics illustrate various topicss from geometry, statistics, and estimaton theory and may be useful for supporting lectures or exploring the topics. The animations are generated with the software [Coinderella]{https://www.cinderella.de/tiki-index.php}.
+The interactive graphics illustrate various topicss from geometry, statistics, and estimaton theory and may be useful for supporting lectures or exploring the topics. The animations are generated with the software [Cinderella](https://www.cinderella.de/tiki-index.php).
 
 # Content
 
@@ -19,7 +19,7 @@ The folder `/Cinderella` contains
 
 # Running the animations
 
-* download the file Cinderella-Animations-local.pdf and the directory /Cinderella into the same folder
+* clone this repository: Then you have the file Cinderella-Animations-local.pdf and the directory /Cinderella in the same folder
 
 * open the pdf and use the provided links, or
 
@@ -27,11 +27,11 @@ The folder `/Cinderella` contains
 
 # Requirements
 
-Some expalantions in `Cinderella-Animations-local-pdf` refer to the [Collected Notes]{https://www.ipb.uni-bonn.de/html/staff/WolfgangFoerstner/collectednotes_v2/main-Lecturenotes.pdf}, which requires you are online.
+Some explanations in `Cinderella-Animations-local-pdf` refer to the [Collected Notes](https://www.ipb.uni-bonn.de/html/staff/WolfgangFoerstner/collectednotes_v2/main-Lecturenotes.pdf), which requires you are online.
 
 # Licence
 
-You may use and modify all files. Especially, you may call the *.cdy-files using the [Cinderella software]{https://beta.cinderella.de/} and adapt the geometric constructions or the scripts according to your needs. You may translate or modify the accompanying text. When presenting or publishing modifications, please, use the citation below.
+You may use and modify all files. Especially, you may call the *.cdy-files using the [Cinderella software](https://beta.cinderella.de/) and adapt the geometric constructions or the scripts according to your needs. You may translate or modify the accompanying text. When presenting or publishing modifications, please, use the citation below.
 
 
 
