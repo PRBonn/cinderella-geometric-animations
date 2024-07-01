@@ -33,7 +33,7 @@ rd3(x):=round(1000*x)/1000;
 </script>
 <script id="csmove" type="text/x-cindyscript">
 //Script (CindyScript)
-
+// round all input data to 0.1
 A.x=rd1(A.x);
 A.y=rd1(A.y);
 B.x=rd1(B.x);
@@ -167,7 +167,7 @@ var cdy = CindyJS({
     {name: "dist12", type: "Dist", color: [0.0, 0.0, 1.0], args: ["G", "L"], alpha: 0.8999999761581421},
     {name: "P15", type: "Mid", color: [1.0, 0.0, 0.0], args: ["H", "L"], alpha: 0.8999999761581421, size: 0.0},
     {name: "dist13", type: "Dist", color: [0.0, 0.0, 1.0], args: ["H", "L"], alpha: 0.8999999761581421},
-    {name: "Text0", type: "Text", color: [0.0, 0.0, 0.0], alpha: 0.8999999761581421, text: "wf 02/01", textsize: 15.0, dock: {corner: "LL", offset: [74.0, 35.0]}},
+    {name: "Text0", type: "Text", color: [0.0, 0.0, 0.0], alpha: 0.8999999761581421, text: "wf 02/01", textsize: 15.0, dock: {corner: "LL", offset: [74.0, 21.0]}},
     {name: "Text1", type: "Text", pos: [2.701235280059485, -4.0, -0.3632785681104622], color: [0.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, text: "CR(A,B|C,D)=(a-c)/(b-c):[(a-d)/(b-d)]=CR(G,H|K,L)=", textsize: 20.0},
     {name: "Text2", type: "Text", pos: [2.981818181818182, -4.0, -0.39995716995657027], color: [0.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, text: "|@$\"A\"@$\"C\"|=", textsize: 20.0},
     {name: "Text3", type: "Text", pos: [1.4318716168702526, -4.0, -0.399682282578226], color: [0.0, 0.0, 0.0], alpha: 0.8999999761581421, pinned: true, text: "|@$\"C\"@$\"B\"|= ", textsize: 20.0},
@@ -180,9 +180,9 @@ var cdy = CindyJS({
   ],
   ports: [{
     width: 715,
-    height: 435,
+    height: 421,
     id: "CSCanvas",
-    transform: [{visibleRect: [-9.27668370655051, 12.206162771776986, 9.593384146034454, 0.7257718404840371]}],
+    transform: [{visibleRect: [-9.27668370655051, 12.206162771776986, 9.593384146034454, 1.0952556865486378]}],
     background: "rgb(168,176,192)"
   }],
   csconsole: false,
@@ -192,6 +192,7 @@ var cdy = CindyJS({
     </script>
 </head>
 <body>
+
 <style>
 p {
   text-indent: 20px;

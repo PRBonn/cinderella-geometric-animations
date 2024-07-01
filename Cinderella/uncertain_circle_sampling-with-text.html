@@ -34,19 +34,12 @@ muCov2ellipse(t,mu,CovM):=(
 
 rd1(x):=round(10*x)/10;
 rd2(x):=round(100*x)/100;
-;
 
-</script>
-<script id="csmove" type="text/x-cindyscript">
-//Script (CindyScript)
-//Np=3;     // number of points
+
 Nc=6;  // number of coordinates  
 nc=1..Nc; // list of coordinates
 
 Nsamples=200;
-
-
-
 ;
 
 </script>
@@ -127,14 +120,14 @@ var cdy = CindyJS({
     {name: "C0", type: "CircleBy3", color: [1.0, 1.0, 0.0], args: ["C", "A", "B"], size: 5, printname: "$C_{0}$"},
     {name: "D", type: "Free", pos: [4.0, -2.444444444444444, -0.36488565900330605], color: [1.0, 0.0, 0.0], pinned: true, size: 1.0},
     {name: "a", type: "Through", pos: [0.0, -0.5970856238235918, 4.0], color: [1.0, 1.0, 0.0], args: ["D"], pinned: true, size: 3, clip: "inci"},
-    {name: "E", type: "PointOnLine", pos: [4.0, -3.354838709677419, -0.500781490948819], color: [1.0, 0.0, 0.0], args: ["a"]},
+    {name: "E", type: "PointOnLine", pos: [4.0, -3.3548387096774195, -0.500781490948819], color: [1.0, 0.0, 0.0], args: ["a"]},
     {name: "Text0", type: "Text", pos: [4.0, 2.5454545454545454, -0.36363636363636365], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 5/24", textsize: 15.0}
   ],
   ports: [{
     width: 1404,
-    height: 639,
+    height: 652,
     id: "CSCanvas",
-    transform: [{visibleRect: [-12.637139874739038, 7.835260960334028, 20.249874739039665, -7.1325469728601245]}],
+    transform: [{visibleRect: [-12.637139874739038, 7.835260960334028, 20.249874739039665, -7.43705636743215]}],
     axes: true,
     grid: 1.0,
     snap: true,

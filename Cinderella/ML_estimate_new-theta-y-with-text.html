@@ -27,21 +27,24 @@
 rd1(x):=round(10*x)/10;
 rd2(x):=round(100*x)/100;
 rd3(x):=round(1000*x)/1000;
+
+fs=35;
+fs1=30;
+fonts="Times New Roman";
+sc=0.8;
 ;
 
 </script>
 <script id="csmove" type="text/x-cindyscript">
 //Script (CindyScript)
+// initialization
 //B.xy=[-7,6.4];D.xy=[-7,5.2];E.xy=[-7,4.0];
 
 diratheta = (U.xy-P.xy)/|U.xy-P.xy|;
-dira=(O.xy-A.xy)/|O.xy-A.xy|;
+dira      = (O.xy-A.xy)/|O.xy-A.xy|;
 //println(dira);
-fs=35;
-fs1=30;
-fonts="Times New Roman";
-sc=0.8;
 
+// round input stdv tp 0.1 only for ouput
 F.x=rd1(F.x);
 G.x=rd1(G.x);
 H.x=rd1(H.x);
@@ -99,8 +102,8 @@ var cdy = CindyJS({
     {name: "F", type: "PointOnLine", pos: [3.7500000000000004, -4.0, -0.625], color: [0.0, 0.0, 1.0], args: ["c"], text_fontfamily: "serif", textsize: 36.0, textitalics: true},
     {name: "e", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "D"], visible: false, labeled: true, textsize: 24.0},
     {name: "f", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "E"], visible: false, labeled: true},
-    {name: "G", type: "PointOnLine", pos: [3.461538461538462, -4.0, -0.7692307692307692], color: [1.0, 0.0, 0.0], args: ["e"], textsize: 24.0},
-    {name: "H", type: "PointOnLine", pos: [4.0, -2.758620689655172, -0.689655172413793], color: [1.0, 0.0, 0.0], args: ["f"]},
+    {name: "G", type: "PointOnLine", pos: [3.0769230769230766, -4.0, -0.7692307692307692], color: [1.0, 0.0, 0.0], args: ["e"], textsize: 24.0},
+    {name: "H", type: "PointOnLine", pos: [4.0, -2.909090909090909, -0.7272727272727273], color: [1.0, 0.0, 0.0], args: ["f"]},
     {name: "K", type: "Mid", color: [1.0, 0.0, 0.0], args: ["B", "F"], size: 0.0},
     {name: "dist0", type: "Dist", color: [0.0, 0.0, 1.0], args: ["B", "F"]},
     {name: "L", type: "Mid", color: [1.0, 0.0, 0.0], args: ["D", "G"], size: 0.0},
@@ -110,19 +113,19 @@ var cdy = CindyJS({
     {name: "g", type: "Segment", color: [0.467, 0.0, 0.718], args: ["B", "F"], size: 4},
     {name: "h", type: "Segment", color: [1.0, 0.0, 0.0], args: ["D", "G"], size: 5},
     {name: "k", type: "Segment", color: [1.0, 0.0, 0.0], args: ["E", "H"], size: 4},
-    {name: "l", type: "Through", pos: [-1.435897435897436, -4.0, 0.0], color: [1.0, 1.0, 1.0], args: ["A"], size: 5},
+    {name: "l", type: "Through", pos: [-1.1722595078299778, -4.0, 0.0], color: [1.0, 1.0, 1.0], args: ["A"], size: 5},
     {name: "C0", type: "CircleByFixedRadius", color: [0.0, 0.0, 1.0], radius: 1.0, args: ["A"], visible: false, printname: "$C_{0}$"},
     {name: "Collection__1", type: "IntersectionConicLine", args: ["C0", "l"]},
-    {name: "N", type: "SelectP", pos: [-3.764778683046829, 1.3514590144270668, 4.0], color: [1.0, 0.0, 0.0], args: ["Collection__1"], visible: false, labeled: true},
-    {name: "O", type: "SelectP", pos: [3.764778683046829, -1.3514590144270668, 4.0], color: [1.0, 0.0, 0.0], args: ["Collection__1"], size: 1.0},
+    {name: "N", type: "SelectP", pos: [-3.838554136240176, 1.1249453956319084, 4.0], color: [1.0, 0.0, 0.0], args: ["Collection__1"], visible: false, labeled: true},
+    {name: "O", type: "SelectP", pos: [3.838554136240176, -1.1249453956319084, 4.0], color: [1.0, 0.0, 0.0], args: ["Collection__1"], size: 1.0},
     {name: "m", type: "Segment", color: [0.0, 0.0, 1.0], args: ["N", "O"], visible: false},
     {name: "n", type: "Segment", color: [0.0, 0.0, 0.0], args: ["A", "O"], text_fontfamily: "serif", textsize: 36.0, textitalics: true, size: 5, arrowshape: "jet", arrowsides: "==>", arrowsize: 1.6, arrowposition: 1.0},
     {name: "P", type: "Free", pos: [4.0, 1.1764705882352942, 0.5808775328037407], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 36.0, textbold: true, textitalics: true, printname: "$y$"},
     {name: "C1", type: "Compass", color: [0.0, 0.0, 1.0], args: ["F", "B", "P"], size: 6, printname: "$C_{1}$"},
     {name: "o", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["l", "P"], visible: false},
     {name: "Collection__2", type: "IntersectionConicLine", args: ["C1", "o"]},
-    {name: "C", type: "SelectP", pos: [4.0, 1.642596244752313, 0.5537100213039419], color: [1.0, 0.0, 0.0], args: ["Collection__2"], visible: false},
-    {name: "Q", type: "SelectP", pos: [4.0, 0.6622444501883504, 0.6108485166437547], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 0.0},
+    {name: "C", type: "SelectP", pos: [4.0, 1.6658674127191193, 0.5580848083772909], color: [1.0, 0.0, 0.0], args: ["Collection__2"], visible: false},
+    {name: "Q", type: "SelectP", pos: [4.0, 0.6453967530499103, 0.6056112845771511], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 0.0},
     {name: "p", type: "Segment", color: [0.0, 0.0, 1.0], args: ["C", "Q"]},
     {name: "R", type: "Meet", color: [1.0, 0.0, 0.0], args: ["o", "p"], labeled: true},
     {name: "S", type: "Meet", color: [1.0, 0.0, 0.0], args: ["o", "p"], labeled: true},
@@ -134,22 +137,22 @@ var cdy = CindyJS({
     {name: "Collection__3", type: "AngularBisector", args: ["r", "s", "P"]},
     {name: "t", type: "SelectL", pos: [-0.09896911193649427, -1.638488630948638, 4.0], color: [0.0, 0.0, 1.0], args: ["Collection__3"], visible: false, labeled: true},
     {name: "Collection__4", type: "IntersectionConicLine", args: ["C2", "t"]},
-    {name: "P1", type: "SelectP", pos: [4.0, 1.9824397409722079, 0.9110203562174255], color: [1.0, 0.0, 0.0], args: ["Collection__4"], visible: false, labeled: true, printname: "$P_{1}$"},
-    {name: "P0", type: "SelectP", pos: [4.0, 0.7992684760223892, 0.42636718969607645], color: [1.0, 0.0, 0.0], args: ["Collection__4"], visible: false, labeled: true, printname: "$P_{0}$"},
+    {name: "P1", type: "SelectP", pos: [4.0, 2.2676706922185073, 1.0278572739203573], color: [1.0, 0.0, 0.0], args: ["Collection__4"], visible: false, labeled: true, printname: "$P_{1}$"},
+    {name: "P0", type: "SelectP", pos: [4.0, 0.7466918277794727, 0.40483062959622534], color: [1.0, 0.0, 0.0], args: ["Collection__4"], visible: false, labeled: true, printname: "$P_{0}$"},
     {name: "Collection__5", type: "IntersectionConicLine", args: ["C2", "s"]},
-    {name: "P3", type: "SelectP", pos: [4.0, 1.6823971702829477, 0.4567634762841694], color: [1.0, 0.0, 0.0], args: ["Collection__5"], visible: false, labeled: true, printname: "$P_{3}$"},
-    {name: "P2", type: "SelectP", pos: [4.0, 0.293013809721634, 0.7976074071211864], color: [1.0, 0.0, 0.0], args: ["Collection__5"], visible: false, labeled: true, printname: "$P_{2}$"},
+    {name: "P3", type: "SelectP", pos: [4.0, 1.7587018270686745, 0.4380443956486352], color: [1.0, 0.0, 0.0], args: ["Collection__5"], visible: false, labeled: true, printname: "$P_{3}$"},
+    {name: "P2", type: "SelectP", pos: [4.0, 0.030833232598291762, 0.8619256226925424], color: [1.0, 0.0, 0.0], args: ["Collection__5"], visible: false, labeled: true, printname: "$P_{2}$"},
     {name: "u", type: "Join", color: [0.0, 0.0, 1.0], args: ["P2", "P1"], visible: false, labeled: true},
     {name: "w", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["r", "P1"], visible: false, labeled: true},
     {name: "C5", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["P", "U"], printname: "$C_{5}$"},
     {name: "x", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["l", "P"], visible: false, labeled: true},
     {name: "C3", type: "Compass", color: [0.0, 0.0, 1.0], args: ["E", "H", "P"], visible: false, printname: "$C_{3}$"},
     {name: "Collection__6", type: "IntersectionConicLine", args: ["C2", "r"]},
-    {name: "W", type: "SelectP", pos: [4.0, 2.9811356016383708, 0.7650866791448723], color: [1.0, 0.0, 0.0], args: ["Collection__6"], text_fontfamily: "serif", labeled: true, textsize: 25.0, textitalics: true, size: 1.0, printname: "$M$"},
-    {name: "V", type: "SelectP", pos: [4.0, 0.07218957026481698, 0.4681592930582554], color: [1.0, 0.0, 0.0], args: ["Collection__6"], size: 0.0},
+    {name: "W", type: "SelectP", pos: [4.0, 3.4887218328730536, 0.8168979713546854], color: [1.0, 0.0, 0.0], args: ["Collection__6"], text_fontfamily: "serif", labeled: true, textsize: 25.0, textitalics: true, size: 1.0, printname: "$M$"},
+    {name: "V", type: "SelectP", pos: [4.0, -0.09915987426933787, 0.4506689917174304], color: [1.0, 0.0, 0.0], args: ["Collection__6"], size: 0.0},
     {name: "Collection__7", type: "IntersectionConicLine", args: ["C3", "s"]},
-    {name: "Y", type: "SelectP", pos: [4.0, 1.4496695463756764, 0.5138562847908626], color: [1.0, 0.0, 0.0], args: ["Collection__7"], visible: false, labeled: true},
-    {name: "X", type: "SelectP", pos: [4.0, 0.821316843100516, 0.6680039530412196], color: [1.0, 0.0, 0.0], args: ["Collection__7"], visible: false, labeled: true},
+    {name: "Y", type: "SelectP", pos: [4.0, 1.5083949840999438, 0.4994497432975363], color: [1.0, 0.0, 0.0], args: ["Collection__7"], visible: false, labeled: true},
+    {name: "X", type: "SelectP", pos: [4.0, 0.7152330326511313, 0.6940284643302633], color: [1.0, 0.0, 0.0], args: ["Collection__7"], visible: false, labeled: true},
     {name: "Z", type: "Meet", color: [1.0, 0.0, 0.0], args: ["r", "u"], visible: false, labeled: true},
     {name: "v", type: "Join", color: [0.0, 0.0, 1.0], args: ["Z", "X"], visible: false, labeled: true},
     {name: "P4", type: "Meet", color: [1.0, 0.0, 0.0], args: ["w", "v"], visible: false, labeled: true, printname: "$P_{4}$"},
@@ -160,11 +163,11 @@ var cdy = CindyJS({
     {name: "q", type: "Segment", color: [0.0, 0.0, 1.0], args: ["P", "U"], size: 2, arrowshape: "jet", arrowsides: "==>", arrowsize: 1.6, arrowposition: 1.0},
     {name: "z", type: "Segment", color: [1.0, 0.0, 0.0], args: ["P", "P6"], size: 2, arrowshape: "jet", arrowsides: "==>", arrowsize: 1.6, arrowposition: 1.0},
     {name: "Collection__8", type: "IntersectionConicLine", args: ["C4", "z"]},
-    {name: "P7", type: "SelectP", pos: [4.0, 2.5401607540634017, 0.6419307807861959], color: [1.0, 0.0, 0.0], args: ["Collection__8"], size: 0.0, printname: "$P_{7}$"},
-    {name: "P8", type: "SelectP", pos: [4.0, 0.049649854594356835, 0.5304290750772928], color: [1.0, 0.0, 0.0], args: ["Collection__8"], size: 0.0, printname: "$P_{8}$"},
+    {name: "P7", type: "SelectP", pos: [4.0, 2.9201187740752252, 0.663439854604917], color: [1.0, 0.0, 0.0], args: ["Collection__8"], size: 0.0, printname: "$P_{7}$"},
+    {name: "P8", type: "SelectP", pos: [4.0, -0.18122793906372894, 0.5165900557598276], color: [1.0, 0.0, 0.0], args: ["Collection__8"], size: 0.0, printname: "$P_{8}$"},
     {name: "Collection__9", type: "IntersectionConicLine", args: ["C4", "x"]},
-    {name: "P9", type: "SelectP", pos: [4.0, 2.0790305230672232, 0.7815677813864336], color: [1.0, 0.0, 0.0], args: ["Collection__9"], visible: false, labeled: true, printname: "$P_{9}$"},
-    {name: "P10", type: "SelectP", pos: [4.0, 0.6427240856292974, 0.46219542189430024], color: [1.0, 0.0, 0.0], args: ["Collection__9"], visible: false, printname: "$P_{10}$"},
+    {name: "P9", type: "SelectP", pos: [4.0, 2.2195181968149504, 0.8388394512394103], color: [1.0, 0.0, 0.0], args: ["Collection__9"], visible: false, labeled: true, printname: "$P_{9}$"},
+    {name: "P10", type: "SelectP", pos: [4.0, 0.6240616122617476, 0.4442581896107044], color: [1.0, 0.0, 0.0], args: ["Collection__9"], visible: false, printname: "$P_{10}$"},
     {name: "l0", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["l", "P8"], visible: false, labeled: true, printname: "$l_{0}$"},
     {name: "l1", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["y", "P9"], visible: false, labeled: true, printname: "$l_{1}$"},
     {name: "l2", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["y", "P10"], visible: false, labeled: true, printname: "$l_{2}$"},
@@ -177,8 +180,8 @@ var cdy = CindyJS({
     {name: "S1", type: "Segment", color: [1.0, 0.0, 0.0], args: ["P14", "P15"], size: 5, printname: "$S_{1}$"},
     {name: "C6", type: "Compass", color: [0.0, 0.0, 1.0], args: ["B", "F", "U"], visible: false, printname: "$C_{6}$"},
     {name: "Collection__10", type: "IntersectionConicLine", args: ["C6", "l"]},
-    {name: "P16", type: "SelectP", pos: [4.0, -1.435897435897436, 0.8859711731030009], color: [1.0, 0.0, 0.0], args: ["Collection__10"], visible: false, labeled: true, printname: "$P_{16}$"},
-    {name: "P17", type: "SelectP", pos: [4.0, -1.435897435897436, 0.6252726851375177], color: [1.0, 0.0, 0.0], args: ["Collection__10"], visible: false, labeled: true, printname: "$P_{17}$"},
+    {name: "P16", type: "SelectP", pos: [4.0, -1.1722595078299776, 0.8272605521684819], color: [1.0, 0.0, 0.0], args: ["Collection__10"], visible: false, labeled: true, printname: "$P_{16}$"},
+    {name: "P17", type: "SelectP", pos: [4.0, -1.1722595078299776, 0.5921966486655778], color: [1.0, 0.0, 0.0], args: ["Collection__10"], visible: false, labeled: true, printname: "$P_{17}$"},
     {name: "S2", type: "Segment", color: [0.0, 0.0, 1.0], args: ["P16", "P17"], size: 5, printname: "$S_{2}$"},
     {name: "S3", type: "Segment", color: [1.0, 0.0, 0.0], args: ["V", "W"], size: 4, dashtype: "dashed", printname: "$S_{3}$"},
     {name: "Tr0", type: "TrSimilarity", color: [0.0, 0.0, 1.0], args: ["P", "P", "P8", "P6"], dock: {offset: [0.0, -0.0]}},
@@ -188,9 +191,9 @@ var cdy = CindyJS({
   ],
   ports: [{
     width: 985,
-    height: 558,
+    height: 544,
     id: "CSCanvas",
-    transform: [{visibleRect: [-8.351521273768086, 8.303866373489809, 15.118517113283454, -4.991850804149541]}],
+    transform: [{visibleRect: [-8.351521273768086, 8.303866373489809, 15.118517113283454, -4.6582665022016]}],
     axes: true,
     grid: 1.0,
     background: "rgb(168,176,192)"
@@ -202,6 +205,7 @@ var cdy = CindyJS({
     </script>
 </head>
 <body>
+
 <style>
 p {
   text-indent: 20px;

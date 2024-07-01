@@ -22,6 +22,17 @@
     </style>
     <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
     <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csinit" type="text/x-cindyscript">
+//Script (CindyScript)
+scale = 0.9;
+dl=-[0.3,0.35]*scale;
+dd=0.8*scale;
+fs=20;
+fonts="Times New Roman";
+
+;
+
+</script>
 <script id="csmove" type="text/x-cindyscript">
 //Script (CindyScript)
 dA=(A.xy-L.xy)/|A.xy-L.xy|;
@@ -29,11 +40,6 @@ dB=(F.xy-H.xy)/|F.xy-H.xy|;
 dC=(H.xy-F.xy)/|H.xy-F.xy|;
 dAs=(M.xy-R.xy)/|M.xy-R.xy|;
 dBs=(O.xy-Q.xy)/|O.xy-Q.xy|;
-scale = 0.9;
-dl=-[0.3,0.35]*scale;
-dd=0.8*scale;
-fs=20;
-fonts="Times New Roman";
 
 
 drawtext(C.xy+[-0.1,0.4],"$c$",size->fs,family->fonts);
@@ -68,7 +74,7 @@ var cdy = CindyJS({
     {name: "a", type: "Through", pos: [-1.3922036595067622, 1.8695306284805089, 4.0], color: [0.0, 0.0, 1.0], args: ["A"], size: 0},
     {name: "B", type: "Free", pos: [-0.0, -4.0, -0.8], color: [1.0, 0.0, 0.0], pinned: true, size: 2.0},
     {name: "b", type: "Through", pos: [0.0, -0.8, 4.0], color: [0.0, 0.0, 1.0], args: ["B"], pinned: true, clip: "inci"},
-    {name: "C", type: "PointOnLine", pos: [-1.4719999999999993, -4.0, -0.7999999999999999], color: [1.0, 0.0, 0.0], args: ["b"]},
+    {name: "C", type: "PointOnLine", pos: [-1.4719999999999993, -4.0, -0.8], color: [1.0, 0.0, 0.0], args: ["b"]},
     {name: "D", type: "PointOnLine", pos: [-2.3999999999999986, -4.0, -0.7999999999999999], color: [1.0, 0.0, 0.0], args: ["b"]},
     {name: "C0", type: "Compass", color: [0.0, 0.0, 1.0], args: ["B", "D", "A"], size: 0, printname: "$C_{0}$"},
     {name: "Collection__1", type: "IntersectionConicLine", args: ["C0", "a"]},
@@ -92,8 +98,8 @@ var cdy = CindyJS({
     {name: "g", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["f", "M"], size: 0},
     {name: "C3", type: "Compass", color: [0.0, 0.0, 1.0], args: ["B", "C", "M"], size: 0, printname: "$C_{3}$"},
     {name: "Collection__4", type: "IntersectionConicLine", args: ["C3", "g"]},
-    {name: "P", type: "SelectP", pos: [4.0, 1.3617630884357181, 0.2876811666684673], color: [1.0, 0.0, 0.0], args: ["Collection__4"], visible: false},
-    {name: "Q", type: "SelectP", pos: [4.0, 0.6935979183366213, 0.34917059918342275], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 2.0},
+    {name: "P", type: "SelectP", pos: [4.0, 1.361763088435717, 0.2876811666684675], color: [1.0, 0.0, 0.0], args: ["Collection__4"], visible: false},
+    {name: "Q", type: "SelectP", pos: [4.0, 0.6935979183366234, 0.34917059918342264], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 2.0},
     {name: "h", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["f", "Q"], size: 0},
     {name: "k", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["g", "O"], size: 0},
     {name: "R", type: "Meet", color: [1.0, 0.0, 0.0], args: ["h", "k"], size: 2.0},
@@ -117,9 +123,9 @@ var cdy = CindyJS({
   ],
   ports: [{
     width: 766,
-    height: 361,
+    height: 347,
     id: "CSCanvas",
-    transform: [{visibleRect: [-2.4999999999999996, 7.259999999999999, 28.139999999999997, -7.179999999999999]}],
+    transform: [{visibleRect: [-2.4999999999999996, 7.259999999999999, 28.139999999999997, -6.619999999999999]}],
     background: "rgb(168,176,192)"
   }],
   csconsole: false,
@@ -129,6 +135,7 @@ var cdy = CindyJS({
     </script>
 </head>
 <body>
+
 <style>
 p {
   text-indent: 20px;

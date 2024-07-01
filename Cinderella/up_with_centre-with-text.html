@@ -22,11 +22,9 @@
     </style>
     <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
     <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
-<script id="csdraw" type="text/x-cindyscript">
+<script id="csinit" type="text/x-cindyscript">
 //Script (CindyScript)
-// uncertain plane through three points
-// z=a+bx+cz = [1,x,y]*[a,b,c]'
-directions(H,M,r1):=(
+directions(H,Mm,r1):=(
 	// function for determining directions in circle to 
   // intersection with principle axes
 	evs=eigenvectors(Mm);
@@ -43,6 +41,14 @@ directions(H,M,r1):=(
 	p4=F2+s2*e2;
 	a=[arctan2(p1.x,p1.y),arctan2(p2.x,p2.y),arctan2(p3.x,p3.y),arctan2(p4.x,p4.y)];
 );
+;
+
+</script>
+<script id="csdraw" type="text/x-cindyscript">
+//Script (CindyScript)
+// uncertain plane through three points
+// z=a+bx+cz = [1,x,y]*[a,b,c]'
+
 // start --------------------------------------------------
 x1=K.x;         // coordiantes of three points
 y1=K.y;
@@ -61,34 +67,29 @@ Cpp=Ai*transpose(Ai)*s^2;           // J*Czz*J'
 zz(t):=sqrt(Cpp_1_1 + 2*Cpp_1_2*r1*cos(t) + 2*Cpp_1_3*r1*sin(t)+ Cpp_2_2*r1^2*cos(t)^2 + 2*Cpp_2_3*r1^2*cos(t)*sin(t) + Cpp_3_3*r1^2*sin(t)^2);
 // plot (in projection
 e(t) :=[r1*cos(t),r2*sin(t)];       // circle
-ep(t):=[r1*cos(t),r2*sin(t)+zz(t)]; // circle + standard deviation
-em(t):=[r1*cos(t),r2*sin(t)-zz(t)]; // circle + standard deviation
+ep(t):=[r1*cos(t),r2*sin(t)+zz(t)]; // circle + vertical standard deviation
+em(t):=[r1*cos(t),r2*sin(t)-zz(t)]; // circle - vertical standard deviation
 plot(e(t),color->[0,1,0]);
 plot(ep(t),size->4);
 plot(em(t),size->4);
+
 // determine principal axes trhough centroid of the 3 points
 sp=[x1+x2+x3,y1+y2+y3];
 Mm=[[x1^2+x2^2+x3^2,x1*y1+x2*y2+x3*y3],[x1*y1+x2*y2+x3*y3,y1^2+y2^2+y3^2]]- [[sp_1^2,sp_1*sp_2],[sp_1*sp_2,sp_2^2]]/3;
-//println(Mm);
-a=directions(sp/3,M,r1);
-//println(a);
+
+a=directions(sp/3,Mm,r1);
+
 draw([r1*cos(a_1),r2*sin(a_1)],[r1*cos(a_2),r2*sin(a_2)],size->2,dashtype->2);
 draw([r1*cos(a_3),r2*sin(a_3)],[r1*cos(a_4),r2*sin(a_4)],size->2,dashtype->2);
-//evs=eigenvectors(Mm);
-//draw([-evs_1_1*r1,-evs_2_1*r2],[evs_1_1*r1,evs_2_1*r2],dashtype->2);
-//draw([-evs_1_2*r1,-evs_2_2*r2],[evs_1_2*r1,evs_2_2*r2],dashtype->2);
-//t1=arctan2(evs_1_1,evs_2_1);
+
 repeat(4,n,
 t=a_n;
-//println([n,a_n,-zz(t)]);
 draw([r1*cos(t),r2*sin(t)-zz(t)],[r1*cos(t),r2*sin(t)+zz(t)],dashtype->2,size->2);
 );
-//println("$sigma=$"+s);
 
 draw([r1*cos(0),r2*sin(0)-zz(0)],[r1*cos(0),r2*sin(0)+zz(0)],size->4);
 draw([r1*cos(pi),r2*sin(pi)-zz(pi)],[r1*cos(pi),r2*sin(pi)+zz(pi)],size->4);
 //
-families=fontfamilies();                        // find fonts and provide input data
 drawtext(Q+[0.13,0],"$\sigma=$"+round(s*100)/100,size->25,family->"Times New Roman");
 drawtext(B+[0.13,0],"$r=$"+round(r1*100)/100,size->25,family->"Times New Roman");
 drawtext(F+[0.13,0],"$b=$"+round(r2*100)/100,size->25,family->"Times New Roman");
@@ -130,9 +131,9 @@ var cdy = CindyJS({
     {name: "H", type: "Meet", color: [1.0, 0.0, 0.0], args: ["c", "d"], size: 0.0},
     {name: "Tr0", type: "TrAffine", color: [0.0, 0.0, 1.0], args: ["C", "C", "D", "H", "B", "B"], dock: {offset: [0.0, -0.0]}},
     {name: "C1", type: "TransformConic", color: [1.0, 1.0, 0.0], args: ["Tr0", "C0"], printname: "$C_{1}$"},
-    {name: "K", type: "PointOnCircle", pos: [4.0, -2.663456742832713, 0.9341478417687628], color: [1.0, 0.0, 0.0], args: ["C0"]},
-    {name: "L", type: "PointOnCircle", pos: [1.0216377167586348, -4.0, -0.8025064160992643], color: [1.0, 0.0, 0.0], args: ["C0"]},
-    {name: "M", type: "PointOnCircle", pos: [1.829562907251185, -4.0, 0.8550198644370532], color: [1.0, 0.0, 0.0], args: ["C0"]},
+    {name: "K", type: "PointOnCircle", pos: [4.0, -2.666666666666677, 0.9344938114173088], color: [1.0, 0.0, 0.0], args: ["C0"]},
+    {name: "L", type: "PointOnCircle", pos: [1.011494252873574, -4.0, -0.8020207510891972], color: [1.0, 0.0, 0.0], args: ["C0"]},
+    {name: "M", type: "PointOnCircle", pos: [1.5722543352601153, -4.0, 0.8354544664779632], color: [1.0, 0.0, 0.0], args: ["C0"]},
     {name: "N", type: "TransformP", color: [1.0, 0.0, 0.0], args: ["Tr0", "M"], size: 3.0, border: false},
     {name: "O", type: "TransformP", color: [1.0, 0.0, 0.0], args: ["Tr0", "L"], size: 3.0, border: false},
     {name: "P", type: "TransformP", color: [1.0, 0.0, 0.0], args: ["Tr0", "K"], size: 3.0, border: false},
@@ -148,20 +149,20 @@ var cdy = CindyJS({
     {name: "C3", type: "Compass", color: [0.0, 0.0, 1.0], args: ["Q", "R", "P"], size: 0, printname: "$C_{3}$"},
     {name: "C4", type: "Compass", color: [0.0, 0.0, 1.0], args: ["Q", "R", "N"], size: 0, printname: "$C_{4}$"},
     {name: "Collection__2", type: "IntersectionCircleCircle", args: ["C2", "C4"]},
-    {name: "T", type: "SelectP", pos: [4.0, {r: 2.964395862917991, i: 0.46786483215932817}, {r: 0.36277520324464857, i: -1.7937570828213663}], color: [1.0, 0.0, 0.0], args: ["Collection__2"]},
-    {name: "S", type: "SelectP", pos: [4.0, {r: 2.9643958629179905, i: -0.46786483215932817}, {r: 0.36277520324464835, i: 1.7937570828213663}], color: [1.0, 0.0, 0.0], args: ["Collection__2"]},
+    {name: "T", type: "SelectP", pos: [4.0, {r: 2.741159339353956, i: 0.308248158622388}, {r: 0.259932267348231, i: -1.8119330135232825}], color: [1.0, 0.0, 0.0], args: ["Collection__2"]},
+    {name: "S", type: "SelectP", pos: [4.0, {r: 2.741159339353956, i: -0.308248158622388}, {r: 0.2599322673482308, i: 1.8119330135232825}], color: [1.0, 0.0, 0.0], args: ["Collection__2"]},
     {name: "l", type: "Join", color: [0.0, 0.0, 1.0], args: ["L", "O"], size: 0},
     {name: "m", type: "Join", color: [0.0, 0.0, 1.0], args: ["N", "M"], size: 0},
     {name: "U", type: "Meet", color: [1.0, 0.0, 0.0], args: ["l", "m"]},
     {name: "Collection__3", type: "IntersectionConicLine", args: ["C2", "l"]},
-    {name: "V", type: "SelectP", pos: [3.3985088589309123, -4.0, -2.6612808855800045], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 1.0},
-    {name: "W", type: "SelectP", pos: [1.6409665702640008, -4.0, -1.2868375355626651], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 1.0},
+    {name: "V", type: "SelectP", pos: [3.3637996893082422, -4.0, -2.658824682156457], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 1.0},
+    {name: "W", type: "SelectP", pos: [1.6249600000352857, -4.0, -1.286262972894995], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 1.0},
     {name: "Collection__4", type: "IntersectionConicLine", args: ["C3", "g"]},
-    {name: "X", type: "SelectP", pos: [4.0, -0.4839916980843191, 0.9335691165132873], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 1.0},
-    {name: "Y", type: "SelectP", pos: [4.0, -1.9835517522995472, 0.9339673028836389], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 1.0},
+    {name: "X", type: "SelectP", pos: [4.0, -0.4851973416913389, 0.9339143399501297], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 1.0},
+    {name: "Y", type: "SelectP", pos: [4.0, -1.9853126674972439, 0.934312820927529], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 1.0},
     {name: "Collection__5", type: "IntersectionConicLine", args: ["C4", "m"]},
-    {name: "Z", type: "SelectP", pos: [4.0, -2.5415653274242063, 1.866051610513764], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 1.0},
-    {name: "P0", type: "SelectP", pos: [2.8870587401426446, -4.0, 1.3479988920875374], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 1.0, printname: "$P_{0}$"},
+    {name: "Z", type: "SelectP", pos: [4.0, -2.996162434833046, 2.121165492423669], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 1.0},
+    {name: "P0", type: "SelectP", pos: [2.497033472536486, -4.0, 1.3254392426064803], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 1.0, printname: "$P_{0}$"},
     {name: "n", type: "Segment", color: [0.0, 0.0, 1.0], args: ["Z", "P0"], size: 2},
     {name: "o", type: "Segment", color: [0.0, 0.0, 1.0], args: ["W", "V"], size: 2},
     {name: "p", type: "Segment", color: [0.0, 0.0, 1.0], args: ["X", "Y"], size: 2},
@@ -175,9 +176,9 @@ var cdy = CindyJS({
   ],
   ports: [{
     width: 668,
-    height: 445,
+    height: 431,
     id: "CSCanvas",
-    transform: [{visibleRect: [-10.944072918562856, 6.334589495107631, 7.493860775258047, -5.948165735057492]}],
+    transform: [{visibleRect: [-10.944072918562856, 6.334589495107631, 7.493860775258047, -5.561741975007354]}],
     axes: true,
     grid: 1.0,
     background: "rgb(168,176,192)"
@@ -189,6 +190,7 @@ var cdy = CindyJS({
     </script>
 </head>
 <body>
+
 <style>
 p {
   text-indent: 20px;

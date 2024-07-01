@@ -22,9 +22,8 @@
     </style>
     <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
     <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
-<script id="csmove" type="text/x-cindyscript">
+<script id="csinit" type="text/x-cindyscript">
 //Script (CindyScript)
-// weighted mean of two points
 // functions
 fe=3;   // size of lines for ellipses
 covm(a,b,p):=(
@@ -45,6 +44,13 @@ standardellipse(t,P,S,c,s):=(
   parellipse(S);
   plot(P+av*cos(t)+bv*sin(t),color->c,size->s);
 );
+;
+
+</script>
+<script id="csmove" type="text/x-cindyscript">
+//Script (CindyScript)
+// weighted mean of two points
+
 //
 x1=B;
 x2=C;
@@ -56,11 +62,10 @@ p1=f.angle;
 p2=g.angle;
 //println([a1,b1,p1,a2,b2,p2]);
 
+// Sigma and Weight  matrices
 S1=covm(a1,b1,p1);W1=inverse(S1);
 S2=covm(a2,b2,p2);W2=inverse(S2);
-//println(S1);
-//println(S2);
-//parellipse(t,B,S1);
+
 standardellipse(t,B,S1,[1,0,0],fe);
 standardellipse(t,C,S2,[1,0,0],fe);
 // 
@@ -82,7 +87,6 @@ standardellipse(t,x0m,S0m,[0,0,1],fe);
 //
 S0S=(S1+S2)/4;
 standardellipse(t,x0m,S0S,[1,1,1],fe);
-families=fontfamilies();                        // find fonts and provide input
 drawtext(B+[0.2,0.2],"$x_1$",size->25,family->"Times New Roman");
 drawtext(C+[0.2,0.2],"$x_2$",size->25,family->"Times New Roman");
 drawtext(E+[0,0.4],"$b_1=$"+round(b1*100)/100,size->25,family->"Times New Roman");
@@ -113,32 +117,32 @@ var cdy = CindyJS({
     {name: "A", type: "Free", pos: [0.0, 0.0, 4.0], color: [1.0, 0.0, 0.0], pinned: true, size: 2.0},
     {name: "a", type: "Through", pos: [0.0, -4.0, 0.0], color: [0.0, 0.0, 1.0], args: ["A"], pinned: true},
     {name: "b", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["a", "A"]},
-    {name: "B", type: "Free", pos: [4.0, 4.0, 0.4444444444444444], color: [1.0, 1.0, 0.0]},
+    {name: "B", type: "Free", pos: [-3.984962406015037, -4.0, -0.4434651311058515], color: [1.0, 1.0, 0.0]},
     {name: "C", type: "Free", pos: [4.0, 1.1428571428571428, 0.5714285714285714], color: [1.0, 1.0, 0.0]},
     {name: "D", type: "Free", pos: [3.111111111111111, -4.0, -0.4444444444444444], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
     {name: "c", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["b", "D"], clip: "inci"},
     {name: "d", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "D"], clip: "inci"},
-    {name: "E", type: "PointOnLine", pos: [2.755555555555556, -4.0, -0.4444444444444445], color: [1.0, 0.0, 0.0], args: ["d"]},
-    {name: "F", type: "PointOnLine", pos: [2.4, -4.0, -0.4444444444444445], color: [1.0, 0.0, 0.0], args: ["d"]},
+    {name: "E", type: "PointOnLine", pos: [2.818239940108553, -4.0, -0.4444444444444445], color: [1.0, 0.0, 0.0], args: ["d"]},
+    {name: "F", type: "PointOnLine", pos: [2.41132829100197, -4.0, -0.4444444444444445], color: [1.0, 0.0, 0.0], args: ["d"]},
     {name: "G", type: "PointOnLine", pos: [4.0, -3.428571428571429, -0.5714285714285714], color: [1.0, 0.0, 0.0], args: ["c"], pinned: true, size: 1.0},
     {name: "e", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "G"], clip: "inci"},
     {name: "H", type: "PointOnLine", pos: [4.0, -3.8095238095238106, -0.634920634920635], color: [1.0, 0.0, 0.0], args: ["e"]},
     {name: "K", type: "PointOnLine", pos: [2.8000000000000003, -4.0, -0.6666666666666665], color: [1.0, 0.0, 0.0], args: ["e"]},
-    {name: "f", type: "Through", pos: [-0.0640640640640641, -0.38038038038038036, 4.0], color: [0.0, 0.0, 1.0], args: ["B"]},
+    {name: "f", type: "Through", pos: [-0.06395756008087106, -0.37974801298017163, 4.0], color: [0.0, 0.0, 1.0], args: ["B"]},
     {name: "g", type: "Through", pos: [1.4558809370648094, -4.0, -2.1911665594536673], color: [0.0, 0.0, 1.0], args: ["C"]},
     {name: "h", type: "Segment", color: [0.0, 0.0, 1.0], args: ["B", "C"], dashtype: "dashed"},
     {name: "Text0", type: "Text", pos: [4.0, -0.3739294541090078, -0.5698573804316129], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 4/24", textsize: 15.0},
-    {name: "Text1", type: "Text", color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$5$", textsize: 20.0, dock: {corner: "LL", offset: [389.0, 5.0]}},
-    {name: "Text2", type: "Text", color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$10$", textsize: 20.0, dock: {corner: "LL", offset: [532.0, 5.0]}},
+    {name: "Text1", type: "Text", pos: [4.0, -0.9645390070921986, 0.8366079778308972], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$5$", textsize: 20.0},
+    {name: "Text2", type: "Text", pos: [4.0, -0.4946996466431095, 0.41682588294754946], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$10$", textsize: 20.0},
     {name: "Text3", type: "Text", pos: [0.7695614032965747, -4.0, -0.8404762319266916], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$5$", textsize: 20.0},
     {name: "Text4", type: "Text", pos: [0.43006173306502277, -4.0, -0.4090906667595132], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$10$", textsize: 20.0},
-    {name: "Text5", type: "Text", color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$15$", textsize: 20.0, dock: {corner: "LL", offset: [681.0, 5.0]}}
+    {name: "Text5", type: "Text", pos: [4.0, -0.30626450116009285, 0.2736930971558155], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$15$", textsize: 20.0}
   ],
   ports: [{
     width: 838,
-    height: 385,
+    height: 408,
     id: "CSCanvas",
-    transform: [{visibleRect: [-8.42646206691548, 11.986938996598077, 19.98953476236087, -1.0681430789047792]}],
+    transform: [{visibleRect: [-8.42646206691548, 11.986938996598077, 19.98953476236087, -1.848057073025729]}],
     axes: true,
     grid: 1.0,
     background: "rgb(168,176,192)"

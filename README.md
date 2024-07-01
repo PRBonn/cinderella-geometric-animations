@@ -8,7 +8,7 @@ The interactive graphics illustrate various topics from geometry, statistics, an
 
 # Content
 
-The repository contains the main-pdf `Cinderella-Animations-local-pdf`. On its first page is has links to the files in the folder `/Cinderella` and to further explanations. 
+The repository contains the main-pdf `Cinderella-Animations-g.pdf`. On its first page is has links to the files in the folder `/Cinderella` and to further explanations. 
 
 The folder `/Cinderella` contains
 * the source code of each animation, namely cdy-files, 
@@ -19,25 +19,27 @@ The folder `/Cinderella` contains
 
 # Running the animations
 
-* clone this repository: Then you have the file Cinderella-Animations-local.pdf and the directory /Cinderella in the same folder
+* clone this repository: Then you have the file Cinderella-Animations-g.pdf and the directory /Cinderella in the same folder
 
 * open the pdf and use the provided links, or
 
 * directly run the html-files.
 
+* If you get stuck, restart the animation
+
 # Requirements
 
-Some explanations in `Cinderella-Animations-local-pdf` refer to the [Collected Notes](https://www.ipb.uni-bonn.de/html/staff/WolfgangFoerstner/collectednotes_v2/main-Lecturenotes.pdf), which requires you are online.
+Some explanations in `Cinderella-Animations-g.pdf` refer to the [Collected Notes](https://www.ipb.uni-bonn.de/html/staff/WolfgangFoerstner/collectednotes_v2/main-Lecturenotes.pdf), which requires you are online.
 
 # Licence
 
-You may use and modify all files. Especially, you may call the *.cdy-files using the [Cinderella software](https://beta.cinderella.de/) and adapt the geometric constructions or the scripts according to your needs. You may translate or modify the accompanying text. When presenting or publishing modifications, please, use the citation below.
+You may use and modify all files. Especially, you may call the *.cdy-files using the [Cinderella software](https://beta.cinderella.de/) and adapt the geometric constructions or the scripts according to your needs. You may translate or modify the accompanying texts *.tex. When presenting or publishing modifications, please, use the citation below.
 
 
 
 # Citation
 
-When presenting or publishing modifications, please, refer to the followng document:
+When presenting or publishing modifications, please, refer to the following document:
 
 ```
 @Report{foerstner2024cinderella,

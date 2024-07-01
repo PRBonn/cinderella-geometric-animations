@@ -22,14 +22,21 @@
     </style>
     <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
     <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
-<script id="csmove" type="text/x-cindyscript">
+<script id="csinit" type="text/x-cindyscript">
 //Script (CindyScript)
-// show Bhattacharyya distance
-//import("../../../../Cinderella/Cdy-Functions.tex");
 rd1(x):=round(10*x)/10;
 rd2(x):=round(100*x)/100;
-//println(modpos(3,2));
+;
+
+</script>
+<script id="csmove" type="text/x-cindyscript">
+//Script (CindyScript)
+// show Bhattacharyya distance, assuming drawing = CovM
+// (boundary and distances interprete standard ellipses differently)
+
+// initialize
 //B.x=-12; P.x=-12;
+// round all values to 0.1:
 A.x=rd1(A.x);
 A.y=rd1(A.y);
 O.x=rd1(O.x);
@@ -45,7 +52,6 @@ b2=Q.x-P.x;
 dm=columnmatrix(A.xy-O.xy);
 phi1=a.angle;
 phi2=g.angle;
-//println(phi1);
 R1=[[cos(phi1),-sin(phi1)],[sin(phi1),cos(phi1)]];
 R2=[[cos(phi2),-sin(phi2)],[sin(phi2),cos(phi2)]];
 D1=[[a1^2,0],[0,b1^2]];
@@ -59,7 +65,7 @@ DB1=1/8*transpose(dm)*inverse(Cm)*dm;
 DB2=1/2*log(det(Cm)/sqrt(det(C1)*det(C2)));
 DB=round(100*(DB1_1_1+DB2))/100;
 DH=sqrt(1-exp(-round(1000*DB)/1000));
-println("DH="+DH);
+//println("DH="+DH);
 //println([DB1_1_1,DB2,DB]);
 //println([sqrt(DB1_1_1),sqrt(DB2),sqrt(DB)]);
 //rdDB1=round(100*sqrt(DB1_1_1))/100;
@@ -131,7 +137,7 @@ var cdy = CindyJS({
     {name: "l", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["g", "O"], alpha: 0.8999999761581421, size: 0},
     {name: "Collection__5", type: "IntersectionConicLine", args: ["C3", "l"]},
     {name: "U", type: "SelectP", pos: [-2.6412841580862407, -4.0, -0.43157548591333245], color: [1.0, 0.0, 0.0], args: ["Collection__5"], alpha: 0.8999999761581421, visible: false, size: 0.0, border: false},
-    {name: "V", type: "PointOnCircle", pos: [{r: -3.0899773224114386, i: 1.8915729009705678E-16}, -4.0, {r: -0.38204991609598343, i: -5.9215581669913456E-18}], color: [1.0, 0.0, 0.0], args: ["C3"], alpha: 0.8999999761581421, visible: false, size: 0.0, border: false},
+    {name: "V", type: "PointOnCircle", pos: [{r: -3.0899773224114386, i: 1.891572900970568E-16}, -4.0, {r: -0.3820499160959833, i: -5.921558166991343E-18}], color: [1.0, 0.0, 0.0], args: ["C3"], alpha: 0.8999999761581421, visible: false, size: 0.0, border: false},
     {name: "m", type: "Join", color: [0.0, 0.0, 1.0], args: ["V", "U"], alpha: 0.8999999761581421, size: 0},
     {name: "W", type: "Meet", color: [1.0, 0.0, 0.0], args: ["g", "m"], alpha: 0.8999999761581421, size: 0.0, border: false},
     {name: "C4", type: "Compass", color: [0.0, 0.0, 1.0], args: ["Q", "P", "O"], alpha: 0.8999999761581421, size: 0},
@@ -167,22 +173,22 @@ var cdy = CindyJS({
     {name: "P19", type: "Mid", color: [1.0, 0.0, 0.0], args: ["O", "P11"], alpha: 0.8999999761581421, size: 0.0, border: false},
     {name: "C9", type: "ConicBy5", color: [0.0, 0.0, 1.0], args: ["P19", "P16", "P17", "P18", "P15"], alpha: 0.8999999761581421},
     {name: "Collection__7", type: "IntersectionConicConic", args: ["C2", "C5"]},
-    {name: "P25", type: "SelectP", pos: [{r: -2.4523383991536774, i: 2.9569872924504805}, -4.0, {r: -0.02559212917055084, i: 0.015210825320248275}], color: [1.0, 0.0, 0.0], args: ["Collection__7"], alpha: 0.8999999761581421, size: 1.0, border: false},
-    {name: "P20", type: "SelectP", pos: [{r: -2.8911428713231535, i: -0.26059511995749235}, -4.0, {r: -0.350274123047056, i: 0.19378779767790352}], color: [1.0, 0.0, 0.0], args: ["Collection__7"], alpha: 0.8999999761581421, size: 1.0, border: false},
+    {name: "P25", type: "SelectP", pos: [{r: -2.4523383991536676, i: 2.956987292450485}, -4.0, {r: -0.025592129170550454, i: 0.015210825320247893}], color: [1.0, 0.0, 0.0], args: ["Collection__7"], alpha: 0.8999999761581421, size: 1.0, border: false},
+    {name: "P20", type: "SelectP", pos: [{r: -2.8911428713231673, i: -0.26059511995754925}, -4.0, {r: -0.3502741230470498, i: 0.19378779767789758}], color: [1.0, 0.0, 0.0], args: ["Collection__7"], alpha: 0.8999999761581421, size: 1.0, border: false},
     {name: "Collection__8", type: "IntersectionConicConic", args: ["C6", "C8"]},
-    {name: "P21", type: "SelectP", pos: [{r: -2.9237249037455477, i: -0.27635208619036594}, -4.0, {r: -0.3275860274994582, i: 0.2063833408499842}], color: [1.0, 0.0, 0.0], args: ["Collection__8"], alpha: 0.8999999761581421, size: 1.0, border: false},
-    {name: "P24", type: "SelectP", pos: [{r: -2.4517118338597585, i: 2.9573157110447785}, -4.0, {r: -0.02559007854112405, i: 0.015211344842958332}], color: [1.0, 0.0, 0.0], args: ["Collection__8"], alpha: 0.8999999761581421, size: 1.0, border: false},
+    {name: "P21", type: "SelectP", pos: [{r: -2.9237249037453243, i: -0.2763520861889733}, -4.0, {r: -0.32758602749959875, i: 0.20638334085014803}], color: [1.0, 0.0, 0.0], args: ["Collection__8"], alpha: 0.8999999761581421, size: 1.0, border: false},
+    {name: "P24", type: "SelectP", pos: [{r: -2.451711833859953, i: 2.9573157110447412}, -4.0, {r: -0.025590078541134386, i: 0.015211344842965034}], color: [1.0, 0.0, 0.0], args: ["Collection__8"], alpha: 0.8999999761581421, size: 1.0, border: false},
     {name: "Collection__9", type: "IntersectionConicConic", args: ["C7", "C9"]},
-    {name: "P22", type: "SelectP", pos: [{r: -2.4515552236637235, i: 2.957397801569292}, -4.0, {r: -0.025589565925364755, i: 0.015211474722354077}], color: [1.0, 0.0, 0.0], args: ["Collection__9"], alpha: 0.8999999761581421, size: 1.0, border: false},
-    {name: "P23", type: "SelectP", pos: [{r: -2.9312271660290197, i: -0.27932459376713153}, -4.0, {r: -0.3223643771618367, i: 0.20882620543261224}], color: [1.0, 0.0, 0.0], args: ["Collection__9"], alpha: 0.8999999761581421, size: 1.0, border: false},
+    {name: "P22", type: "SelectP", pos: [{r: -2.451555223663987, i: 2.95739780156913}, -4.0, {r: -0.025589565925394884, i: 0.015211474722371757}], color: [1.0, 0.0, 0.0], args: ["Collection__9"], alpha: 0.8999999761581421, size: 1.0, border: false},
+    {name: "P23", type: "SelectP", pos: [{r: -2.931227166029089, i: -0.2793245937616707}, -4.0, {r: -0.3223643771616333, i: 0.2088262054326961}], color: [1.0, 0.0, 0.0], args: ["Collection__9"], alpha: 0.8999999761581421, size: 1.0, border: false},
     {name: "C10", type: "ConicBy5", color: [1.0, 0.0, 0.0], args: ["P25", "P24", "P23", "P21", "P20"], alpha: 0.8999999761581421, size: 2},
     {name: "Text0", type: "Text", pos: [4.0, 0.34782608695652173, -0.33444816053511706], color: [0.0, 0.0, 0.0], text: "wf 6/08", textsize: 15.0}
   ],
   ports: [{
     width: 1044,
-    height: 395,
+    height: 381,
     id: "CSCanvas",
-    transform: [{visibleRect: [-14.099999999999998, 13.939999999999998, 27.659999999999997, -1.8599999999999997]}],
+    transform: [{visibleRect: [-14.099999999999998, 13.939999999999998, 27.659999999999997, -1.2999999999999998]}],
     background: "rgb(168,176,192)"
   }],
   csconsole: false,

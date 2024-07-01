@@ -29,16 +29,20 @@
 printmatrix(Name,I,Mm):=(
 		println(Name);
 		repeat(I,i,println(i+".="+row(Mm,i));););
+
 //  #### conjugate transpose ##########
 cellipse(t,p,S):=(
 					regional(v,l);
 					v=eigenvectors(S);
           l=eigenvalues(S);
           p+sqrt(l_1)*column(v,1)*cos(t)+sqrt(l_2)*column(v,2)*sin(t));
+// conjugate transpose
 ctranspose(A):=transpose(conjugate(A));
-// #### add NE part ############
+
+// ### modulo in [1:m], for circle of polygon
 modpos(a,m):= a-(ceil(a/m)-1)*m;
-// #### add NE part ############
+
+// #### add NE part for corner (j1,i1,k1) ############
 addNEpart(j1,i1,k1):=(
     regional(Pj,Pi,Pk,zj,zi,zk,av,ii,kk,m,n);
     Na=3;
@@ -65,7 +69,7 @@ addNEpart(j1,i1,k1):=(
 //printmatrix("check NA",I,NA);
 );
 
-// #### sigma angle/distance ratio ########
+// #### sigma angle/distance ratio at corner (j1,i1,k1) using CovM ########
 sigmajik(j1,i1,k1,Cm):=(
     regional(Pj,Pi,Pk,zj,zi,zk,av,ii,kk,q);
 	  Pj=pactive_j1;    Pi=pactive_i1;    Pk=pactive_k1;
@@ -81,6 +85,7 @@ sigmajik(j1,i1,k1,Cm):=(
         [Cm_i1_j1,Cm_i1_i1,Cm_i1_k1],
         [Cm_k1_j1,Cm_k1_i1,Cm_k1_k1]];
 //println("Cjik="+Cjik);
+  // variance propagation
   q=av*Cjik*ctranspose(av);
 //println("q="+q);
   sigma*sqrt(q_1_1);
@@ -318,9 +323,9 @@ var cdy = CindyJS({
   ],
   ports: [{
     width: 1311,
-    height: 482,
+    height: 493,
     id: "CSCanvas",
-    transform: [{visibleRect: [-6.62504061828842, 12.468244144977584, 29.339465595277286, -0.7544042111922631]}],
+    transform: [{visibleRect: [-6.62504061828842, 12.468244144977584, 29.339465595277286, -1.0561658956691684]}],
     axes: true,
     grid: 1.0,
     snap: true,

@@ -22,9 +22,8 @@
     </style>
     <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
     <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
-<script id="csmove" type="text/x-cindyscript">
+<script id="csinit" type="text/x-cindyscript">
 //Script (CindyScript)
-// demo incidence line point
 // rounding
 rd1(x):=round(x*10)/10;
 rd2(x):=round(x*100)/100;
@@ -38,26 +37,20 @@ muCov2ellipse(t,mu,CovM):=(
          mu+sqrt(l_1)*column(v,1)*cos(t)+sqrt(l_2)*column(v,2)*sin(t));
 // skew matrix
 Skew(x):=[[0,-x_3,x_2],[x_3,0,-x_1],[-x_2,x_1,0]];
-// for plotting hyperbola branches
-cosh(t):=(exp(t)+exp(-t))/2;
-sinh(t):=(exp(t)-exp(-t))/2;
-LineHyperbolap(lc):=
-   (
-   R=[[cos(lc_2),-sin(lc_2)],[+sin(lc_2),cos(lc_2)]];
-   lc_1+R*[1/tan(lc_4)*lc_3*sinh(t),lc_3*cosh(t)];
-   );
-LineHyperbolan(lc):=
-   (
-   R=[[cos(lc_2),-sin(lc_2)],[+sin(lc_2),cos(lc_2)]];
-   lc_1+R*[1/tan(lc_4)*lc_3*sinh(t),-lc_3*cosh(t)];
-   );
+
+;
+
+</script>
+<script id="csmove" type="text/x-cindyscript">
+//Script (CindyScript)
+// demo incidence line point
 
 
 // START ################################
 // for fixing default
 //A.xy=[0,4]/10;B.xy=[3,0]/10;
 
-// read figure
+// read figure - round values to 0.1
 A.x=rd1(A.x);
 A.y=rd1(A.y);
 B.x=rd1(B.x);
@@ -70,6 +63,7 @@ alf=h.angle;
 sigma1=rd1(|F.x-E.x|); // stdv. of points A and B
 sigma2=rd1(|D.x-C.x|);
 crit=rd1(|N.x-M.x|);
+// determine CovM of C
 a=rd1(|K.x-G.x|);      // semiaxes of C -> CovM of C
 b=rd1(|H.x-G.x|);
 a=max([0.01,a]);
@@ -123,13 +117,12 @@ draw(lc_1+lc_3*[sin(lc_2),-cos(lc_2)],lc_1-lc_3*[sin(lc_2),-cos(lc_2)],size->1);
 
 // Testing via collinearity of three points
 ze=L.xy;
-inc=det([[xe_1,ye_1,ze_1],[xe_2,ye_2,ze_2],[1,1,1]]);
+inc=det([[xe_1,ye_1,ze_1],[xe_2,ye_2,ze_2],[1,1,1]]); // double area of tiangle
 //println(inc);
 nxy=[xe_2-ye_2,ye_1-xe_1];
-v=|ye-ze|^2*sigma1^2+|xe-ze|^2*sigma2^2+
- nxy*CovM*nxy;
+v=|ye-ze|^2*sigma1^2+|xe-ze|^2*sigma2^2+nxy*CovM*nxy;
 //println("sigma_d="+sqrt(v));
-zstat=|inc|/sqrt(v);
+zstat=|inc|/sqrt(v);                                  // test statistic
 //println(zstat);
 drawtext([-7,0.2],"z="+rd2(zstat),size->fs,family->"Times New Roman");
 lh=l.homog;
@@ -158,7 +151,7 @@ var cdy = CindyJS({
   angleUnit: "°",
   geometry: [
     {name: "A", type: "Free", pos: [-2.1176470588235294, -4.0, -0.39215686274509803], color: [1.0, 0.0, 0.0], labeled: true, textsize: 25.0},
-    {name: "B", type: "Free", pos: [4.0, 0.2727272727272727, 0.30303030303030304], color: [1.0, 0.0, 0.0], labeled: true, textsize: 25.0},
+    {name: "B", type: "Free", pos: [4.0, 0.6942148760330579, 0.3305785123966942], color: [1.0, 0.0, 0.0], labeled: true, textsize: 25.0},
     {name: "C", type: "Free", pos: [4.0, -1.1714285714285713, -0.5714285714285714], color: [1.0, 0.0, 0.0], pinned: true, size: 1.0},
     {name: "a", type: "Through", pos: [0.0, -1.9512195121951224, 4.0], color: [0.0, 0.0, 1.0], args: ["C"], clip: "inci"},
     {name: "D", type: "PointOnLine", pos: [4.0, -1.6400069118271696, -0.8000033716230097], color: [1.0, 0.0, 0.0], args: ["a"], textsize: 20.0},
@@ -186,21 +179,21 @@ var cdy = CindyJS({
     {name: "C2", type: "Compass", color: [0.0, 0.0, 1.0], args: ["E", "F", "B"], size: 0, printname: "$C_{2}$"},
     {name: "m", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["l", "B"], clip: "inci"},
     {name: "Collection__2", type: "IntersectionConicLine", args: ["C1", "m"]},
-    {name: "P", type: "SelectP", pos: [4.0, 0.5933149193265618, 0.27151042658064245], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 0.0},
-    {name: "Q", type: "SelectP", pos: [4.0, -0.13207104805549685, 0.3428296939096746], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 0.0},
+    {name: "P", type: "SelectP", pos: [4.0, 0.9895837538814615, 0.2932309021785851], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 0.0},
+    {name: "Q", type: "SelectP", pos: [4.0, 0.31262448965297246, 0.3788283114862773], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 0.0},
     {name: "Collection__3", type: "IntersectionConicLine", args: ["C2", "l"]},
-    {name: "R", type: "SelectP", pos: [4.0, 0.5266761226514388, 0.3182930633123842], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 0.0},
-    {name: "S", type: "SelectP", pos: [4.0, 0.04201867313682622, 0.289164321547752], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 0.0},
+    {name: "R", type: "SelectP", pos: [4.0, 0.9968406415912371, 0.3486690961693549], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 0.0},
+    {name: "S", type: "SelectP", pos: [4.0, 0.42144341051386486, 0.3142725807498475], color: [1.0, 0.0, 0.0], args: ["Collection__3"], size: 0.0},
     {name: "T", type: "Mid", color: [1.0, 0.0, 0.0], args: ["P", "S"], size: 0.0},
     {name: "n", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["l", "O"], size: 0},
     {name: "C3", type: "Compass", color: [0.0, 0.0, 1.0], args: ["T", "P", "O"], size: 0, printname: "$C_{3}$"},
     {name: "Collection__4", type: "IntersectionConicLine", args: ["C3", "n"]},
-    {name: "U", type: "SelectP", pos: [4.0, 2.4684953933595075, 0.3939303628079612], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 0.0},
-    {name: "V", type: "SelectP", pos: [4.0, 2.2892355701430183, 0.4736013953486231], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 0.0},
+    {name: "U", type: "SelectP", pos: [4.0, 2.855874474130911, 0.416278860333669], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 0.0},
+    {name: "V", type: "SelectP", pos: [4.0, 2.757306774654497, 0.5069029654141408], color: [1.0, 0.0, 0.0], args: ["Collection__4"], size: 0.0},
     {name: "o", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["l", "A"], clip: "inci"},
     {name: "Collection__5", type: "IntersectionConicLine", args: ["C0", "o"]},
-    {name: "W", type: "SelectP", pos: [-1.9422154567142642, -4.0, -0.41810237841541], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 0.0},
-    {name: "X", type: "SelectP", pos: [-2.27257788413724, -4.0, -0.36924331633920227], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 0.0},
+    {name: "W", type: "SelectP", pos: [-1.9393721723521893, -4.0, -0.417876969105089], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 0.0},
+    {name: "X", type: "SelectP", pos: [-2.2752489098085524, -4.0, -0.36941930026448533], color: [1.0, 0.0, 0.0], args: ["Collection__5"], size: 0.0},
     {name: "C4", type: "ConicBy5", color: [0.0, 0.0, 1.0], args: ["W", "X", "U", "P", "V"], size: 3, printname: "$C_{4}$"},
     {name: "C5", type: "Compass", color: [0.0, 0.0, 1.0], args: ["G", "H", "L"], size: 0, printname: "$C_{5}$"},
     {name: "C6", type: "Compass", color: [0.0, 0.0, 1.0], args: ["G", "K", "L"], size: 0, printname: "$C_{6}$"},
@@ -229,9 +222,9 @@ var cdy = CindyJS({
   ],
   ports: [{
     width: 997,
-    height: 450,
+    height: 451,
     id: "CSCanvas",
-    transform: [{visibleRect: [-8.778158492920358, 14.605201603852501, 28.70288654965607, -2.312020331111786]}],
+    transform: [{visibleRect: [-8.778158492920358, 14.605201603852501, 28.70288654965607, -2.349614157633929]}],
     axes: true,
     grid: 1.0,
     background: "rgb(168,176,192)"

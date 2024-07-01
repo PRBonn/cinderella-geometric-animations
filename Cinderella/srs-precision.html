@@ -22,9 +22,8 @@
     </style>
     <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
     <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
-<script id="csmove" type="text/x-cindyscript">
+<script id="csinit" type="text/x-cindyscript">
 //Script (CindyScript)
-// Precision SRS
 // rounding
 rd1(x):=round(x*10)/10;
 rd2(x):=round(x*100)/100;
@@ -52,6 +51,13 @@ LineHyperbolan(lc):=
    lc_1+R*[1/tan(lc_4)*lc_3*sinh(t),-lc_3*cosh(t)];
    );
 // ########### end preamle #################
+;
+
+</script>
+<script id="csmove" type="text/x-cindyscript">
+//Script (CindyScript)
+// Precision SRS
+
 // set default values
 //sigma=0.5*4;HH=4;dd=1.2;cc=2.0;
 //P1.x=P0.x+sigma;B.x=A.x+HH;F.x=E.x+dd;D.x=C.x+cc;
@@ -135,7 +141,7 @@ var cdy = CindyJS({
     {name: "d", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["c", "E"], clip: "inci"},
     {name: "F", type: "PointOnLine", pos: [4.0, -1.5964332430130364, -0.454641219108539], color: [1.0, 0.0, 0.0], args: ["d"]},
     {name: "G", type: "Free", pos: [4.0, 2.1408450704225355, 2.101798042389339], color: [1.0, 0.0, 0.0]},
-    {name: "e", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "G"], alpha: 0.452991452991453},
+    {name: "e", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "G"]},
     {name: "f", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["e", "G"], clip: "inci", dashtype: "dashed"},
     {name: "C0", type: "Compass", color: [0.0, 0.0, 1.0], args: ["C", "D", "G"], size: 0, printname: "$C_{0}$"},
     {name: "Collection__1", type: "IntersectionConicLine", args: ["C0", "e"]},

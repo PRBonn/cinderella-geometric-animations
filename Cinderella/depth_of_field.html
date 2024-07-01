@@ -22,13 +22,19 @@
     </style>
     <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
     <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csinit" type="text/x-cindyscript">
+//Script (CindyScript)
+
+fs=17;          // fontsize
+scalinga=5;     // scaling of aperture
+scalingb=200;   // scaling of blur
+;
+
+</script>
 <script id="csmove" type="text/x-cindyscript">
 //Script (CindyScript)
-// depth of field
+// depth of field (per construction)
 
-fs=17;
-scalinga=5;
-scalingb=200;
 // initiate
 //println(10+35/16*5/10); // fstop=a/f a=f*fstop
 //A.xy=[-30,0];E.x=A.x+3.5;C.xx=[3.5,0];P37.x=A.x+35/16*5/10;P35.x=A.x+0.6;O.x=A.x+2.5;H.x=A.x+6;P7.y=2;
@@ -229,9 +235,9 @@ var cdy = CindyJS({
   ],
   ports: [{
     width: 1242,
-    height: 481,
+    height: 467,
     id: "CSCanvas",
-    transform: [{visibleRect: [-34.41022786983076, 10.885522676037203, 18.712833676881242, -9.687901320716804]}],
+    transform: [{visibleRect: [-34.41022786983076, 10.885522676037203, 18.712833676881242, -9.089090643056604]}],
     axes: true,
     grid: 1.0,
     background: "rgb(168,176,192)"

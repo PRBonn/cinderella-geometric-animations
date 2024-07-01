@@ -28,42 +28,23 @@
 printmatrix(Name,I,Mm):=(
 		println(Name);
 		repeat(I,i,println(i+".="+row(Mm,i));););
-//  #### conjugate transpose ##########
+
+// function for ellipse coordinates c(t ; mean, CovM)
 cellipse(t,p,S):=(
 					regional(v,l);
 					v=eigenvectors(S);
           l=eigenvalues(S);
           p+sqrt(l_1)*column(v,1)*cos(t)+sqrt(l_2)*column(v,2)*sin(t));
-ctranspose(A):=transpose(conjugate(A));
-// #### add NE part ############
-modpos(a,m):= a-(ceil(a/m)-1)*m;
-// #### add NE part for polygon ############
-addNEpartPolygon(j1,i1,k1):=(
-    regional(Pj,Pi,Pk,zj,zi,zk,av,ii,kk,m,n);
-    Na=3;
-		Pj=pactive_j1;   Pi=pactive_i1;   Pk=pactive_k1;
-    zj=Pj.x+i*Pj.y;  zi=Pi.x+i*Pi.y; zk=Pk.x+i*Pk.y;
-    zij=zj-zi;
-    zik=zk-zi;
-    //println("3 points="+[zi,zi,zk,zij,zik]);
-		av=zeromatrix(1,3);
-    //NA=zeromatrix(I,I);
-    av_1_1 = -1/zij;
-    av_1_2 =  1/zij-1/zik;
-    av_1_3 = +1/zik;
-    //println("av="+av);
-		repeat(Na,m,
-    	ii=modpos(i1+m-2,I);
-			repeat(Na,n,
-    		kk=modpos(i1+n-2,I);
-  			Nm_ii_kk=Nm_ii_kk + conjugate(av_1_m)*av_1_n;
-        //NA_ii_kk = conjugate(av_1_m)*av_1_n;
- 			 );
-		 );
-//printmatrix("check N=",I+2,Nm-ctranspose(Nm));
-);
 
-// #### add NE part for Triangle ############
+//  #### conjugate transpose ##########
+ctranspose(A):=transpose(conjugate(A));
+
+// #### modulo [1,m] ############
+modpos(a,m):= a-(ceil(a/m)-1)*m;
+
+
+
+// #### add NE part for Triangle corner (j1,i1,k1)############
 addNEpartTriangle(j1,i1,k1):=(
     regional(Pj,Pi,Pk,zj,zi,zk,av,ii,kk,m,n);
     Na=3;
@@ -90,7 +71,7 @@ addNEpartTriangle(j1,i1,k1):=(
 //printmatrix("check N=",I+2,Nm);
 );
 
-// #### sigma angle/distance ratio ########
+// #### sigma angle/distance ratio of corner (j1,i1,k1) as function ov CovM ########
 sigmajik(j1,i1,k1,Cm):=(
     regional(Pj,Pi,Pk,zj,zi,zk,av,ii,kk,q);
 	  Pj=pactive_j1;    Pi=pactive_i1;    Pk=pactive_k1;
@@ -111,57 +92,8 @@ sigmajik(j1,i1,k1,Cm):=(
   sigma*sqrt(q_1_1);
 );
 
-// point l in circle (i,j,k)
-PointInCircle(l,i,j,k,P):=(
-dx=[P_i_1-P_l_1,P_j_1-P_l_1,P_k_1-P_l_1];
-dy=[P_i_2-P_l_2,P_j_2-P_l_2,P_k_2-P_l_2];
-d2=[dx_1_1^2+dy_1_1^2,dx_2_1^2+dy_2_1^2,dx_3_1^2+dy_3_1^2];
-Am=[dx,dy,d2];
-AA=det(Am);
-BB=det([[P_i_1,P_i_2,1],[P_j_1,P_j_2,1],[P_k_1,P_k_2,1]]);
-if(AA*BB<0,0,1);
-);
 
-// Brute Force Delaunay Triangulation
-// keep only triangles which contain no pother point
-// in: Ix2 matrix of coordinates. out: triangle list, edge list
-DelaunayTriangulationBF(PP):=
-(
-	DT=[];
-	DTe=[];
-	NM=length(PP);
-	repeat(NM_1,ii,           // first point
-		(repeat(NM_1-ii,jjj,    // second point
-		   (jj=jjj+ii;
-		 	 repeat(NM_1-jj,kkk,  // third point
-  			 (kk=kkk+jj,
-       	  Index=1..NM_1;
-			 	  Nmijk=remove(Index,[ii,jj,kk]);
-      	  lInijk=0;        // indicator, whether point in circle
-      	  repeat(NM_1-3,lll, // other point     
-      	    (ll=Nmijk_lll;
-         	   lInijk=max([lInijk,PointInCircle(ll,ii,jj,kk,PP)]);
-					  );
-                );
- 					if(lInijk==0,     // if no point in circle, save triangle and edges
-               (DTe=append(DTe,sort([ii,jj]));
-        	      DTe=append(DTe,sort([jj,kk]));
-        	      DTe=append(DTe,sort([kk,ii]));
-                DT =append(DT,sort([ii,jj,kk]));
-                //println(DT);     
-               );
-						 );
-			     );
-		         	);
-		    );
-       	     );
-    );
-       );
-  
-        	     DTe=set(DTe);  // eliminate double edges
-               [DT,DTe];
-);
-
+// DT using convex Hull in 3D
 DelaunayTriangulationTE(PP):=
  (regional(Numpts,xyz,mp,CH3);
   Numpts=length(PP);
@@ -400,12 +332,12 @@ var cdy = CindyJS({
     {name: "C", type: "Free", pos: [-3.740740740740741, -4.0, -0.675048272138386], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
     {name: "D", type: "Free", pos: [-2.380952380952381, -4.0, -0.4339596035175338], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
     {name: "E", type: "Free", pos: [4.0, 1.9658703071672357, 0.4976465077880252], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
-    {name: "F", type: "Free", pos: [4.0, 1.5722543352601157, 0.2107087092223864], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
+    {name: "F", type: "Free", pos: [4.0, 1.9799999999999998, 0.24301737796981898], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
     {name: "G", type: "Free", pos: [1.8445595854922276, -4.0, -0.7554944392844113], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
     {name: "H", type: "Free", pos: [3.2331606217616584, -4.0, -0.7554944392844113], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
     {name: "K", type: "Free", pos: [4.0, -3.694267515923567, -0.9287288330056775], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
     {name: "L", type: "Free", pos: [4.0, -2.4871794871794872, -0.9346822229608421], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
-    {name: "T", type: "Free", pos: [1.325549334380831, -4.0, -1.325549334380831], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 20.0, size: 3.0, printname: "$\\sigma$"},
+    {name: "T", type: "Free", pos: [1.0341165019992296, -4.0, -1.0341165019992296], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 20.0, size: 3.0, printname: "$\\sigma$"},
     {name: "M", type: "Free", pos: [0.0, 0.0, 4.0], color: [1.0, 0.0, 0.0], pinned: true, size: 1.0},
     {name: "a", type: "Through", pos: [0.0037991161128023325, -4.0, 0.0], color: [0.0, 0.0, 1.0], args: ["M"], pinned: true, size: 0},
     {name: "b", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["a", "T"], clip: "inci"},
@@ -416,7 +348,7 @@ var cdy = CindyJS({
     {name: "Q", type: "Free", pos: [3.7894736842105257, -4.0, -1.5348465977041197], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
     {name: "R", type: "Free", pos: [2.5, -4.0, -1.012572408207579], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 3.0},
     {name: "S", type: "Free", pos: [0.7766990291262135, -4.0, -0.38834951456310673], dimDependent: 1, color: [1.0, 0.0, 0.0], size: 7.0, border: false},
-    {name: "U", type: "Free", pos: [0.8695652173913044, -4.0, -0.4347826086956522], dimDependent: 1, color: [0.0, 1.0, 0.0], size: 8.0, border: false},
+    {name: "U", type: "Free", pos: [0.8695652173913044, -4.0, -0.4347826086956522], dimDependent: 1, color: [1.0, 0.0, 0.0], size: 8.0, border: false},
     {name: "V", type: "Free", pos: [0.9876543209876543, -4.0, -0.49382716049382713], dimDependent: 1, color: [1.0, 0.0, 0.0], size: 8.0, border: false},
     {name: "W", type: "Free", pos: [1.1428571428571428, -4.0, -0.5714285714285714], dimDependent: 1, color: [1.0, 0.0, 0.0], size: 8.0, border: false},
     {name: "X", type: "Free", pos: [4.0, -0.56, -0.8], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
@@ -429,13 +361,13 @@ var cdy = CindyJS({
     {name: "Text2", type: "ToggleButton", pos: [2.4335664335664333, -4.0, -0.5098266670695503], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "\nGall=0;\nGstart=0;\nGend=1;\nGfirstlast=0;", text: "last 2:", textsize: 20.0},
     {name: "Text3", type: "ToggleButton", pos: [2.857142857142857, -4.0, -0.5951445991097607], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "\nGall=0;\nGstart=0;\nGend=0;\nGfirstlast=1;", text: "first+last:", textsize: 20.0},
     {name: "Text6", type: "Text", pos: [1.7957091752462926, -4.0, -0.3622481911458465], color: [0.0, 0.0, 0.0], pinned: true, text: "GAUGE", textsize: 20.0},
-    {name: "Text8", type: "Text", pos: [4.0, 0.3935785236385211, -0.8205422280501496], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 5/24", textsize: 14.0}
+    {name: "Text8", type: "Text", pos: [4.0, 0.3935785236385211, -0.8205422280501496], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 5/24", textsize: 15.0}
   ],
   ports: [{
     width: 1432,
-    height: 488,
+    height: 495,
     id: "CSCanvas",
-    transform: [{visibleRect: [-6.131248770962575, 12.468244144977584, 33.15263597184909, -0.9190014936342115]}],
+    transform: [{visibleRect: [-6.131248770962575, 12.468244144977584, 33.15263597184909, -1.111031656483151]}],
     axes: true,
     grid: 1.0,
     background: "rgb(168,176,192)"
@@ -478,8 +410,6 @@ The animation (generated with <a
 		
  		<p> - Repeat the exploration for a larger network of you own choice. </p>
 
-		
- 		
     <div id="CSCanvas"></div>
 </body>
 </html>

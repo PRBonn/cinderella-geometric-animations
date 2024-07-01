@@ -29,16 +29,20 @@
 printmatrix(Name,I,Mm):=(
 		println(Name);
 		repeat(I,i,println(i+".="+row(Mm,i));););
+
 //  #### conjugate transpose ##########
 cellipse(t,p,S):=(
 					regional(v,l);
 					v=eigenvectors(S);
           l=eigenvalues(S);
           p+sqrt(l_1)*column(v,1)*cos(t)+sqrt(l_2)*column(v,2)*sin(t));
+// conjugate transpose
 ctranspose(A):=transpose(conjugate(A));
-// #### add NE part ############
+
+// ### modulo in [1:m], for circle of polygon
 modpos(a,m):= a-(ceil(a/m)-1)*m;
-// #### add NE part ############
+
+// #### add NE part for corner (j1,i1,k1) ############
 addNEpart(j1,i1,k1):=(
     regional(Pj,Pi,Pk,zj,zi,zk,av,ii,kk,m,n);
     Na=3;
@@ -65,7 +69,7 @@ addNEpart(j1,i1,k1):=(
 //printmatrix("check NA",I,NA);
 );
 
-// #### sigma angle/distance ratio ########
+// #### sigma angle/distance ratio at corner (j1,i1,k1) using CovM ########
 sigmajik(j1,i1,k1,Cm):=(
     regional(Pj,Pi,Pk,zj,zi,zk,av,ii,kk,q);
 	  Pj=pactive_j1;    Pi=pactive_i1;    Pk=pactive_k1;
@@ -81,6 +85,7 @@ sigmajik(j1,i1,k1,Cm):=(
         [Cm_i1_j1,Cm_i1_i1,Cm_i1_k1],
         [Cm_k1_j1,Cm_k1_i1,Cm_k1_k1]];
 //println("Cjik="+Cjik);
+  // variance propagation
   q=av*Cjik*ctranspose(av);
 //println("q="+q);
   sigma*sqrt(q_1_1);
@@ -298,29 +303,29 @@ var cdy = CindyJS({
     {name: "c", type: "Segment", color: [0.0, 0.0, 1.0], args: ["T", "N"], size: 3},
     {name: "O", type: "Free", pos: [3.832460732984293, -4.0, -0.7634053758214209], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
     {name: "P", type: "Free", pos: [4.0, -2.4, -0.8], color: [1.0, 0.0, 0.0], labeled: true, textsize: 18.0, size: 4.0},
-    {name: "R", type: "Free", pos: [0.7766990291262135, -4.0, -0.38834951456310673], dimDependent: 1, color: [0.0, 1.0, 0.0], pinned: true, size: 7.0, border: false},
+    {name: "R", type: "Free", pos: [0.7766990291262135, -4.0, -0.38834951456310673], dimDependent: 1, color: [1.0, 0.0, 0.0], pinned: true, size: 7.0, border: false},
     {name: "S", type: "Free", pos: [0.8716417910447767, -4.0, -0.4352550053190786], dimDependent: 1, color: [1.0, 0.0, 0.0], pinned: true, size: 7.0, border: false},
     {name: "U", type: "Free", pos: [0.9876543209876543, -4.0, -0.49382716049382713], dimDependent: 1, color: [1.0, 0.0, 0.0], pinned: true, size: 7.0, border: false},
     {name: "V", type: "Free", pos: [1.1428571428571428, -4.0, -0.5714285714285714], dimDependent: 1, color: [1.0, 0.0, 0.0], pinned: true, size: 7.0, border: false},
     {name: "W", type: "Free", pos: [4.0, -0.9230769230769231, -1.2462429639477897], dimDependent: 1, color: [1.0, 0.0, 0.0], pinned: true, size: 7.0, border: false},
-    {name: "Text0", type: "ToggleButton", pos: [1.9231863865368513, -4.0, -0.39674658586696127], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "Dall=1;\nDstart=0;\nDend=0;\nDborder=0;", text: "all:", textsize: 20.0},
-    {name: "Text1", type: "ToggleButton", pos: [2.1458552608666563, -4.0, -0.445201925552224], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pressed: true, pinned: true, script: "Dall=0;\nDstart=1;\nDend=0;\nDborder=0;", text: "start:", textsize: 20.0},
-    {name: "Text2", type: "ToggleButton", pos: [2.461515864322268, -4.0, -0.5106922272712028], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pressed: true, pinned: true, script: "Dall=0;\nDstart=0;\nDend=1;\nDborder=0;", text: "end:", textsize: 20.0},
-    {name: "Text3", type: "ToggleButton", pos: [2.8860628271282134, -4.0, -0.5987732496847179], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pressed: true, pinned: true, script: "Dall=0;\nDstart=0;\nDend=0;\nDborder=1;", text: "border:", textsize: 20.0},
-    {name: "Text6", type: "Text", pos: [1.7957091752462926, -4.0, -0.3622481911458465], color: [0.0, 0.0, 0.0], pinned: true, text: "GAUGE", textsize: 18.0},
-    {name: "Text7", type: "ToggleButton", pos: [4.0, -1.1818181818181817, -0.8284683339880191], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, text: "LOOP CLOSED", textsize: 18.0},
-    {name: "Text8", type: "Text", pos: [4.0, 0.3935785236385211, -0.8205422280501496], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 4/24", textsize: 14.0},
     {name: "Q", type: "Free", pos: [4.0, -1.8181818181818181, -0.7272727272727273], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
     {name: "X", type: "Free", pos: [1.6, -4.0, -1.6], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
     {name: "Y", type: "Free", pos: [0.6666666666666666, -4.0, -0.6666666666666666], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
     {name: "Z", type: "Free", pos: [3.6666666666666665, -4.0, -0.6666666666666666], color: [1.0, 0.0, 0.0], pinned: true, size: 0.0},
-    {name: "Poly0", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.4700854700854701, args: ["Z", "Y", "X", "Q"], size: 0}
+    {name: "Poly0", type: "Poly", color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.4700854700854701, args: ["Z", "Y", "X", "Q"], size: 0},
+    {name: "Text0", type: "ToggleButton", pos: [1.9231863865368513, -4.0, -0.39674658586696127], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "Dall=1;\nDstart=0;\nDend=0;\nDborder=0;", text: "all:", textsize: 20.0},
+    {name: "Text1", type: "ToggleButton", pos: [2.1458552608666563, -4.0, -0.445201925552224], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "Dall=0;\nDstart=1;\nDend=0;\nDborder=0;", text: "start:", textsize: 20.0},
+    {name: "Text2", type: "ToggleButton", pos: [2.461515864322268, -4.0, -0.5106922272712028], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "Dall=0;\nDstart=0;\nDend=1;\nDborder=0;", text: "end:", textsize: 20.0},
+    {name: "Text3", type: "ToggleButton", pos: [2.8860628271282134, -4.0, -0.5987732496847179], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, script: "Dall=0;\nDstart=0;\nDend=0;\nDborder=1;", text: "border:", textsize: 20.0},
+    {name: "Text6", type: "Text", pos: [1.7957091752462926, -4.0, -0.3622481911458465], color: [0.0, 0.0, 0.0], pinned: true, text: "GAUGE", textsize: 18.0},
+    {name: "Text7", type: "ToggleButton", pos: [4.0, -1.1818181818181817, -0.8284683339880191], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pinned: true, text: "LOOP CLOSED", textsize: 18.0},
+    {name: "Text8", type: "Text", pos: [4.0, 0.3935785236385211, -0.8205422280501496], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 4/24", textsize: 14.0}
   ],
   ports: [{
     width: 1311,
-    height: 496,
+    height: 493,
     id: "CSCanvas",
-    transform: [{visibleRect: [-6.62504061828842, 12.468244144977584, 29.339465595277286, -1.1384645368901425]}],
+    transform: [{visibleRect: [-6.62504061828842, 12.468244144977584, 29.339465595277286, -1.0561658956691684]}],
     axes: true,
     grid: 1.0,
     snap: true,
@@ -332,8 +337,6 @@ var cdy = CindyJS({
 });
     </script>
 </head>
-
-
 <body>
 
 <style>
@@ -368,8 +371,6 @@ The animation (generated with <a
 		
  		<p> - Repeat the exploration for a straight and a round polygon with 12 points having approximately the same mutual distances. Compare the results with those in Figs. 4.7, 15.13 and 15.14 in <a href="https://link.springer.com/book/10.1007/978-3-319-11550-4">(Förstner/Wrobel, GC Vol. 11, Springer, 2016)</a>.</p>
 
-		
-		
     <div id="CSCanvas"></div>
 </body>
 </html>
