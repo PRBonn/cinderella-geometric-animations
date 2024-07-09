@@ -38,7 +38,7 @@ sc=0.8;
 <script id="csmove" type="text/x-cindyscript">
 //Script (CindyScript)
 // initialization
-//B.xy=[-7,6.4];D.xy=[-7,5.2];E.xy=[-7,4.0];
+//B.xy=[-8,6.4];D.xy=[-78,5.2];E.xy=[-8,4.0];
 
 diratheta = (U.xy-P.xy)/|U.xy-P.xy|;
 dira      = (O.xy-A.xy)/|O.xy-A.xy|;
@@ -55,25 +55,24 @@ drawtext(H.xy+[-0.7,0.3],"$s_2=$"+rd2(|E.x-H.x|),size->fs1,family->fonts);
 
 drawtext(E.xy+[0,-1.5]+[0,0.3],"$\phi=$"+rd1(r.angle*180/pi)+"°",size->fs1,family->fonts);
 
+if(Text0.pressed,
+(
 drawtext(E.xy+[0,-2.7]+[0,0.3],"$\mathbf{a}=$"+[rd3(dira_1),rd3(dira_2)],size->fs1,family->fonts);
-
-drawtext(O.xy-0.6*[dira_2,-dira_1]-[0.3,0.3],"$\mathbf{a}$",size->fs,family->fonts);
-drawtext(A.xy-0.6*[dira_2,-dira_1]-[0.3,0.3],"$O$",size->fs,family->fonts,italics->true);
-
-if(Text0.pressed,
-  drawtext(U.xy+0.9*diratheta-[0.7,0.3],"$\mathbf{a}x|\mathbf{I}$",size->fs,family->fonts,italics->true);,
-  drawtext(U.xy+0.9*diratheta-[0.7,0.3],"$\mathbf{a}\theta|\mathbf{I}$",size->fs,family->fonts,italics->true);
-);
-
-if(Text0.pressed,
-  drawtext(P6.xy+0.9*diratheta-[0.7,0.3],"$\mathbf{a}x|\mathbf{\Sigma}$",size->fs,family->fonts,italics->true);,
-  drawtext(P6.xy+0.9*diratheta-[0.7,0.3],"$\mathbf{a}\theta|\mathbf{\Sigma}$",size->fs,family->fonts,italics->true);
-);
-
-if(Text0.pressed,
-  drawtext(P.xy-[0.7,0.3],"$\mathbf{l}$",size->fs,family->fonts,italics->true);,
+drawtext(O.xy-0.6*[dira_2,-dira_1]-[0.3,0.3],"$\mathbf{a}$",size->fs,family->fonts); drawtext(U.xy+0.9*diratheta-[0.7,0.3],"$\mathbf{a}x|\mathbf{I}$",size->fs,family->fonts,italics->true);
+drawtext(P6.xy+0.9*diratheta-[0.7,0.3],"$\mathbf{a}x|\mathbf{\Sigma}$",size->fs,family->fonts,italics->true);
+ drawtext(P.xy-[0.7,0.3],"$\mathbf{l}$",size->fs,family->fonts,italics->true);
+),
+(drawtext(E.xy+[0,-2.7]+[0,0.3],"$\mathbf{x}=$"+[rd3(dira_1),rd3(dira_2)],size->fs1,family->fonts);
+drawtext(O.xy-0.6*[dira_2,-dira_1]-[0.3,0.3],"$\mathbf{x}$",size->fs,family->fonts);
+ drawtext(U.xy+0.9*diratheta-[0.7,0.3],"$\mathbf{x}\theta|\mathbf{I}$",size->fs,family->fonts,italics->true);
+ drawtext(P6.xy+0.9*diratheta-[0.7,0.3],"$\mathbf{x}\theta|\mathbf{\Sigma}$",size->fs,family->fonts,italics->true);
   drawtext(P.xy-[0.7,0.3],"$\mathbf{y}$",size->fs,family->fonts,italics->true);
 );
+);
+
+drawtext(A.xy-0.6*[dira_2,-dira_1]-[0.3,0.3],"$O$",size->fs,family->fonts,italics->true);
+
+
 
 
 ;
@@ -94,16 +93,16 @@ var cdy = CindyJS({
     {name: "A", type: "Free", pos: [-0.0, 0.0, 4.0], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, textsize: 36.0, textitalics: true, printname: "$O$"},
     {name: "a", type: "Through", pos: [0.0, -4.0, 0.0], color: [0.0, 0.0, 1.0], args: ["A"], pinned: true},
     {name: "b", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["a", "A"]},
-    {name: "B", type: "Free", pos: [4.0, -3.6571428571428575, -0.5714285714285714], color: [1.0, 0.0, 0.0], pinned: true, size: 2.0},
+    {name: "B", type: "Free", pos: [4.0, -3.2, -0.5], color: [1.0, 0.0, 0.0], pinned: true, size: 2.0},
     {name: "c", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "B"], visible: false, text_fontfamily: "serif", labeled: true, textsize: 36.0, textitalics: true},
     {name: "d", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["b", "B"], size: 0},
-    {name: "D", type: "PointOnLine", pos: [4.0, -2.9714285714285715, -0.5714285714285714], color: [1.0, 0.0, 0.0], args: ["d"], pinned: true, size: 1.0},
-    {name: "E", type: "PointOnLine", pos: [4.0, -2.2857142857142856, -0.5714285714285714], color: [1.0, 0.0, 0.0], args: ["d"], pinned: true, size: 1.0},
-    {name: "F", type: "PointOnLine", pos: [3.7500000000000004, -4.0, -0.625], color: [0.0, 0.0, 1.0], args: ["c"], text_fontfamily: "serif", textsize: 36.0, textitalics: true},
+    {name: "D", type: "PointOnLine", pos: [4.0, -2.5452234183662963, -0.5], color: [1.0, 0.0, 0.0], args: ["d"], pinned: true, size: 1.0},
+    {name: "E", type: "PointOnLine", pos: [4.0, -1.945223418366297, -0.5], color: [1.0, 0.0, 0.0], args: ["d"], pinned: true, size: 1.0},
+    {name: "F", type: "PointOnLine", pos: [4.0, -3.657142857142857, -0.5714285714285713], color: [0.0, 0.0, 1.0], args: ["c"], text_fontfamily: "serif", textsize: 36.0, textitalics: true},
     {name: "e", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "D"], visible: false, labeled: true, textsize: 24.0},
     {name: "f", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["a", "E"], visible: false, labeled: true},
-    {name: "G", type: "PointOnLine", pos: [3.0769230769230766, -4.0, -0.7692307692307692], color: [1.0, 0.0, 0.0], args: ["e"], textsize: 24.0},
-    {name: "H", type: "PointOnLine", pos: [4.0, -2.909090909090909, -0.7272727272727273], color: [1.0, 0.0, 0.0], args: ["f"]},
+    {name: "G", type: "PointOnLine", pos: [3.928928174964971, -4.0, -0.7857856349929943], color: [1.0, 0.0, 0.0], args: ["e"], textsize: 24.0},
+    {name: "H", type: "PointOnLine", pos: [4.0, -2.3226548279000565, -0.5970149253731344], color: [1.0, 0.0, 0.0], args: ["f"]},
     {name: "K", type: "Mid", color: [1.0, 0.0, 0.0], args: ["B", "F"], size: 0.0},
     {name: "dist0", type: "Dist", color: [0.0, 0.0, 1.0], args: ["B", "F"]},
     {name: "L", type: "Mid", color: [1.0, 0.0, 0.0], args: ["D", "G"], size: 0.0},
@@ -113,46 +112,46 @@ var cdy = CindyJS({
     {name: "g", type: "Segment", color: [0.467, 0.0, 0.718], args: ["B", "F"], size: 4},
     {name: "h", type: "Segment", color: [1.0, 0.0, 0.0], args: ["D", "G"], size: 5},
     {name: "k", type: "Segment", color: [1.0, 0.0, 0.0], args: ["E", "H"], size: 4},
-    {name: "l", type: "Through", pos: [-1.1722595078299778, -4.0, 0.0], color: [1.0, 1.0, 1.0], args: ["A"], size: 5},
+    {name: "l", type: "Through", pos: [-1.2442748091603053, -4.0, 0.0], color: [1.0, 1.0, 1.0], args: ["A"], size: 5},
     {name: "C0", type: "CircleByFixedRadius", color: [0.0, 0.0, 1.0], radius: 1.0, args: ["A"], visible: false, printname: "$C_{0}$"},
     {name: "Collection__1", type: "IntersectionConicLine", args: ["C0", "l"]},
-    {name: "N", type: "SelectP", pos: [-3.838554136240176, 1.1249453956319084, 4.0], color: [1.0, 0.0, 0.0], args: ["Collection__1"], visible: false, labeled: true},
-    {name: "O", type: "SelectP", pos: [3.838554136240176, -1.1249453956319084, 4.0], color: [1.0, 0.0, 0.0], args: ["Collection__1"], size: 1.0},
+    {name: "N", type: "SelectP", pos: [-3.8194730488838524, 1.1881185247482213, 4.0], color: [1.0, 0.0, 0.0], args: ["Collection__1"], visible: false, labeled: true},
+    {name: "O", type: "SelectP", pos: [3.8194730488838524, -1.1881185247482213, 4.0], color: [1.0, 0.0, 0.0], args: ["Collection__1"], size: 1.0},
     {name: "m", type: "Segment", color: [0.0, 0.0, 1.0], args: ["N", "O"], visible: false},
     {name: "n", type: "Segment", color: [0.0, 0.0, 0.0], args: ["A", "O"], text_fontfamily: "serif", textsize: 36.0, textitalics: true, size: 5, arrowshape: "jet", arrowsides: "==>", arrowsize: 1.6, arrowposition: 1.0},
     {name: "P", type: "Free", pos: [4.0, 1.1764705882352942, 0.5808775328037407], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 36.0, textbold: true, textitalics: true, printname: "$y$"},
     {name: "C1", type: "Compass", color: [0.0, 0.0, 1.0], args: ["F", "B", "P"], size: 6, printname: "$C_{1}$"},
     {name: "o", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["l", "P"], visible: false},
     {name: "Collection__2", type: "IntersectionConicLine", args: ["C1", "o"]},
-    {name: "C", type: "SelectP", pos: [4.0, 1.6658674127191193, 0.5580848083772909], color: [1.0, 0.0, 0.0], args: ["Collection__2"], visible: false},
-    {name: "Q", type: "SelectP", pos: [4.0, 0.6453967530499103, 0.6056112845771511], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 0.0},
+    {name: "C", type: "SelectP", pos: [4.0, 1.6595483853762332, 0.5568577735381507], color: [1.0, 0.0, 0.0], args: ["Collection__2"], visible: false},
+    {name: "Q", type: "SelectP", pos: [4.0, 0.6498395457061931, 0.6070628614158214], color: [1.0, 0.0, 0.0], args: ["Collection__2"], size: 0.0},
     {name: "p", type: "Segment", color: [0.0, 0.0, 1.0], args: ["C", "Q"]},
     {name: "R", type: "Meet", color: [1.0, 0.0, 0.0], args: ["o", "p"], labeled: true},
     {name: "S", type: "Meet", color: [1.0, 0.0, 0.0], args: ["o", "p"], labeled: true},
     {name: "T", type: "Meet", color: [1.0, 0.0, 0.0], args: ["o", "p"], labeled: true},
     {name: "U", type: "Meet", color: [0.0, 0.0, 1.0], args: ["l", "o"], size: 6.0, border: false},
-    {name: "r", type: "Through", pos: [-0.46079062407290233, -0.4082954896848505, 4.0], color: [1.0, 0.0, 0.0], args: ["P"], size: 0, clip: "inci", dashtype: "dashed"},
+    {name: "r", type: "Through", pos: [-0.4543525684877031, -0.4301848786745276, 4.0], color: [1.0, 0.0, 0.0], args: ["P"], size: 0, clip: "inci", dashtype: "dashed"},
     {name: "C2", type: "Compass", color: [0.0, 0.0, 1.0], args: ["D", "G", "P"], size: 0, printname: "$C_{2}$"},
     {name: "s", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["r", "P"], visible: false, labeled: true},
     {name: "Collection__3", type: "AngularBisector", args: ["r", "s", "P"]},
-    {name: "t", type: "SelectL", pos: [-0.09896911193649427, -1.638488630948638, 4.0], color: [0.0, 0.0, 1.0], args: ["Collection__3"], visible: false, labeled: true},
+    {name: "t", type: "SelectL", pos: [-0.04937459028831733, -1.807110004552439, 4.0], color: [0.0, 0.0, 1.0], args: ["Collection__3"], visible: false, labeled: true},
     {name: "Collection__4", type: "IntersectionConicLine", args: ["C2", "t"]},
-    {name: "P1", type: "SelectP", pos: [4.0, 2.2676706922185073, 1.0278572739203573], color: [1.0, 0.0, 0.0], args: ["Collection__4"], visible: false, labeled: true, printname: "$P_{1}$"},
-    {name: "P0", type: "SelectP", pos: [4.0, 0.7466918277794727, 0.40483062959622534], color: [1.0, 0.0, 0.0], args: ["Collection__4"], visible: false, labeled: true, printname: "$P_{0}$"},
+    {name: "P1", type: "SelectP", pos: [4.0, 2.168390184330153, 1.029004489257399], color: [1.0, 0.0, 0.0], args: ["Collection__4"], visible: false, labeled: true, printname: "$P_{1}$"},
+    {name: "P0", type: "SelectP", pos: [4.0, 0.786401167269239, 0.40465294452930683], color: [1.0, 0.0, 0.0], args: ["Collection__4"], visible: false, labeled: true, printname: "$P_{0}$"},
     {name: "Collection__5", type: "IntersectionConicLine", args: ["C2", "s"]},
-    {name: "P3", type: "SelectP", pos: [4.0, 1.7587018270686745, 0.4380443956486352], color: [1.0, 0.0, 0.0], args: ["Collection__5"], visible: false, labeled: true, printname: "$P_{3}$"},
-    {name: "P2", type: "SelectP", pos: [4.0, 0.030833232598291762, 0.8619256226925424], color: [1.0, 0.0, 0.0], args: ["Collection__5"], visible: false, labeled: true, printname: "$P_{2}$"},
+    {name: "P3", type: "SelectP", pos: [4.0, 1.8039071936915383, 0.4412770543439262], color: [1.0, 0.0, 0.0], args: ["Collection__5"], visible: false, labeled: true, printname: "$P_{3}$"},
+    {name: "P2", type: "SelectP", pos: [4.0, -0.03165711044352222, 0.8496779236471773], color: [1.0, 0.0, 0.0], args: ["Collection__5"], visible: false, labeled: true, printname: "$P_{2}$"},
     {name: "u", type: "Join", color: [0.0, 0.0, 1.0], args: ["P2", "P1"], visible: false, labeled: true},
     {name: "w", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["r", "P1"], visible: false, labeled: true},
     {name: "C5", type: "CircleMP", color: [0.0, 0.0, 1.0], args: ["P", "U"], printname: "$C_{5}$"},
     {name: "x", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["l", "P"], visible: false, labeled: true},
     {name: "C3", type: "Compass", color: [0.0, 0.0, 1.0], args: ["E", "H", "P"], visible: false, printname: "$C_{3}$"},
     {name: "Collection__6", type: "IntersectionConicLine", args: ["C2", "r"]},
-    {name: "W", type: "SelectP", pos: [4.0, 3.4887218328730536, 0.8168979713546854], color: [1.0, 0.0, 0.0], args: ["Collection__6"], text_fontfamily: "serif", labeled: true, textsize: 25.0, textitalics: true, size: 1.0, printname: "$M$"},
-    {name: "V", type: "SelectP", pos: [4.0, -0.09915987426933787, 0.4506689917174304], color: [1.0, 0.0, 0.0], args: ["Collection__6"], size: 0.0},
+    {name: "W", type: "SelectP", pos: [4.0, 3.486069080830252, 0.829266119634699], color: [1.0, 0.0, 0.0], args: ["Collection__6"], text_fontfamily: "serif", labeled: true, textsize: 25.0, textitalics: true, size: 1.0, printname: "$M$"},
+    {name: "V", type: "SelectP", pos: [4.0, -0.06844939039660992, 0.4469910953119253], color: [1.0, 0.0, 0.0], args: ["Collection__6"], size: 0.0},
     {name: "Collection__7", type: "IntersectionConicLine", args: ["C3", "s"]},
-    {name: "Y", type: "SelectP", pos: [4.0, 1.5083949840999438, 0.4994497432975363], color: [1.0, 0.0, 0.0], args: ["Collection__7"], visible: false, labeled: true},
-    {name: "X", type: "SelectP", pos: [4.0, 0.7152330326511313, 0.6940284643302633], color: [1.0, 0.0, 0.0], args: ["Collection__7"], visible: false, labeled: true},
+    {name: "Y", type: "SelectP", pos: [4.0, 1.4912246347329343, 0.5108468474625784], color: [1.0, 0.0, 0.0], args: ["Collection__7"], visible: false, labeled: true},
+    {name: "X", type: "SelectP", pos: [4.0, 0.7617091305571979, 0.6731592030713679], color: [1.0, 0.0, 0.0], args: ["Collection__7"], visible: false, labeled: true},
     {name: "Z", type: "Meet", color: [1.0, 0.0, 0.0], args: ["r", "u"], visible: false, labeled: true},
     {name: "v", type: "Join", color: [0.0, 0.0, 1.0], args: ["Z", "X"], visible: false, labeled: true},
     {name: "P4", type: "Meet", color: [1.0, 0.0, 0.0], args: ["w", "v"], visible: false, labeled: true, printname: "$P_{4}$"},
@@ -163,11 +162,11 @@ var cdy = CindyJS({
     {name: "q", type: "Segment", color: [0.0, 0.0, 1.0], args: ["P", "U"], size: 2, arrowshape: "jet", arrowsides: "==>", arrowsize: 1.6, arrowposition: 1.0},
     {name: "z", type: "Segment", color: [1.0, 0.0, 0.0], args: ["P", "P6"], size: 2, arrowshape: "jet", arrowsides: "==>", arrowsize: 1.6, arrowposition: 1.0},
     {name: "Collection__8", type: "IntersectionConicLine", args: ["C4", "z"]},
-    {name: "P7", type: "SelectP", pos: [4.0, 2.9201187740752252, 0.663439854604917], color: [1.0, 0.0, 0.0], args: ["Collection__8"], size: 0.0, printname: "$P_{7}$"},
-    {name: "P8", type: "SelectP", pos: [4.0, -0.18122793906372894, 0.5165900557598276], color: [1.0, 0.0, 0.0], args: ["Collection__8"], size: 0.0, printname: "$P_{8}$"},
+    {name: "P7", type: "SelectP", pos: [4.0, 2.9467071490649737, 0.6859729349889959], color: [1.0, 0.0, 0.0], args: ["Collection__8"], size: 0.0, printname: "$P_{7}$"},
+    {name: "P8", type: "SelectP", pos: [4.0, -0.1234052854557778, 0.5037065033722586], color: [1.0, 0.0, 0.0], args: ["Collection__8"], text_fontfamily: "serif", labeled: true, textsize: 30.0, textitalics: true, size: 0.0, printname: "$T$"},
     {name: "Collection__9", type: "IntersectionConicLine", args: ["C4", "x"]},
-    {name: "P9", type: "SelectP", pos: [4.0, 2.2195181968149504, 0.8388394512394103], color: [1.0, 0.0, 0.0], args: ["Collection__9"], visible: false, labeled: true, printname: "$P_{9}$"},
-    {name: "P10", type: "SelectP", pos: [4.0, 0.6240616122617476, 0.4442581896107044], color: [1.0, 0.0, 0.0], args: ["Collection__9"], visible: false, printname: "$P_{10}$"},
+    {name: "P9", type: "SelectP", pos: [4.0, 2.1729874024286526, 0.8199998415970785], color: [1.0, 0.0, 0.0], args: ["Collection__9"], visible: false, labeled: true, printname: "$P_{9}$"},
+    {name: "P10", type: "SelectP", pos: [4.0, 0.6299290696647453, 0.44973045338612433], color: [1.0, 0.0, 0.0], args: ["Collection__9"], visible: false, printname: "$P_{10}$"},
     {name: "l0", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["l", "P8"], visible: false, labeled: true, printname: "$l_{0}$"},
     {name: "l1", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["y", "P9"], visible: false, labeled: true, printname: "$l_{1}$"},
     {name: "l2", type: "Parallel", color: [0.0, 0.0, 1.0], args: ["y", "P10"], visible: false, labeled: true, printname: "$l_{2}$"},
@@ -180,20 +179,20 @@ var cdy = CindyJS({
     {name: "S1", type: "Segment", color: [1.0, 0.0, 0.0], args: ["P14", "P15"], size: 5, printname: "$S_{1}$"},
     {name: "C6", type: "Compass", color: [0.0, 0.0, 1.0], args: ["B", "F", "U"], visible: false, printname: "$C_{6}$"},
     {name: "Collection__10", type: "IntersectionConicLine", args: ["C6", "l"]},
-    {name: "P16", type: "SelectP", pos: [4.0, -1.1722595078299776, 0.8272605521684819], color: [1.0, 0.0, 0.0], args: ["Collection__10"], visible: false, labeled: true, printname: "$P_{16}$"},
-    {name: "P17", type: "SelectP", pos: [4.0, -1.1722595078299776, 0.5921966486655778], color: [1.0, 0.0, 0.0], args: ["Collection__10"], visible: false, labeled: true, printname: "$P_{17}$"},
+    {name: "P16", type: "SelectP", pos: [4.0, -1.2442748091603053, 0.8422309337555927], color: [1.0, 0.0, 0.0], args: ["Collection__10"], visible: false, labeled: true, printname: "$P_{16}$"},
+    {name: "P17", type: "SelectP", pos: [4.0, -1.2442748091603053, 0.600688289411075], color: [1.0, 0.0, 0.0], args: ["Collection__10"], visible: false, labeled: true, printname: "$P_{17}$"},
     {name: "S2", type: "Segment", color: [0.0, 0.0, 1.0], args: ["P16", "P17"], size: 5, printname: "$S_{2}$"},
     {name: "S3", type: "Segment", color: [1.0, 0.0, 0.0], args: ["V", "W"], size: 4, dashtype: "dashed", printname: "$S_{3}$"},
     {name: "Tr0", type: "TrSimilarity", color: [0.0, 0.0, 1.0], args: ["P", "P", "P8", "P6"], dock: {offset: [0.0, -0.0]}},
     {name: "C7", type: "TransformConic", color: [1.0, 0.0, 0.0], args: ["Tr0", "C4"], printname: "$C_{7}$"},
-    {name: "Text6", type: "Text", pos: [4.0, 2.1569965870307164, -0.5729474640965224], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 3/24", textsize: 15.0},
-    {name: "Text0", type: "ToggleButton", pos: [4.0, -0.24827586206896557, -0.5788745068285555], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, text_fontfamily: "serif", pinned: true, text: "notation $(y,\\theta) \\mapsto  (x,l)$", textsize: 20.0}
+    {name: "Text6", type: "Text", pos: [4.0, 1.9093655589123866, -0.5071710180673143], color: [0.0, 0.0, 0.0], pinned: true, text: "wf 3/24", textsize: 15.0},
+    {name: "Text0", type: "ToggleButton", pos: [4.0, -0.20606060606060606, -0.5087078999402457], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, text_fontfamily: "serif", pinned: true, text: "notation $(\\theta,X,y) \\mapsto  (x,A,l)$", textsize: 20.0}
   ],
   ports: [{
-    width: 985,
-    height: 544,
+    width: 1126,
+    height: 541,
     id: "CSCanvas",
-    transform: [{visibleRect: [-8.351521273768086, 8.303866373489809, 15.118517113283454, -4.6582665022016]}],
+    transform: [{visibleRect: [-9.209309478777076, 8.232384023072393, 17.62039937789301, -4.6582665022016]}],
     axes: true,
     grid: 1.0,
     background: "rgb(168,176,192)"
@@ -205,7 +204,6 @@ var cdy = CindyJS({
     </script>
 </head>
 <body>
-
 <style>
 p {
   text-indent: 20px;
@@ -220,16 +218,16 @@ li {
 The animation (generated with <a
     href="http://www.cinderella.de">Cinderella</a>) visualizes the effect of the covariance matrix of observations onto the Maximum Likelihood estimation of a parameter.
 		
-<p>  The animation shows the estimation of the single variable &theta; lying on a line (white), i.e. we assume E(y)=a&theta;, with (a=[a<sub>1</sub>,a<sub>2</sub>], |a|=1), based on the observed point y=[y<sub>1</sub>,y<sub>2</sub>]), not sitting on the line. The simple least squares solution is the point a&theta;|I<sub>2</sub> being the point on the line closest to y. In case the two coordinates y<sub>1</sub> and y<sub>2</sub> have the joint covariance matrix &Sigma; then the best point is a&theta;|&Sigma;. The tangent point T of the (yellow) tangent at the ellipse (representing &Sigma;) which is parallel to the line yields the direction from y to the optimal point.  </p>
+<p>  The animation shows the estimation of the single variable &theta; lying on a line (white), i.e. we assume E(y)=x&theta;, with the design matrix X=x=[x<sub>1</sub>,x<sub>2</sub>], |x|=1, based on the observed point y=[y<sub>1</sub>,y<sub>2</sub>]), not sitting on the line. The simple least squares solution is the point x&theta;|I<sub>2</sub> being the point on the line closest to y. In case the two coordinates y<sub>1</sub> and y<sub>2</sub> have the joint covariance matrix &Sigma; then the best point is x&theta;|&Sigma;. The tangent point T of the (yellow) tangent at the ellipse (representing &Sigma;) which is parallel to the line yields the direction from y to the optimal point.  </p>
     
-<p> You may change the configuration by moving the point a or the point y. The semi-axes s<sub>1</sub> and s<sub>2</sub> of the covariance matrix can be changed by moving the red points in the left upper corner. The direction of the major semiaxis can be changed by rotating the red arrow at M. Changing the covariance matrix changes the estimated point. You may adapt the notation, substituting (y,&theta;) by (x,l).</p>
+<p> You may change the configuration by moving the white line on x or the point y. The semi-axes s<sub>1</sub> and s<sub>2</sub> of the covariance matrix can be changed by moving the red points in the left upper corner. The direction of the major semiaxis can be changed by rotating the red arrow at M. Changing the covariance matrix changes the estimated point. You may adapt the notation, substituting (&theta;,X,y) by (x,A,l).</p>
 
 
-<p>  Generally, changing the three parameters of the covariance matrix also lead to changes of the estimated point ax|&Sigma;. The difference to the simple least squares solution with &Sigma;=I<sub>2</sub> only stays unchanged, if the major semiaxis of &Sigma; is parallel or perpendicular to the direction a. So: Rotate the ellipse such that a semiaxis is parallel to a, then changing the semiaxis a<sub>1</sub> or a<sub>2</sub> does not lead to changes of the estimate. This is the result of <a href="https://typeset.io/pdf/least-squares-theory-using-an-estimated-dispersion-matrix-3pqpdbs9lm.pdf#page=10"> Rao's lemma 5a, (1967, p. 10)</a>.</p>
+<p>  Generally, changing the three parameters of the covariance matrix also lead to changes of the estimated point x&theta;|&Sigma;. The difference to the simple least squares solution with &Sigma;=I<sub>2</sub> only stays unchanged, if the major semiaxis of &Sigma; is parallel or perpendicular to the direction x. So: Rotate the ellipse such that a semiaxis is parallel to x, then changing the semiaxes s<sub>1</sub> or s<sub>2</sub> does not lead to changes of the estimate. This is the result of <a href="https://typeset.io/pdf/least-squares-theory-using-an-estimated-dispersion-matrix-3pqpdbs9lm.pdf#page=10"> Rao's lemma 5a, (1967, p. 10)</a>.</p>
 
 
-<p> Changing the line to y<sub>2</sub>=y<sub>1</sub>, hence a &prop; [1,1], we can realize the general mean of the two observations. By choosing a point on the x-axis as observation, say y=[3,0], we may be able to find a covariance matrix of the observations which leads to a point y<sub>2</sub>=y<sub>1</sub> outside the range [3,0]. However, 
-assuming no correlation between y<sub>1</sub> and y<sub>2</sub>, i.e. &phi;=0 or &phi;=90&deg;, the mean always stays in within the interval [y<sub>1</sub>,y<sub>2</sub>].</p>
+<p> Changing the line to y<sub>2</sub>=y<sub>1</sub>, hence x &prop; [1,1], we can realize the general mean of the two observations. By choosing a point on the y<sub>1</sub>-axis as observation, say y=[3,0], we may be able to find a covariance matrix of the observations which leads to a point y<sub>2</sub>=y<sub>1</sub> outside the range [3,0]. However, 
+when assuming no correlation between y<sub>1</sub> and y<sub>2</sub>, i.e. &phi;=0 or &phi;=90&deg;, the mean always stays within the interval [y<sub>1</sub>,y<sub>2</sub>].</p>
     <div id="CSCanvas"></div>
 </body>
 </html>

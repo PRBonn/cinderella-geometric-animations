@@ -32,9 +32,7 @@ Uniform(x,a,b):=1/abs(a-b)*Heavy(-(x-a)*(x-b)); // Uniform density
 
 // fixed values
 a=0;b=3;                                        // assumed range of outliers [a,b]
-scale=0.3;                                      // vertical scaling of Figure
-m1=C.x;                                         // mean 1
-m2=D.x;                                         // mean 2
+scale=0.3;                                      // vertical scaling of Figure                                     // mean 2
 s1=0.1;                                         // standard deviation 1
 s2=0.1;                                         // standard deviation 2
 ;
@@ -43,6 +41,9 @@ s2=0.1;                                         // standard deviation 2
 <script id="csdraw" type="text/x-cindyscript">
 //Bayes-1D-GMM-oulier
 // drwawing-loop
+
+m1=C.x;                                         // mean 1
+m2=D.x;                                         // mean 2
 P1=abs(min(max(A.y/1,0),1));                    // take P(mu=mu_1) from drawing, enforce in [0,1]
 Pin=abs(min(max(B.y/1,0),1));                   // take P(observation is inlier) from drawing, enforce in [0,1]
 
@@ -95,9 +96,9 @@ var cdy = CindyJS({
   geometry: [
     {name: "A", type: "Free", pos: [-2.3049114923178373, 2.19155518941696, 4.0], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 36.0, printname: "$P_1$"},
     {name: "B", type: "Free", pos: [-1.2280266147595036, 3.816328864329534, 4.0], color: [0.0, 0.0, 1.0], text_fontfamily: "serif", textsize: 36.0, printname: "$P_{in}$"},
-    {name: "C", type: "Free", pos: [4.0, -0.6456692913385826, 3.334201506518848], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 36.0},
-    {name: "D", type: "Free", pos: [4.0, -0.6745562130177515, 2.5055833806384245], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 36.0},
-    {name: "E", type: "Free", pos: [4.0, -1.0599369085173502, 2.671568399545071], color: [0.0, 0.0, 1.0], text_fontfamily: "serif", textsize: 36.0},
+    {name: "C", type: "Free", pos: [4.0, -0.596078431372549, 3.3211262064932843], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 36.0},
+    {name: "D", type: "Free", pos: [4.0, -0.7669616519174041, 2.498192279220612], color: [1.0, 0.0, 0.0], text_fontfamily: "serif", textsize: 36.0},
+    {name: "E", type: "Free", pos: [4.0, -1.2327044025157232, 2.6631672410559353], color: [0.0, 0.0, 1.0], text_fontfamily: "serif", textsize: 36.0},
     {name: "a", type: "Through", pos: [4.0, -0.0, 2.3049114923178373], color: [1.0, 0.0, 0.0], args: ["A"], pinned: true, size: 3, clip: "inci"},
     {name: "G", type: "PointOnLine", pos: [-2.3049114923178373, 0.04675996217519154, 4.0], color: [1.0, 0.0, 0.0], args: ["a"], size: 1.0},
     {name: "H", type: "Mid", color: [1.0, 0.0, 0.0], args: ["A", "G"], size: 0.0},
@@ -135,7 +136,7 @@ var cdy = CindyJS({
     {name: "P0", type: "PointOnLine", pos: [3.98636331868085, -0.0, 4.0], color: [1.0, 0.0, 0.0], args: ["l"], pinned: true, size: 0.0, printname: "$P_{0}$"},
     {name: "P2", type: "PointOnLine", pos: [4.0, -0.0, 2.003675738277106], color: [1.0, 0.0, 0.0], args: ["l"], pinned: true, size: 0.0, printname: "$P_{2}$"},
     {name: "o", type: "Through", pos: [-2.003675738277106, 0.09543007877491057, 4.0], color: [0.0, 0.0, 0.0], args: ["P2"], pinned: true, size: 3, clip: "inci"},
-    {name: "P3", type: "PointOnLine", pos: [4.0, -0.11872022739196017, 2.006508108440153], color: [1.0, 0.0, 0.0], args: ["o"], pinned: true, size: 0.0},
+    {name: "P3", type: "PointOnLine", pos: [4.0, -0.11872022739196014, 2.006508108440153], color: [1.0, 0.0, 0.0], args: ["o"], pinned: true, size: 0.0},
     {name: "P4", type: "PointOnLine", pos: [4.0, -0.0, 1.3333333333333333], color: [1.0, 0.0, 0.0], args: ["l"], size: 0.0},
     {name: "p", type: "Through", pos: [-1.3333333333333333, -0.0, 4.0], color: [0.0, 0.0, 0.0], args: ["P4"], pinned: true, size: 3, clip: "inci"},
     {name: "P5", type: "PointOnLine", pos: [4.0, -0.08816601336734932, 1.333333333333333], color: [1.0, 0.0, 0.0], args: ["p"], pinned: true, size: 0.0, printname: "$P_{5}$"},
@@ -143,13 +144,13 @@ var cdy = CindyJS({
     {name: "P6", type: "PointOnLine", pos: [3.98636331868085, -0.28339075725219304, 4.0], color: [1.0, 0.0, 0.0], args: ["n"], pinned: true, size: 0.0, printname: "$P_{6}$"},
     {name: "q", type: "Orthogonal", color: [0.0, 0.0, 1.0], args: ["b", "Z"], clip: "inci", dashtype: "dashed"},
     {name: "P1", type: "PointOnLine", pos: [3.039398123270888, -4.0, -4.0], color: [1.0, 0.0, 0.0], args: ["q"], pinned: true, size: 0.0, printname: "$P_{1}$"},
-    {name: "P7", type: "PointOnLine", pos: [-0.6195812048228153, -1.5869882406122815, 4.0], color: [0.0, 0.0, 1.0], args: ["h"], printname: "$P_{7}$"},
+    {name: "P7", type: "PointOnLine", pos: [-0.6195812048228153, -1.8514862807143284, 4.0], color: [0.0, 0.0, 1.0], args: ["h"], printname: "$P_{7}$"},
     {name: "r", type: "Segment", color: [0.0, 0.0, 1.0], args: ["V", "P7"], size: 3},
     {name: "Text2", type: "Text", pos: [-0.9432569136701663, -4.0, -3.800629297433015], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$p(\\theta)$", textsize: 25.0, textitalics: true},
     {name: "Text3", type: "Text", pos: [0.9927376124867026, 3.410642182332704, 4.0], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$L(\\theta)=p(y|\\theta)$", textsize: 25.0, textitalics: true},
     {name: "Text4", type: "Text", pos: [1.0032532304661312, 2.7481582496287036, 4.0], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "$p(\\theta|y)$", textsize: 25.0, textitalics: true},
     {name: "Text5", type: "Text", color: [0.0, 0.0, 0.0], args: ["dist2", "W"], visible: false, text: "|@$\"T\"@$\"C\"|= @#\"dist2\"", dock: {to: "W", offset: [3.0, 3.0]}},
-    {name: "Text7", type: "Text", color: [0.0, 0.0, 0.0], args: ["dist3", "X"], visible: false, text: "|@$\"U\"@$\"D\"|= @#\"dist3\"", dock: {to: "X", offset: [3.0, 3.0]}},
+    {name: "Text7", type: "Text", color: [0.0, 0.0, 0.0], args: ["X", "dist3"], visible: false, text: "|@$\"U\"@$\"D\"|= @#\"dist3\"", dock: {to: "X", offset: [3.0, 3.0]}},
     {name: "Text8", type: "Text", color: [0.0, 0.0, 0.0], args: ["dist4", "Y"], visible: false, text: "|@$\"E\"@$\"V\"|= @#\"dist4\"", dock: {to: "Y", offset: [3.0, 3.0]}},
     {name: "Text0", type: "Text", pos: [0.4007174181305069, -4.0, -3.8607831777159194], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "1", textsize: 22.0},
     {name: "Text9", type: "Text", pos: [4.0, -0.3239396115578461, 2.1103866945864995], color: [0.0, 0.0, 0.0], text_fontfamily: "serif", pinned: true, text: "2", textsize: 22.0},
@@ -159,9 +160,9 @@ var cdy = CindyJS({
   ],
   ports: [{
     width: 989,
-    height: 471,
+    height: 514,
     id: "CSCanvas",
-    transform: [{visibleRect: [-0.9281047300009325, 1.7735538224699754, 3.7431195853727175, -0.4510636219597407]}],
+    transform: [{visibleRect: [-0.9281047300009325, 1.7735538224699754, 3.7431195853727175, -0.6541603313238125]}],
     axes: true,
     grid: 0.5,
     background: "rgb(168,176,192)"
@@ -173,7 +174,6 @@ var cdy = CindyJS({
     </script>
 </head>
 <body>
-
 <style>
 p {
   text-indent: 20px;
